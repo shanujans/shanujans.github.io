@@ -1003,7 +1003,6 @@
             </div>
         </div>
     </section>
-    <!-- Replace your entire contact form with this code -->
 
     <!-- Services Section -->
     <section id="services">
@@ -1402,7 +1401,7 @@
                 const formData = new FormData(contactForm);
                 
                 try {
-                    // Replace with your Formspree endpoint
+                    // Formspree endpoint
                     const response = await fetch('https://formspree.io/f/mrbapzwd', {
                         method: 'POST',
                         body: formData,
@@ -1458,8 +1457,6 @@
             });
         });
 
-        // Resume download
-        // no needed
 
         // Add hover animations to all interactive elements
         const interactiveElements = document.querySelectorAll('a, button, .service-card, .project-card, .skill, .social-icons a');
