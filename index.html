@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- SEO Meta Tags -->
+    <title>Shanujan Suresh | Portfolio</title>
+    <meta name="description" content="Personal portfolio of Shanujan Suresh, an IT professional transitioning into AI/ML with expertise in system operations, data infrastructure, Python, Cyber Security, and Blockchain." />
+    <meta name="keywords" content="Shanujan Suresh, Portfolio, IT Professional, AI, ML, Python, Cyber Security, Blockchain, Web Developer, System Operations" />
+    <meta name="author" content="Shanujan Suresh" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://shanujans.github.io/" />
+    <meta property="og:title" content="Shanujan Suresh | Portfolio" />
+    <meta property="og:description" content="Explore the portfolio of Shanujan Suresh, showcasing projects in AI/ML, Quantum Computing, Web Development, and more." />
+    <meta property="og:image" content="https://picsum.photos/seed/shanujan-portfolio/1200/630" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://shanujans.github.io/" />
+    <meta property="twitter:title" content="Shanujan Suresh | Portfolio" />
+    <meta property="twitter:description" content="Explore the portfolio of Shanujan Suresh, showcasing projects in AI/ML, Quantum Computing, Web Development, and more." />
+    <meta property="twitter:image" content="https://picsum.photos/seed/shanujan-portfolio/1200/630" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+      body {
+        font-family: 'Rajdhani', sans-serif;
+        background-color: #0a0a14;
+        color: #f0f8ff;
+      }
+      ::selection {
+        background-color: #00ff9d;
+        color: #0a0a14;
+      }
+      .font-rajdhani { font-family: 'Rajdhani', sans-serif; }
+      .font-jetbrains-mono { font-family: 'JetBrains Mono', monospace; }
+      .scroll-mt-24 { scroll-margin-top: 6rem; }
+      
+      .animated-gradient-text {
+        background: linear-gradient(90deg, #00ff9d, #00b3ff, #7700ff, #00ff9d);
+        background-size: 400% 100%;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        animation: gradient-animation 10s ease infinite;
+      }
+
+      @keyframes gradient-animation {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
+      .glow-orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        opacity: 0.3;
+      }
+      
+      .scanline {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        pointer-events: none;
+        z-index: 2;
+      }
+
+      .scanline::after {
+        content: '';
+        position: absolute;
+        top: -100%;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom, rgba(10,10,20,0) 0%, rgba(0,255,157,0.03) 50%, rgba(10,10,20,0) 100%);
+        animation: scan 15s linear infinite;
+        opacity: 0.4;
+      }
+      
+      @keyframes scan {
+          0% { top: -100%; }
+          100% { top: 100%; }
+      }
+
+      .fade-in-up {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      }
+      
+      .fade-in-up.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Hero Animation */
+      @keyframes fadeInUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .hero-fade-in-up {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.6s ease-out forwards;
+      }
+      
+      /* Global Button Styles */
+      .btn-primary, .btn-secondary, .btn-tertiary {
+        display: inline-block;
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        font-weight: 600;
+        border-radius: 0.25rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+        cursor: pointer;
+      }
+      .btn-primary {
+        background-color: #00ff9d;
+        color: #0a0a14;
+        box-shadow: 0 0 5px #00ff9d, 0 0 10px #00ff9d;
+      }
+      .btn-primary:hover {
+        background-color: transparent;
+        color: #00ff9d;
+        border-color: #00ff9d;
+        box-shadow: 0 0 15px #00ff9d, 0 0 25px #00ff9d;
+      }
+      .btn-secondary {
+        background-color: transparent;
+        color: #00b3ff;
+        border-color: #00b3ff;
+        box-shadow: 0 0 5px #00b3ff, 0 0 10px #00b3ff;
+      }
+      .btn-secondary:hover {
+        background-color: #00b3ff;
+        color: #0a0a14;
+        box-shadow: 0 0 15px #00b3ff, 0 0 25px #00b3ff;
+      }
+       .btn-tertiary {
+        background-color: transparent;
+        color: #7700ff;
+        border-color: #7700ff;
+        box-shadow: 0 0 5px #7700ff, 0 0 10px #7700ff;
+      }
+      .btn-tertiary:hover {
+        background-color: #7700ff;
+        color: #0a0a14;
+        box-shadow: 0 0 15px #7700ff, 0 0 25px #7700ff;
+      }
+
+      /* Card Hover Glow Effects */
+      .service-card:hover {
+        border-color: #7700ff;
+        box-shadow: 0 0 20px rgba(119, 0, 255, 0.5);
+      }
+      .project-card:hover {
+        border-color: #00b3ff;
+        box-shadow: 0 0 20px rgba(0, 179, 255, 0.5);
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "vite": "https://aistudiocdn.com/vite@^7.1.12",
+    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
