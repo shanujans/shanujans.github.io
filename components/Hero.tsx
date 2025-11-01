@@ -38,7 +38,7 @@ const Hero: React.FC = () => {
           <div className="flex flex-wrap justify-center gap-4 hero-fade-in-up" style={{ animationDelay: '700ms' }}>
             <a href="#projects" className="btn-primary" onClick={handleScrollClick}>View My Work</a>
             <a href="#contact" className="btn-secondary" onClick={handleScrollClick}>Contact Me</a>
-            <a href="./Shanujan CV.pdf" download className="btn-secondary">Download Resume <i className="fas fa-download ml-2"></i></a>
+            <a href="/Shanujan-CV.pdf" download="Shanujan-Suresh-CV.pdf" className="btn-secondary">Download Resume <i className="fas fa-download ml-2"></i></a>
           </div>
         </div>
       </div>
