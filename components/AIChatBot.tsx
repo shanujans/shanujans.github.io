@@ -111,9 +111,18 @@ const AIChatBot: React.FC = () => {
     }
   };
 
-  // Render simple markdown bold + newlines
+  // Safely escape HTML before applying minimal markdown formatting
+  const escapeHtml = (text: string): string =>
+    text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+
+  // Render simple markdown bold + newlines on escaped text
   const renderMessage = (content: string) =>
-    content
+    escapeHtml(content)
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
       .replace(/\n/g, '<br/>');
 
