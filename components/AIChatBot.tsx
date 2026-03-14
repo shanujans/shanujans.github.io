@@ -138,7 +138,7 @@ const AIChatBot: React.FC = () => {
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-[#00ff9d]/15 border border-[#00ff9d]/30 flex items-center justify-center text-sm">🤖</div>
             <div>
-              <div className="text-sm font-bold text-white font-jetbrains-mono">Shanu AI</div>
+              <div className="text-sm font-bold text-white font-jetbrains-mono">ARIA</div>
               <div className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#00ff9d] animate-pulse" />
                 <span className="text-[10px] text-gray-500 font-jetbrains-mono">Powered by Gemini • Secure Proxy</span>
