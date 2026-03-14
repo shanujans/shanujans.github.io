@@ -1,19 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import type { ChatMessage } from '../types';
 
-// ================================================================
-// 🔐 SECURITY NOTE:
-//    Your Gemini API key is stored as a SECRET on Cloudflare Workers.
-//    It NEVER appears in this file, your GitHub repo, or the browser.
-//
-// ✏️  ONLY CHANGE YOU NEED TO MAKE:
-//    After deploying your Cloudflare Worker (see worker/gemini-proxy.js),
-//    paste your Worker URL below — it looks like:
-//    https://your-worker-name.your-subdomain.workers.dev
-// ================================================================
-const WORKER_URL = 'https://YOUR_WORKER_NAME.YOUR_SUBDOMAIN.workers.dev'; // ← REPLACE THIS
+const WORKER_URL = 'gemini-proxy.shanujansh.workers.dev';
 
-const SYSTEM_CONTEXT = `You are Shanujan's portfolio AI assistant. Your name is "Shanu AI".
+const SYSTEM_CONTEXT = `You are Shanujan's portfolio AI assistant. Your name is "ARIA".
 
 About Shanujan Suresh:
 - IT professional transitioning into AI/ML, based in Sri Lanka
