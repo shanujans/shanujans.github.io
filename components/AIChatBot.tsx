@@ -35,7 +35,7 @@ const SUGGESTED = [
 const AIChatBot: React.FC = () => {
   const [isOpen, setIsOpen]     = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
-    { role: 'assistant', content: "Hi! I'm **Shanu AI** 👋 — Shanujan's portfolio assistant.\nAsk me anything about his skills, projects, or how to get in touch!" },
+    { role: 'assistant', content: "Hi! I'm **ARIA** 👋 — Shanujan's portfolio assistant.\nAsk me anything about his skills, projects, or how to get in touch!" },
   ]);
   const [input, setInput]       = useState('');
   const [isLoading, setIsLoading] = useState(false);
