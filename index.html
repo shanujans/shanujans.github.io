@@ -3,25 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <!-- SEO Meta Tags -->
-    <title>Shanujan Suresh | Portfolio</title>
-    <meta name="description" content="Personal portfolio of Shanujan Suresh, an IT professional transitioning into AI/ML with expertise in system operations, data infrastructure, Python, Cyber Security, and Blockchain." />
-    <meta name="keywords" content="Shanujan Suresh, Portfolio, IT Professional, AI, ML, Python, Cyber Security, Blockchain, Web Developer, System Operations" />
+
+    <!-- Google Search Console Verification -->
+    <meta name="google-site-verification" content="google173255409e5f314c.html" />
+
+    <!-- SEO -->
+    <title>Shanujan Suresh | IT Professional & Developer</title>
+    <meta name="description" content="Portfolio of Shanujan Suresh — IT Professional, Python Developer & AI/ML Engineer. Expert in cybersecurity, quantum computing, and automation." />
+    <meta name="keywords" content="Shanujan Suresh, Portfolio, IT Professional, AI, ML, Python, Cyber Security, Blockchain, Web Developer, Quantum Computing, Sri Lanka" />
     <meta name="author" content="Shanujan Suresh" />
 
-    <!-- Open Graph / Facebook -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://shanujans.github.io/" />
-    <meta property="og:title" content="Shanujan Suresh | Portfolio" />
-    <meta property="og:description" content="Explore the portfolio of Shanujan Suresh, showcasing projects in AI/ML, Quantum Computing, Web Development, and more." />
+    <meta property="og:url" content="https://shanujan.is-a.dev/" />
+    <meta property="og:title" content="Shanujan Suresh | IT Professional & Developer" />
+    <meta property="og:description" content="Explore the portfolio of Shanujan Suresh — AI/ML, Quantum Computing, Cybersecurity & more." />
     <meta property="og:image" content="https://picsum.photos/seed/shanujan-portfolio/1200/630" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://shanujans.github.io/" />
-    <meta property="twitter:title" content="Shanujan Suresh | Portfolio" />
-    <meta property="twitter:description" content="Explore the portfolio of Shanujan Suresh, showcasing projects in AI/ML, Quantum Computing, Web Development, and more." />
+    <meta property="twitter:url" content="https://shanujan.is-a.dev/" />
+    <meta property="twitter:title" content="Shanujan Suresh | IT Professional & Developer" />
+    <meta property="twitter:description" content="Explore the portfolio of Shanujan Suresh — AI/ML, Quantum Computing, Cybersecurity & more." />
     <meta property="twitter:image" content="https://picsum.photos/seed/shanujan-portfolio/1200/630" />
 
     <link rel="icon" href="/favicon.png" type="image/png" />
@@ -30,61 +33,161 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
+      /* ─── BASE ─────────────────────────────────────── */
+      *, *::before, *::after { box-sizing: border-box; }
+
+      html { scroll-behavior: smooth; }
+
       body {
         font-family: 'Rajdhani', sans-serif;
         background-color: #0a0a14;
-        color: #f0f8ff;
+        color: #e2e8f0;
+        cursor: none;
+        overflow-x: hidden;
       }
-      ::selection {
-        background-color: #00ff9d;
-        color: #0a0a14;
-      }
+
+      ::selection { background-color: #00ff9d; color: #0a0a14; }
+
+      /* scrollbar */
+      ::-webkit-scrollbar { width: 4px; }
+      ::-webkit-scrollbar-track { background: #0a0a14; }
+      ::-webkit-scrollbar-thumb { background: #00ff9d30; border-radius: 4px; }
+      ::-webkit-scrollbar-thumb:hover { background: #00ff9d60; }
+
+      /* ─── TYPOGRAPHY ────────────────────────────────── */
       .font-rajdhani { font-family: 'Rajdhani', sans-serif; }
       .font-jetbrains-mono { font-family: 'JetBrains Mono', monospace; }
-      .scroll-mt-20 { scroll-margin-top: 5rem; }
-      .scroll-mt-24 { scroll-margin-top: 6rem; }
-      
+
+      /* ─── CURSOR ────────────────────────────────────── */
+      .cursor-dot {
+        position: fixed;
+        width: 8px; height: 8px;
+        background: #00ff9d;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9998;
+        will-change: transform;
+        box-shadow: 0 0 8px #00ff9d, 0 0 16px #00ff9d80;
+        transition: width 0.2s, height 0.2s, background 0.2s;
+      }
+      .cursor-trail {
+        position: fixed;
+        width: 32px; height: 32px;
+        border: 1px solid rgba(0, 255, 157, 0.3);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9997;
+        will-change: transform;
+        transition: width 0.3s, height 0.3s, border-color 0.3s;
+      }
+      .cursor-dot.cursor-hover {
+        width: 14px; height: 14px;
+        background: #00b3ff;
+        box-shadow: 0 0 12px #00b3ff;
+      }
+      .cursor-trail.trail-hover {
+        width: 48px; height: 48px;
+        border-color: rgba(0, 179, 255, 0.4);
+      }
+
+      /* ─── ANIMATED GRADIENT TEXT ────────────────────── */
       .animated-gradient-text {
-        background: linear-gradient(90deg, #00ff9d, #00b3ff, #7700ff, #00ff9d);
-        background-size: 400% 100%;
+        background: linear-gradient(90deg, #00ff9d, #00b3ff, #7700ff, #ff6b35, #00ff9d);
+        background-size: 300% 100%;
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
-        animation: gradient-animation 10s ease infinite;
+        animation: gradientShift 8s ease infinite;
       }
-
-      @keyframes gradient-animation {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
+      @keyframes gradientShift {
+        0%   { background-position: 0% 50%; }
+        50%  { background-position: 100% 50%; }
         100% { background-position: 0% 50%; }
       }
 
+      /* ─── GLITCH TEXT ───────────────────────────────── */
+      .glitch-text {
+        position: relative;
+        color: #fff;
+        animation: glitch 6s ease-in-out infinite;
+      }
+      .glitch-text::before,
+      .glitch-text::after {
+        content: attr(data-text);
+        position: absolute;
+        inset: 0;
+        background: transparent;
+      }
+      .glitch-text::before {
+        color: #00ff9d;
+        clip-path: polygon(0 30%, 100% 30%, 100% 50%, 0 50%);
+        animation: glitchTop 6s ease-in-out infinite;
+      }
+      .glitch-text::after {
+        color: #7700ff;
+        clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%);
+        animation: glitchBottom 6s ease-in-out infinite;
+      }
+      @keyframes glitch {
+        0%, 90%, 100% { transform: translate(0); }
+        92%           { transform: translate(-2px, 1px); }
+        94%           { transform: translate(2px, -1px); }
+        96%           { transform: translate(-1px, 2px); }
+        98%           { transform: translate(1px, -2px); }
+      }
+      @keyframes glitchTop {
+        0%, 90%, 100% { transform: translate(0); opacity: 0; }
+        91%            { transform: translate(-4px, -2px); opacity: 0.8; }
+        93%            { transform: translate(3px, 1px); opacity: 0.8; }
+        95%            { opacity: 0; }
+      }
+      @keyframes glitchBottom {
+        0%, 90%, 100% { transform: translate(0); opacity: 0; }
+        92%            { transform: translate(3px, 2px); opacity: 0.7; }
+        94%            { transform: translate(-2px, -1px); opacity: 0.7; }
+        96%            { opacity: 0; }
+      }
+
+      /* ─── GLOW ORBS ─────────────────────────────────── */
       .glow-orb {
         position: absolute;
         border-radius: 50%;
-        filter: blur(80px);
-        opacity: 0.3;
+        filter: blur(90px);
       }
-      
-      .scanline {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        pointer-events: none;
-        z-index: 2;
+      @keyframes orbFloat1 {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        33%       { transform: translate(30px, -20px) scale(1.05); }
+        66%       { transform: translate(-20px, 15px) scale(0.95); }
+      }
+      @keyframes orbFloat2 {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        33%       { transform: translate(-25px, 20px) scale(0.95); }
+        66%       { transform: translate(20px, -15px) scale(1.05); }
       }
 
+      /* ─── SCANLINE ──────────────────────────────────── */
+      .scanline {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 2;
+        background: repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(0,0,0,0.03) 2px,
+          rgba(0,0,0,0.03) 4px
+        );
+      }
       .scanline::after {
         content: '';
         position: absolute;
@@ -92,101 +195,184 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: linear-gradient(to bottom, rgba(10,10,20,0) 0%, rgba(0,255,157,0.05) 50%, rgba(10,10,20,0) 100%);
-        animation: scan 10s linear infinite;
-        opacity: 0.6;
+        background: linear-gradient(
+          to bottom,
+          transparent 0%,
+          rgba(0, 255, 157, 0.04) 50%,
+          transparent 100%
+        );
+        animation: scanMove 12s linear infinite;
       }
-      
-      @keyframes scan {
-          0% { top: -100%; }
-          100% { top: 100%; }
+      @keyframes scanMove {
+        0%   { top: -100%; }
+        100% { top: 100%; }
       }
 
+      /* ─── SCROLL INDICATOR ──────────────────────────── */
+      @keyframes scrollPulse {
+        0%, 100% { opacity: 0.5; transform: scaleY(1); }
+        50%       { opacity: 1; transform: scaleY(1.15); }
+      }
+
+      /* ─── HERO FADE IN UP ───────────────────────────── */
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(28px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+      .hero-fade-in-up {
+        opacity: 0;
+        transform: translateY(28px);
+        animation: fadeInUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      }
+
+      /* ─── SCROLL FADE IN ────────────────────────────── */
       .fade-in-up {
         opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        transform: translateY(24px);
+        transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+                    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
       }
-      
       .fade-in-up.visible {
         opacity: 1;
         transform: translateY(0);
       }
 
-      /* Hero Animation */
-      @keyframes fadeInUp {
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-      .hero-fade-in-up {
-        opacity: 0;
-        transform: translateY(20px);
-        animation: fadeInUp 0.6s ease-out forwards;
-      }
-      
-      /* Global Button Styles */
+      /* ─── BUTTONS ───────────────────────────────────── */
       .btn-primary, .btn-secondary, .btn-tertiary {
-        display: inline-block;
-        padding: 0.75rem 1.5rem;
-        font-size: 1rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.7rem 1.6rem;
+        font-size: 0.9rem;
         font-weight: 600;
-        border-radius: 0.25rem;
+        font-family: 'JetBrains Mono', monospace;
+        border-radius: 6px;
         text-transform: uppercase;
-        letter-spacing: 0.05em;
-        transition: all 0.3s ease;
-        border: 2px solid transparent;
+        letter-spacing: 0.08em;
+        transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        border: 1.5px solid transparent;
         cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        text-decoration: none;
       }
       .btn-primary {
-        background-color: #00ff9d;
+        background: #00ff9d;
         color: #0a0a14;
-        box-shadow: 0 0 5px #00ff9d, 0 0 10px #00ff9d;
+        border-color: #00ff9d;
+        box-shadow: 0 0 12px rgba(0,255,157,0.4);
       }
       .btn-primary:hover {
-        background-color: transparent;
+        background: transparent;
         color: #00ff9d;
-        border-color: #00ff9d;
-        box-shadow: 0 0 15px #00ff9d, 0 0 25px #00ff9d;
+        box-shadow: 0 0 24px rgba(0,255,157,0.5), inset 0 0 12px rgba(0,255,157,0.05);
+        transform: translateY(-2px);
       }
       .btn-secondary {
-        background-color: transparent;
+        background: transparent;
         color: #00b3ff;
         border-color: #00b3ff;
-        box-shadow: 0 0 5px #00b3ff, 0 0 10px #00b3ff;
+        box-shadow: 0 0 8px rgba(0,179,255,0.25);
       }
       .btn-secondary:hover {
-        background-color: #00b3ff;
+        background: #00b3ff;
         color: #0a0a14;
-        box-shadow: 0 0 15px #00b3ff, 0 0 25px #00b3ff;
+        box-shadow: 0 0 20px rgba(0,179,255,0.5);
+        transform: translateY(-2px);
       }
-       .btn-tertiary {
-        background-color: transparent;
+      .btn-tertiary {
+        background: transparent;
         color: #7700ff;
         border-color: #7700ff;
-        box-shadow: 0 0 5px #7700ff, 0 0 10px #7700ff;
+        box-shadow: 0 0 8px rgba(119,0,255,0.25);
       }
       .btn-tertiary:hover {
-        background-color: #7700ff;
-        color: #0a0a14;
-        box-shadow: 0 0 15px #7700ff, 0 0 25px #7700ff;
+        background: #7700ff;
+        color: #fff;
+        box-shadow: 0 0 20px rgba(119,0,255,0.5);
+        transform: translateY(-2px);
+      }
+
+      /* ─── CONTACT INPUTS ────────────────────────────── */
+      .contact-input {
+        width: 100%;
+        background: transparent;
+        border: 1.5px solid rgba(255,255,255,0.1);
+        border-radius: 6px;
+        padding: 1rem 1rem 0.6rem;
+        color: #fff;
+        font-size: 0.9rem;
+        font-family: 'JetBrains Mono', monospace;
+        transition: border-color 0.3s, box-shadow 0.3s;
+        outline: none;
+        padding-top: 1.4rem;
+      }
+      .contact-input:focus {
+        border-color: #00ff9d;
+        box-shadow: 0 0 0 3px rgba(0,255,157,0.08);
+      }
+      .contact-label {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.8rem;
+        color: #6b7280;
+        background: #0a0a14;
+        padding: 0 4px;
+        pointer-events: none;
+        transform-origin: left center;
+        transition: all 0.2s ease;
+      }
+      .contact-input:focus + .contact-label,
+      .contact-input:not(:placeholder-shown) + .contact-label {
+        top: 0.2rem;
+        font-size: 0.65rem;
+        color: #00ff9d;
+        transform: translateY(0);
+      }
+
+      /* ─── LOADING SCREEN ────────────────────────────── */
+      @keyframes matrixFade {
+        0%   { opacity: 0; transform: translateY(-10px); }
+        50%  { opacity: 1; }
+        100% { opacity: 0; transform: translateY(10px); }
+      }
+
+      /* ─── CHATBOT SCROLLBAR ─────────────────────────── */
+      .scrollbar-thin::-webkit-scrollbar { width: 3px; }
+      .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+      .scrollbar-thin::-webkit-scrollbar-thumb { background: rgba(0,255,157,0.2); border-radius: 3px; }
+
+      /* ─── BOUNCE DOT (chatbot loading) ──────────────── */
+      @keyframes bounce {
+        0%, 100% { transform: translateY(0); opacity: 0.4; }
+        50%       { transform: translateY(-4px); opacity: 1; }
+      }
+
+      /* ─── MISC ──────────────────────────────────────── */
+      .scroll-mt-20 { scroll-margin-top: 5rem; }
+
+      /* On mobile, restore default cursor */
+      @media (pointer: coarse) {
+        body { cursor: auto; }
+        .cursor-dot, .cursor-trail { display: none; }
       }
     </style>
 
-<script type="importmap">
-{
-  "imports": {
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "vite": "https://aistudiocdn.com/vite@^7.1.12",
-    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.0"
-  }
-}
-</script>
-  <script type="module" crossorigin src="/assets/index-BboFfA1a.js"></script>
-</head>
+
+    <script type="importmap">
+    {
+      "imports": {
+        "react": "https://aistudiocdn.com/react@^19.2.0",
+        "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+        "react/": "https://aistudiocdn.com/react@^19.2.0/"
+      }
+    }
+    </script>
+    <script type="module" crossorigin src="/assets/index-DWwZuh_1.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/react-N--QU9DW.js">
+  </head>
   <body>
     <div id="root"></div>
   </body>

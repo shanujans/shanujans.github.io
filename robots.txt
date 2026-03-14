@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://shanujans.github.io/sitemap.xml
