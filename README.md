@@ -41,8 +41,8 @@
 | Build Tool | Vite 7 |
 | Styling | Tailwind CSS |
 | Animations | Pure CSS + Canvas API |
-| AI Chatbot | Google Gemini 3.1 Flash Lite Preview |
-| API Proxy | Cloudflare Workers (free tier) |
+| AI Chatbot | Google Gemini Flash Latest |
+| API Proxy | Cloudflare Workers |
 | Contact Form | Formspree |
 | Deployment | GitHub Pages via gh-pages |
 | Fonts | JetBrains Mono + Rajdhani |
