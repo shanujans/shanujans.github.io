@@ -15,6 +15,7 @@ import ScrollProgress from './components/ScrollProgress';
 import CursorGlow from './components/CursorGlow';
 import AIChatBot from './components/AIChatBot';
 import RightSideEffect from './components/RightSideEffect';
+import VisitorTracker from './components/VisitorTracker';
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -39,6 +40,7 @@ const App: React.FC = () => {
         style={{ opacity: loading ? 0 : 1, transition: 'opacity 0.4s ease' }}
       >
         <CursorGlow />
+        <VisitorTracker />
         <ScrollProgress />
         <TerminalBackground />
         <ParticleNetwork />
