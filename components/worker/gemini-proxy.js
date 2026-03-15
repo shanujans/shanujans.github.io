@@ -1,9 +1,5 @@
-// ============================================================
-// Cloudflare Worker — Gemini API Proxy
-// ============================================================
-
 const GEMINI_MODEL = 'gemini-flash-latest';
-const ALLOWED_ORIGIN = 'https://shanujan.is-a.dev/';
+const ALLOWED_ORIGIN = 'https://shanujan.is-a.dev';
 
 const rateLimitMap = new Map();
 const RATE_LIMIT = 20;
@@ -24,6 +20,7 @@ function isRateLimited(ip) {
 
 export default {
   async fetch(request, env) {
+
     if (request.method === 'OPTIONS') {
       return new Response(null, {
         headers: {
@@ -57,4 +54,35 @@ export default {
       body = await request.json();
     } catch {
       return new Response(
-        JSON.stringify({ error: 'Invali
+        JSON.stringify({ error: 'Invalid JSON body' }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${env.GEMINI_API_KEY}`;
+
+    let geminiRes;
+    try {
+      geminiRes = await fetch(geminiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+    } catch {
+      return new Response(
+        JSON.stringify({ error: 'Failed to reach Gemini API' }),
+        { status: 502, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const data = await geminiRes.json();
+
+    return new Response(JSON.stringify(data), {
+      status: geminiRes.status,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': ALLOWED_ORIGIN,
+      },
+    });
+  },
+};
