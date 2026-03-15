@@ -1,4 +1,4 @@
-const GEMINI_MODEL = 'gemini-flash-latest';
+const GEMINI_MODEL = 'gemini-2.0-flash';
 const ALLOWED_ORIGIN = 'https://shanujan.is-a.dev';
 
 const rateLimitMap = new Map();
