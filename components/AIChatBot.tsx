@@ -77,8 +77,8 @@ const AIChatBot: React.FC = () => {
       });
 
       if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        throw new Error((err as {error?: string}).error || `Error ${res.status}`);
+        const errText = await res.text().catch(() => 'Request failed');
+        throw new Error(`Error ${res.status}: ${errText}`);
       }
 
       const data = await res.json();
@@ -88,8 +88,16 @@ const AIChatBot: React.FC = () => {
       setMessages(prev => [...prev, { role: 'assistant', content: reply }]);
       if (!isOpen) setHasUnread(true);
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Unknown error';
-
+      let msg= 'Unknown error';
+      if (err instanceof Error) {
+        msg = err.message;
+      } else if (typeof err === 'string') {
+        msg = err;
+      } else {
+        msg = JSON.stringify(err);
+      }
+      setError(`⚠️ ${msg}`);
+     }
       // Friendly message if Worker URL not configured yet
       const isMisconfigured = WORKER_URL.includes('YOUR_WORKER_NAME');
       setError(isMisconfigured
