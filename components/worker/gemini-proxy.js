@@ -3,7 +3,7 @@
 // ============================================================
 
 const GEMINI_MODEL = 'gemini-flash-latest';
-const ALLOWED_ORIGIN = 'https://shanujans.github.io';
+const ALLOWED_ORIGIN = 'https://shanujan.is-a.dev/';
 
 const rateLimitMap = new Map();
 const RATE_LIMIT = 20;
