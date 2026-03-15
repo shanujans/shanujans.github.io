@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 
 const roles = [
   'IT Professional',
-  'Python Developer',
+  'Python Junior Developer',
   'Cybersecurity Enthusiast',
-  'AI/ML Engineer',
+  'AI/ML Enthusiast',
   'Quantum Computing Explorer',
 ];
 
@@ -46,7 +46,7 @@ const Hero: React.FC = () => {
 
   const stats = [
     { value: '7+', label: 'Projects' },
-    { value: '3+', label: 'Years Exp.' },
+    { value: '4+', label: 'Years Exp.' },
     { value: '4+', label: 'Tech Stacks' },
     { value: '∞', label: 'Curiosity' },
   ];
@@ -97,8 +97,7 @@ const Hero: React.FC = () => {
             className="text-base md:text-lg text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed hero-fade-in-up"
             style={{ animationDelay: '450ms' }}
           >
-            Passionate IT professional transitioning into AI/ML. Expert in system operations, 
-            cybersecurity, and Python automation. Building tomorrow's solutions today.
+            Passionate IT professional transitioning into AI/ML, Cybersecurity, and Python automation. Building tomorrow's solutions today.
           </p>
 
           <div className="flex flex-wrap justify-center gap-4 mb-16 hero-fade-in-up" style={{ animationDelay: '600ms' }}>
