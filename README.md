@@ -8,7 +8,7 @@
 ![Vite](https://img.shields.io/badge/Vite-7-646CFF?style=for-the-badge&logo=vite)
 ![License](https://img.shields.io/badge/License-MIT-7700ff?style=for-the-badge)
 
-**[🌐 Live Site](https://shanujan.is-a.dev)** &nbsp;|&nbsp; **[📧 Contact](mailto:shanujansh@gmail.com)** &nbsp;|&nbsp; **[💼 LinkedIn](https://www.linkedin.com/in/shanujansuresh/)**
+**[🌐 Live Site](https://shanujan.is-a.dev)** &nbsp;|&nbsp; **[📧 Contact](mailto:shanujansh@gmail.com)** &nbsp;|&nbsp; **[💼 LinkedIn](https://www.linkedin.com/in/shanujansuresh/)** &nbsp;|&nbsp; **[🏢 RevMatrix AI](https://revmatrixai.github.io)**
 
 </div>
 
@@ -24,12 +24,14 @@
 - ✍️ **Typewriter Hero** — cycles through 5 roles with blinking cursor
 - 👾 **CSS Glitch Animation** — cyberpunk name glitch on the hero section
 - 📊 **Scroll Progress Bar** — gradient indicator at the top of the page
-- 🗂️ **Experience Timeline** — alternating work & education timeline
+- 🗺️ **Active Section Navigation** — header highlights current section while scrolling
+- 🗂️ **Experience Timeline** — alternating work and education timeline
 - 🎴 **3D Tilt Project Cards** — mouse-tracked perspective tilt effect
 - 🔍 **Project Filter Tabs** — filter by Python, ML, Security, PyPI and more
-- 🤖 **Shanu AI Chatbot** — Gemini 2.0 Flash Lite powered by a secure Cloudflare Worker proxy
+- 🤖 **ARIA AI Chatbot** — powered by Llama 3 via Groq, proxied securely through Cloudflare Workers
 - 🔐 **Security Hardened** — API keys stored as Cloudflare Secrets, email obfuscated, Formspree endpoint encrypted
 - 📱 **Fully Responsive** — mobile-first design across all screen sizes
+- ⚡ **Auto Deploy** — GitHub Actions builds and deploys on every push to main
 
 ---
 
@@ -41,10 +43,11 @@
 | Build Tool | Vite 7 |
 | Styling | Tailwind CSS |
 | Animations | Pure CSS + Canvas API |
-| AI Chatbot | Google Gemini Flash Latest |
-| API Proxy | Cloudflare Workers |
+| AI Chatbot | Llama 3.1 8B via Groq API |
+| API Proxy | Cloudflare Workers (free tier) |
 | Contact Form | Formspree |
-| Deployment | GitHub Pages via gh-pages |
+| CI/CD | GitHub Actions |
+| Deployment | GitHub Pages |
 | Fonts | JetBrains Mono + Rajdhani |
 | Icons | Font Awesome 6 |
 
@@ -54,32 +57,35 @@
 
 ```
 shanujans.github.io/
+├── .github/
+│   └── workflows/
+│       └── deploy.yml             # Auto deploy on push to main
 ├── components/
-│   ├── AIChatBot.tsx          # Gemini AI assistant (Cloudflare Worker proxy)
-│   ├── About.tsx              # Skills, stats, tech stack
-│   ├── BackToTopButton.tsx    # Animated back to top
-│   ├── Contact.tsx            # Obfuscated email + encrypted Formspree
-│   ├── CursorGlow.tsx         # Custom neon cursor with trail
-│   ├── Experience.tsx         # Work & education timeline
-│   ├── Footer.tsx             # Links, status, credits
-│   ├── Header.tsx             # Active section nav + hamburger
-│   ├── Hero.tsx               # Typewriter, glitch text, stats
-│   ├── LoadingScreen.tsx      # Matrix rain boot screen
-│   ├── ParticleNetwork.tsx    # Interactive canvas particles
-│   ├── Projects.tsx           # 3D tilt cards + filter tabs
-│   ├── RightSideEffect.tsx    # Floating binary/hex ambient effect
-│   ├── ScrollProgress.tsx     # Top gradient scroll bar
-│   ├── Services.tsx           # Service cards with glow
-│   └── TerminalBackground.tsx # Animated terminal (left side)
+│   ├── AIChatBot.tsx              # ARIA — Llama 3 via Groq + Cloudflare proxy
+│   ├── About.tsx                  # Animated counters, skills, tech stack
+│   ├── BackToTopButton.tsx        # Smooth back to top
+│   ├── Contact.tsx                # Obfuscated email + encrypted Formspree
+│   ├── CursorGlow.tsx             # Custom neon cursor with trail
+│   ├── Experience.tsx             # Work & education timeline
+│   ├── Footer.tsx                 # Links, status, credits
+│   ├── Header.tsx                 # Active section nav + hamburger menu
+│   ├── Hero.tsx                   # Typewriter, glitch text, stats strip
+│   ├── LoadingScreen.tsx          # Matrix rain boot screen
+│   ├── ParticleNetwork.tsx        # Interactive canvas particle network
+│   ├── Projects.tsx               # 3D tilt cards + filter tabs
+│   ├── RightSideEffect.tsx        # Floating binary/hex ambient effect
+│   ├── ScrollProgress.tsx         # Top gradient scroll bar
+│   ├── Services.tsx               # Service cards with color glow
+│   └── TerminalBackground.tsx     # Animated terminal left side
 ├── hooks/
-│   └── useOnScreen.ts         # Intersection Observer hook
+│   └── useOnScreen.ts             # Intersection Observer hook
 ├── worker/
-│   └── gemini-proxy.js        # Cloudflare Worker — deploy separately
+│   └── gemini-proxy.js            # Cloudflare Worker — deploy separately
 ├── public/
 │   ├── favicon.png
 │   └── Shanujan-CV.pdf
 ├── App.tsx
-├── index.html                 # All CSS animations & variables
+├── index.html                     # All CSS animations and variables
 ├── index.tsx
 ├── types.ts
 ├── vite.config.ts
@@ -106,44 +112,40 @@ npm install
 
 # Start dev server
 npm run dev
-# → Opens at http://localhost:5173
+# Opens at http://localhost:5173
 ```
 
 ### Deploy to GitHub Pages
 
+Deployment is fully automated via GitHub Actions. Every push to `main` triggers a build and deploy automatically.
+
+To deploy manually:
 ```bash
 npm run deploy
 ```
-
-This runs `vite build` then pushes the `dist/` folder to the `gh-pages` branch automatically.
 
 ---
 
-## 🤖 AI Chatbot Setup
+## 🤖 ARIA Chatbot Setup
 
-The chatbot uses **Google Gemini 2.0 Flash Lite** via a **Cloudflare Worker proxy** so your API key is never exposed in the browser or GitHub.
+ARIA uses **Llama 3.1 8B** via **Groq API** (free, no credit card) proxied through a **Cloudflare Worker** so the API key is never exposed in the browser or GitHub.
 
-### 1. Get a free Gemini API key
-Go to [aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey) — no credit card needed.
+### 1. Get a free Groq API key
+Go to [console.groq.com](https://console.groq.com) → Sign up free → API Keys → Create API Key
+
+**Free limits:** 30 requests/min · 14,400 requests/day · Zero cost
 
 ### 2. Deploy the Cloudflare Worker
 1. Go to [workers.cloudflare.com](https://workers.cloudflare.com) → free account
-2. Create Worker → paste contents of `worker/gemini-proxy.js`
-3. Settings → Variables & Secrets → Add Secret:
-   - Name: `GEMINI_API_KEY`
+2. Create Worker → name it `gemini-proxy` → Deploy
+3. Edit Code → paste contents of `worker/gemini-proxy.js` → Save and Deploy
+4. Settings → Variables and Secrets → Add Secret:
+   - Name: `GROQ_API_KEY`
    - Value: your key from step 1
-4. Copy your Worker URL: `https://your-worker.workers.dev`
+5. Save and Deploy
 
-### 3. Update the Worker URL
-In `components/AIChatBot.tsx` line 18:
-```ts
-const WORKER_URL = 'https://your-worker-name.workers.dev'; // ← paste here
-```
-
-Then redeploy:
-```bash
-npm run deploy
-```
+### 3. Worker URL is already set
+`components/AIChatBot.tsx` already has the Worker URL configured. No changes needed unless you rename your worker.
 
 ---
 
@@ -151,12 +153,28 @@ npm run deploy
 
 | Protection | Implementation |
 |---|---|
-| API key never in source | Stored as Cloudflare Secret |
-| API key never in browser | Requests proxied via Worker |
-| Rate limiting | 20 requests / 60s per IP |
+| API key never in source code | Stored as Cloudflare Secret |
+| API key never in browser | All requests proxied via Cloudflare Worker |
+| Rate limiting | 20 requests per 60 seconds per IP |
 | CORS locked | Worker only accepts requests from portfolio domain |
-| Email obfuscated | Split base64, decoded only on copy click |
-| Formspree URL encrypted | Split base64 chunks, decoded at fetch time |
+| Email obfuscated | Base64 encoded, decoded only on copy click |
+| Formspree URL encrypted | Base64 encoded, decoded only at fetch time |
+| No secrets in GitHub | Zero environment variables needed in GitHub |
+
+---
+
+## 📬 Contact
+
+**Shanujan Suresh** — IT Professional & Developer · Sri Lanka 🇱🇰
+
+| Platform | Link |
+|---|---|
+| 🌐 Portfolio | [shanujan.is-a.dev](https://shanujan.is-a.dev) |
+| 🏢 Startup | [RevMatrix AI](https://revmatrixai.github.io) |
+| 💼 LinkedIn | [shanujansuresh](https://www.linkedin.com/in/shanujansuresh/) |
+| 🐙 GitHub | [shanujans](https://github.com/shanujans) |
+| ✈️ Telegram | [@Revmatrix](https://t.me/Revmatrix) |
+| 📸 Instagram | [shanujan_29](https://www.instagram.com/shanujan_29/) |
 
 ---
 
@@ -166,18 +184,6 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 
 ---
 
-## 🙋 About Me
-
-**Shanujan Suresh** — IT Professional & Developer based in Sri Lanka 🇱🇰, transitioning into AI/ML.
-
-Passionate about Python, Cybersecurity, Quantum Computing, and Blockchain.
-
-[![GitHub](https://img.shields.io/badge/GitHub-shanujans-181717?style=flat&logo=github)](https://github.com/shanujans)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-shanujansuresh-0A66C2?style=flat&logo=linkedin)](https://www.linkedin.com/in/shanujansuresh/)
-[![Telegram](https://img.shields.io/badge/Telegram-@Revmatrix-26A5E4?style=flat&logo=telegram)](https://t.me/Revmatrix)
-
----
-
 <div align="center">
-  <sub>Built with ❤️ using React + TypeScript + Vite</sub>
+  <sub>Built with ❤️ using React + TypeScript + Vite · Deployed on GitHub Pages</sub>
 </div>
