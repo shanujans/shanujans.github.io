@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import type { ChatMessage } from '../types';
 
-const WORKER_URL = 'gemini-proxy.shanujansh.workers.dev';
+const WORKER_URL = 'https:/gemini-proxy.shanujansh.workers.dev';
 
 const SYSTEM_CONTEXT = `You are Shanujan's portfolio AI assistant. Your name is "ARIA".
 
