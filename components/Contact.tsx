@@ -77,6 +77,8 @@ const Contact: React.FC = () => {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
+                  <input type="text" name="_gotcha" style={{ display: 'none' }} />
+                  <input type="hidden" name="_subject" value="New message from portfolio" />
                   <div className="relative">
                     <input type="text" name="name" required placeholder=" " className="contact-input peer" />
                     <label className="contact-label">Your Name</label>
