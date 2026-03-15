@@ -5,19 +5,19 @@ import type { ExperienceItem } from '../types';
 const experience: ExperienceItem[] = [
   {
     type: 'work',
-    title: 'IT Support Specialist',
-    organization: 'Skills International',
-    period: '2023 – Present',
+    title: 'IT Support Technician',
+    organization: 'Pravin Construct Works',
+    period: '2020 – Present',
     description:
-      'Providing technical support and system administration for the organization. Managing student registrations, course enrollments, and maintaining the internal management system. Built a C# desktop application for streamlined student data management with SQL Server backend.',
-    skills: ['C#', '.NET', 'SQL Server', 'System Admin', 'Technical Support'],
+      'Providing technical support and system adminstration and cloud platforms. Proven ability to troubleshoot complex issues, automate tasks, and deliver excellent customer service.',
+    skills: [ 'MS Office', 'System Admin', 'Technical Support'],
     icon: 'fas fa-server',
   },
   {
     type: 'work',
     title: 'Python Developer & Bot Engineer',
     organization: 'Freelance',
-    period: '2022 – Present',
+    period: '2025 – Present',
     description:
       'Developed multiple Telegram bots including an asynchronous file uploader with VirusTotal API integration and an Academic Ally bot for plagiarism detection. Specialized in async Python, API integrations, and automation workflows.',
     skills: ['Python', 'AsyncIO', 'Telegram API', 'VirusTotal API', 'NLP'],
@@ -25,21 +25,22 @@ const experience: ExperienceItem[] = [
   },
   {
     type: 'education',
-    title: 'AI/ML & Quantum Computing',
+    title: 'AI & Quantum Computing',
     organization: 'IBM Training & Self-Study',
-    period: '2023 – Present',
+    period: '2025 – Present',
     description:
       'Completed IBM Watson Studio and IBM AutoAI courses. Built a Quantum Random Number Generator using IBM Quantum computers and a Loan Risk Predictor using AutoAI with 77% accuracy. Continuously expanding knowledge in AI/ML systems.',
     skills: ['IBM Watson', 'IBM Quantum', 'Machine Learning', 'Python', 'SnapML'],
     icon: 'fas fa-brain',
   },
+  
   {
     type: 'education',
-    title: 'Information Technology',
-    organization: 'Skills International',
-    period: '2021 – 2023',
+    title: 'Computer Science',
+    organization: 'University of the People',
+    period: '2025 – Present',
     description:
-      'Studied core IT fundamentals including networking, system administration, cloud computing, and software development. Built foundational knowledge in cybersecurity, web technologies, and database management.',
+      'Studying core IT fundamentals including networking, system administration, cloud computing, and software development. Built foundational knowledge in cybersecurity, web technologies, and database management.',
     skills: ['Networking', 'Cloud Computing', 'Cybersecurity', 'Web Dev', 'Databases'],
     icon: 'fas fa-graduation-cap',
   },
