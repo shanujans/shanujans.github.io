@@ -6,7 +6,7 @@ const WORKER_URL = 'https://gemini-proxy.shanujansh.workers.dev';
 const SYSTEM_CONTEXT = `You are Shanujan's portfolio AI assistant. Your name is "ARIA".
 
 About Shanujan Suresh:
-- IT professional transitioning into AI/ML, based in Sri Lanka
+- IT professional transitioning into AI, based in Sri Lanka
 - Skills: Python, IT Support, System Administration, Cloud Platforms, Cybersecurity, Quantum Computing, Blockchain, Web Development, Telegram Bots
 - Projects:
   * Quantum Random Number Generator (IBM Quantum computers, cryptography)
@@ -33,22 +33,40 @@ const SUGGESTED = [
 ];
 
 const AIChatBot: React.FC = () => {
-  const [isOpen, setIsOpen]     = useState(false);
-  const [messages, setMessages] = useState<ChatMessage[]>([
+  const [isOpen, setIsOpen]       = useState(false);
+  const [messages, setMessages]   = useState<ChatMessage[]>([
     { role: 'assistant', content: "Hi! I'm **ARIA** 👋 — Shanujan's portfolio assistant.\nAsk me anything about his skills, projects, or how to get in touch!" },
   ]);
-  const [input, setInput]       = useState('');
+  const [input, setInput]         = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [hasUnread, setHasUnread] = useState(false);
-  const [error, setError]       = useState('');
+  const [error, setError]         = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef       = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (isOpen) { setHasUnread(false); setTimeout(() => inputRef.current?.focus(), 150); }
+    if (isOpen) {
+      setHasUnread(false);
+      setTimeout(() => inputRef.current?.focus(), 150);
+    }
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isOpen]);
 
+  // ── Helpers ──────────────────────────────────────────────
+  const escapeHtml = (text: string): string =>
+    text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+
+  const renderMessage = (content: string) =>
+    escapeHtml(content)
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\n/g, '<br/>');
+
+  // ── Send message ─────────────────────────────────────────
   const sendMessage = async (text: string) => {
     if (!text.trim() || isLoading) return;
     setError('');
@@ -59,13 +77,11 @@ const AIChatBot: React.FC = () => {
     setIsLoading(true);
 
     try {
-      // Build conversation history for Gemini
       const contents = [...messages, userMsg].map(m => ({
         role: m.role === 'assistant' ? 'model' : 'user',
         parts: [{ text: m.content }],
       }));
 
-      // Call Cloudflare Worker proxy — no API key in browser
       const res = await fetch(WORKER_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -78,7 +94,7 @@ const AIChatBot: React.FC = () => {
 
       if (!res.ok) {
         const errText = await res.text().catch(() => 'Request failed');
-        throw new Error(`Error ${res.status}: ${errText}`);
+        throw new Error('Error ' + res.status + ': ' + errText);
       }
 
       const data = await res.json();
@@ -87,46 +103,19 @@ const AIChatBot: React.FC = () => {
 
       setMessages(prev => [...prev, { role: 'assistant', content: reply }]);
       if (!isOpen) setHasUnread(true);
-    } catch (err: unknown) {
-      let msg= 'Unknown error';
-      if (err instanceof Error) {
-        msg = err.message;
-      } else if (typeof err === 'string') {
-        msg = err;
-      } else {
-        msg = JSON.stringify(err);
-      }
-      setError(`⚠️ ${msg}`);
-     }
-      // Friendly message if Worker URL not configured yet
-      const isMisconfigured = WORKER_URL.includes('YOUR_WORKER_NAME');
-      setError(isMisconfigured
-        ? '⚙️ Worker URL not configured yet. See worker/gemini-proxy.js setup guide.'
-        : `⚠️ ${msg}`
-      );
+
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : JSON.stringify(err);
+      setError('⚠️ ' + msg);
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Safely escape HTML before applying minimal markdown formatting
-  const escapeHtml = (text: string): string =>
-    text
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
-
-  // Render simple markdown bold + newlines on escaped text
-  const renderMessage = (content: string) =>
-    escapeHtml(content)
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\n/g, '<br/>');
-
+  // ── Render ───────────────────────────────────────────────
   return (
     <>
-      {/* ── Chat window ───────────────────────────────────── */}
+      {/* Chat window */}
       <div
         className="fixed bottom-20 right-6 z-50 flex flex-col rounded-2xl overflow-hidden border border-white/10"
         style={{
@@ -182,7 +171,7 @@ const AIChatBot: React.FC = () => {
               <div className="w-6 h-6 rounded-full bg-[#00ff9d]/15 border border-[#00ff9d]/25 flex items-center justify-center mr-2 flex-shrink-0 text-xs">🤖</div>
               <div className="px-4 py-3 rounded-xl rounded-bl-sm bg-white/5 border border-white/8">
                 <div className="flex gap-1 items-center">
-                  {[0,1,2].map(i => (
+                  {[0, 1, 2].map(i => (
                     <span key={i} className="w-1.5 h-1.5 rounded-full bg-[#00ff9d]"
                       style={{ animation: `bounce 1s ease-in-out ${i * 0.15}s infinite` }} />
                   ))}
@@ -235,7 +224,7 @@ const AIChatBot: React.FC = () => {
         </div>
       </div>
 
-      {/* ── FAB ───────────────────────────────────────────── */}
+      {/* FAB */}
       <button
         onClick={() => setIsOpen(s => !s)}
         className="fixed bottom-6 right-20 z-50 w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 hover:scale-110"
