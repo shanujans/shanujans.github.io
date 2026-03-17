@@ -28,6 +28,23 @@ function getDevice(): string {
   return 'Desktop';
 }
 
+function generateSessionId(): string {
+  const cryptoObj = globalThis.crypto || (window as any).crypto;
+  if (cryptoObj && typeof cryptoObj.getRandomValues === 'function') {
+    const bytes = new Uint8Array(16);
+    cryptoObj.getRandomValues(bytes);
+    let binary = '';
+    for (let i = 0; i < bytes.length; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return btoa(binary)
+      .replace(/\+/g, '-')
+      .replace(/\//g, '_')
+      .replace(/=+$/g, '');
+  }
+  return Math.random().toString(36).slice(2);
+}
+
 async function getCanvas(): Promise<string> {
   try {
     const c = document.createElement('canvas');
@@ -87,8 +104,7 @@ const VisitorTracker: React.FC = () => {
     if (sent.current) return;
     sent.current = true;
 
-    const sessionId = sessionStorage.getItem('sid') ||
-      Math.random().toString(36).slice(2);
+    const sessionId = sessionStorage.getItem('sid') || generateSessionId();
     sessionStorage.setItem('sid', sessionId);
 
     const ua = navigator.userAgent;
