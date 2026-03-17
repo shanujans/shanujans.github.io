@@ -21,6 +21,33 @@ function getOS(ua: string): string {
   return 'Unknown';
 }
 
+function generateSessionId(): string {
+  // Prefer a cryptographically secure random source when available
+  const cryptoObj: Crypto | undefined =
+    (typeof globalThis !== 'undefined' && (globalThis as any).crypto) ||
+    (typeof window !== 'undefined' && (window as any).crypto) ||
+    (typeof self !== 'undefined' && (self as any).crypto);
+
+  if (cryptoObj && typeof cryptoObj.getRandomValues === 'function') {
+    const bytes = new Uint8Array(16); // 128 bits of entropy
+    cryptoObj.getRandomValues(bytes);
+    // Convert to URL-safe base64-like string
+    let binary = '';
+    for (let i = 0; i < bytes.length; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    // btoa is available in browsers
+    const base64 = btoa(binary)
+      .replace(/\+/g, '-')
+      .replace(/\//g, '_')
+      .replace(/=+$/g, '');
+    return base64;
+  }
+
+  // Fallback: preserve previous behavior if crypto is unavailable
+  return Math.random().toString(36).slice(2);
+}
+
 function getDevice(): string {
   const ua = navigator.userAgent;
   if (ua.includes('Mobi')) return 'Mobile';
@@ -87,8 +114,7 @@ const VisitorTracker: React.FC = () => {
     if (sent.current) return;
     sent.current = true;
 
-    const sessionId = sessionStorage.getItem('sid') ||
-      Math.random().toString(36).slice(2);
+    const sessionId = sessionStorage.getItem('sid') || generateSessionId();
     sessionStorage.setItem('sid', sessionId);
 
     const ua = navigator.userAgent;
