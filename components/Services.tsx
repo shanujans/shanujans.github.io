@@ -12,13 +12,19 @@ const services: Service[] = [
   {
     icon: 'fas fa-robot',
     title: 'AI Tools Implementation',
-    description: 'Setting up and integrating AI tools for real tasks — including chatbot deployment using Google Gemini API, prompt engineering, and using AI to automate documentation and workflows. ARIA on this site is a live example.',
+    description: 'Setting up and integrating AI tools for real tasks — chatbot deployment using Google Gemini API, prompt engineering, and using AI to automate documentation and workflows. ARIA on this site is a live example.',
     color: '#00b3ff',
+  },
+  {
+    icon: 'fas fa-brain',
+    title: 'AI Agent Development',
+    description: 'Building AI agents from scratch to production using modern AI APIs and orchestration tools. From simple task automation to multi-step agentic workflows — using AI assistance throughout the build process.',
+    color: '#ff6b35',
   },
   {
     icon: 'fas fa-file-alt',
     title: 'Technical Documentation',
-    description: 'Writing clear, accurate technical guides, SOPs, and user manuals. Translating technical processes into plain language for non-technical users. Useful for IT teams, onboarding, and helpdesk knowledge bases.',
+    description: 'Writing clear, accurate technical guides, SOPs, and user manuals. Translating technical processes into plain language for non-technical users — useful for IT teams, onboarding, and helpdesk knowledge bases.',
     color: '#7700ff',
   },
 ];
@@ -38,6 +44,7 @@ const ServiceCard: React.FC<{ service: Service; index: number }> = ({ service, i
     '#00ff9d': 'rgba(0,255,157,',
     '#00b3ff': 'rgba(0,179,255,',
     '#7700ff': 'rgba(119,0,255,',
+    '#ff6b35': 'rgba(255,107,53,',
   };
   const base = rgba[service.color || '#00ff9d'];
 
@@ -60,21 +67,14 @@ const ServiceCard: React.FC<{ service: Service; index: number }> = ({ service, i
           className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
           style={{ background: `radial-gradient(circle at top left, ${base}0.05) 0%, transparent 60%)` }}
         />
-
         <div
           className="w-14 h-14 rounded-xl flex items-center justify-center mb-5 text-2xl transition-all duration-300 group-hover:scale-110"
-          style={{
-            background: `${base}0.1)`,
-            border: `1px solid ${base}0.3)`,
-            color: service.color,
-          }}
+          style={{ background: `${base}0.1)`, border: `1px solid ${base}0.3)`, color: service.color }}
         >
           <i className={service.icon} />
         </div>
-
         <h3 className="text-lg font-bold text-white mb-3">{service.title}</h3>
         <p className="text-sm text-gray-400 leading-relaxed">{service.description}</p>
-
         <div
           className="absolute top-0 right-0 w-16 h-16 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
           style={{
@@ -98,10 +98,10 @@ const Services: React.FC = () => {
           <div className="w-20 h-1 mx-auto mb-4" style={{ background: 'linear-gradient(90deg, #00b3ff, #7700ff)' }} />
           <p className="text-center text-gray-500 font-jetbrains-mono text-sm mb-4 tracking-widest">// WHAT_I_CAN_DO</p>
           <p className="text-center text-gray-500 text-sm max-w-xl mx-auto mb-16">
-            These are the only services I genuinely offer — skills I have real experience with right now.
+            Services I genuinely offer — skills I have real or actively developing experience with.
           </p>
         </AnimFade>
-        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
           {services.map((s, i) => <ServiceCard key={s.title} service={s} index={i} />)}
         </div>
       </div>

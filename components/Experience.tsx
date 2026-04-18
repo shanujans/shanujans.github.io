@@ -9,7 +9,7 @@ const experience: ExperienceItem[] = [
     organization: 'Pravin Construct Works',
     period: '2020 – Present',
     description:
-      'Sole IT person for a small construction company. Responsible for day-to-day technical support including setting up and maintaining 1–2 office PCs, troubleshooting hardware and software issues, managing MS Office documents, handling email and printer issues, and providing basic network connectivity support. Also handled company documentation, data entry, and general office administration.',
+      'Sole IT person for a small construction company. Day-to-day technical support including setting up and maintaining office PCs, troubleshooting hardware and software issues, managing MS Office documents, email and printer support, and basic network connectivity. Also handled company documentation, data entry, and general office administration.',
     skills: ['IT Support', 'Hardware Troubleshooting', 'MS Office', 'Email Systems', 'Networking Basics', 'Printers & Peripherals', 'Documentation'],
     icon: 'fas fa-headset',
   },
@@ -19,19 +19,29 @@ const experience: ExperienceItem[] = [
     organization: 'Self-Directed Learning',
     period: '2023 – Present',
     description:
-      'Independently exploring AI tools and building personal projects to grow technical skills. Deployed ARIA — a live AI chatbot using Google Gemini API and Cloudflare Workers on my portfolio site. Built several learning projects using AI assistance including a Quantum Random Number Generator (IBM API), a Loan Risk Predictor (IBM AutoAI), and Telegram bots. All projects are learning exercises and are honestly described as such.',
-    skills: ['Google Gemini API', 'Cloudflare Workers', 'React', 'Git & GitHub', 'IBM Watson', 'AI Tools', 'Self-Learning'],
+      'Independently exploring AI tools and building personal projects to grow technical skills. Deployed ARIA — a live AI chatbot using Google Gemini API and Cloudflare Workers. Built several learning projects using AI assistance including a Quantum Random Number Generator, Loan Risk Predictor, and Telegram bots. All projects are learning exercises honestly described as such.',
+    skills: ['Google Gemini API', 'Cloudflare Workers', 'React', 'Git & GitHub', 'IBM Watson', 'AI Tools'],
     icon: 'fas fa-robot',
   },
   {
     type: 'education',
-    title: 'Information Technology',
-    organization: 'Skills International',
-    period: '2021 – 2023',
+    title: 'BSc Computer Science (In Progress)',
+    organization: 'University of the People',
+    period: '2025 – Present',
     description:
-      'Completed an IT program covering networking fundamentals, system administration basics, web technologies, and database concepts. Also working there part-time providing IT support and student administration assistance.',
-    skills: ['Networking', 'System Administration', 'Web Technologies', 'Databases', 'IT Fundamentals'],
+      'Currently studying Bachelor of Science in Computer Science fully online. Covering core CS fundamentals including programming, data structures, algorithms, and software engineering principles.',
+    skills: ['Computer Science', 'Programming Fundamentals', 'Data Structures', 'Algorithms', 'Online Learning'],
     icon: 'fas fa-graduation-cap',
+  },
+  {
+    type: 'education',
+    title: 'Diploma in Information Technology',
+    organization: 'ESoft Metro Campus',
+    period: '2024 – 2025',
+    description:
+      'Completed an IT diploma covering networking fundamentals, system administration basics, web technologies, and database concepts. Final year project: Student Management System — a full C# Windows Forms desktop application with SQL Server backend built for real institutional use.',
+    skills: ['Networking', 'System Administration', 'Web Technologies', 'SQL Server', 'C#', 'IT Fundamentals'],
+    icon: 'fas fa-school',
   },
   {
     type: 'education',
@@ -39,9 +49,19 @@ const experience: ExperienceItem[] = [
     organization: 'IBM Training (Online)',
     period: '2023 – 2024',
     description:
-      'Completed IBM Watson Studio and IBM AutoAI learning courses. Built a Loan Risk Predictor as a hands-on learning project using AutoAI. Also explored IBM Quantum computing through a guided tutorial. These are learning certifications — not professional qualifications.',
-    skills: ['IBM Watson', 'IBM AutoAI', 'IBM Quantum (Beginner)', 'Cloud Basics'],
+      'Completed IBM Watson Studio and IBM AutoAI learning courses. Built a Loan Risk Predictor using AutoAI and explored IBM Quantum computing via guided tutorial. Learning certifications — not professional qualifications.',
+    skills: ['IBM Watson', 'IBM AutoAI', 'IBM Quantum (Beginner)', 'IBM Cloud'],
     icon: 'fas fa-certificate',
+  },
+  {
+    type: 'education',
+    title: 'Cisco & Google Certifications',
+    organization: 'Cisco NetAcad & Google (Online)',
+    period: '2023 – 2024',
+    description:
+      'Completed Cisco Introduction to Networks (ITN) and Google IT Support fundamentals. Covered core networking concepts, IP addressing, routing basics, and IT support best practices.',
+    skills: ['Cisco Networking', 'IP Addressing', 'Routing Basics', 'Google IT Support', 'Troubleshooting'],
+    icon: 'fas fa-network-wired',
   },
 ];
 
@@ -65,9 +85,7 @@ const TimelineItem: React.FC<{ item: ExperienceItem; index: number }> = ({ item,
     <AnimFade delay={index * 100}>
       <div className={`relative flex items-start gap-0 md:gap-8 mb-12 ${isLeft ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
         <div className={`flex-1 ${isLeft ? 'md:text-right md:pr-8' : 'md:text-left md:pl-8'} pl-12 md:pl-0`}>
-          <div
-            className={`p-6 rounded-lg border ${borderColor} bg-white/5 backdrop-blur-sm hover:-translate-y-1 transition-all duration-300 group`}
-          >
+          <div className={`p-6 rounded-lg border ${borderColor} bg-white/5 backdrop-blur-sm hover:-translate-y-1 transition-all duration-300 group`}>
             <div className={`flex items-center gap-3 mb-3 ${isLeft ? 'md:justify-end' : 'md:justify-start'} flex-wrap`}>
               <span className={`text-xs font-jetbrains-mono px-2 py-1 rounded ${badgeBg}`}>
                 {item.type === 'work' ? 'WORK' : 'EDUCATION'}

@@ -5,47 +5,48 @@ import type { Project } from '../types';
 const projects: Project[] = [
   {
     title: 'ARIA — Live AI Chatbot (Portfolio)',
-    description: 'The AI assistant on this site — my most genuine technical achievement. Built using Google Gemini API (now Groq/Llama), Cloudflare Workers for secure API proxying, and React. Handles CORS, rate limiting, and API key security. This is real working code I deployed and maintain.',
+    description: 'The AI assistant on this site — my most genuine technical achievement. Built using Google Gemini API, Cloudflare Workers for secure API proxying, and React. Handles CORS, rate limiting, and API key security. Real working code I deployed and maintain.',
     tags: ['Google Gemini API', 'Cloudflare Workers', 'React', 'TypeScript', 'API Integration'],
     githubUrl: 'https://github.com/shanujans/shanujans.github.io',
     featured: true,
   },
   {
     title: 'Loan Risk Predictor — PyPI Package (Learning Project)',
-    description: 'A learning project where I packaged a Kaggle ML notebook into a Python package published on PyPI. Built with AI assistance to understand CI/CD via GitHub Actions. Decision Tree model with 87.5% accuracy. This was a learning exercise — not a production tool.',
+    description: 'A learning project where I packaged a Kaggle ML notebook into a Python package published on PyPI. Built with AI assistance to understand CI/CD via GitHub Actions. Decision Tree model with 87.5% accuracy. A learning exercise — not a production tool.',
     tags: ['Python', 'Machine Learning', 'PyPI', 'scikit-learn', 'GitHub Actions', 'Learning Project'],
     githubUrl: 'https://github.com/shanujans/loan-risk-prediction',
     featured: true,
   },
   {
+    title: 'Student Management System — C# (ESoft Final Year Project)',
+    description: 'Final year project for ESoft Metro Campus diploma. A C# Windows Forms desktop application with SQL Server backend for managing student registrations and records. Built independently as assessed coursework — my strongest traditional development project.',
+    tags: ['C#', '.NET', 'SQL Server', 'Windows Forms', 'Final Year Project'],
+    githubUrl: 'https://github.com/shanujans/Skills-International-Application',
+    featured: true,
+  },
+  {
     title: 'Quantum Random Number Generator (Learning Project)',
-    description: 'A guided learning project using IBM Quantum API to generate random numbers from qubit measurements. Followed IBM tutorials and used AI assistance throughout. Built to understand quantum concepts — not a production cryptography tool.',
+    description: 'A guided learning project using IBM Quantum API to generate random numbers from qubit measurements. Followed IBM tutorials with AI assistance. Built to understand quantum concepts — not a production cryptography tool.',
     tags: ['IBM Quantum', 'Python', 'API', 'Learning Project'],
     githubUrl: 'https://github.com/shanujans/Quantum-Random-Number-Generator',
   },
   {
     title: 'Loan Risk Prediction — IBM AutoAI (Learning Project)',
-    description: 'Used IBM Watson Studio\'s AutoAI tool to build a loan risk classifier. Selected the best model (SnapML, 77% accuracy) through the AutoAI interface. This was a guided IBM learning course project — AutoAI does the ML work automatically.',
+    description: 'Used IBM Watson Studio\'s AutoAI tool to build a loan risk classifier through the guided interface. AutoAI handles the ML pipeline automatically — selected SnapML model with 77% accuracy. IBM learning course project.',
     tags: ['IBM Watson', 'AutoAI', 'SnapML', 'No-Code ML', 'Learning Project'],
     githubUrl: 'https://github.com/shanujans/AutoAI-Loan-Risk-Predictor',
   },
   {
     title: 'Telegram File Uploader Bot (AI-Assisted)',
-    description: 'A Telegram bot that downloads and uploads large files, built with significant AI assistance. Includes VirusTotal API integration for basic scanning. This helped me understand async Python and API concepts — though I could not write this independently from scratch.',
+    description: 'A Telegram bot that downloads and uploads large files with VirusTotal API scanning, built with significant AI assistance. Helped me understand async Python and API concepts — I could not write this independently from scratch.',
     tags: ['Python', 'Telegram API', 'AsyncIO', 'VirusTotal API', 'AI-Assisted'],
     githubUrl: 'https://github.com/shanujans/telegram-uploader',
   },
   {
     title: 'Academic Ally Telegram Bot (AI-Assisted)',
-    description: 'A Telegram bot that checks documents for basic plagiarism patterns using NLP libraries. Built with AI assistance as a learning project. Helped me understand bot development and text processing concepts.',
+    description: 'A Telegram bot checking documents for plagiarism patterns using NLP libraries, built with AI assistance. Helped me understand bot development and text processing concepts.',
     tags: ['Python', 'NLP', 'Telegram', 'AI-Assisted', 'Learning Project'],
     githubUrl: 'https://github.com/shanujans/Academic-Ally',
-  },
-  {
-    title: 'Student Management System — C# (Learning Project)',
-    description: 'A Windows Forms desktop application for managing student records at Skills International. Built during my studies with guidance. Uses SQL Server for data storage. My first real desktop application project.',
-    tags: ['C#', '.NET', 'SQL Server', 'Windows Forms', 'Learning Project'],
-    githubUrl: 'https://github.com/shanujans/Skills-International-Application',
   },
   {
     title: 'Student Management System — Java (Learning Project)',
@@ -55,7 +56,7 @@ const projects: Project[] = [
   },
 ];
 
-const allTags = ['All', 'Featured', 'AI Tools', 'Python', 'Learning Project', 'API Integration'];
+const allTags = ['All', 'Featured', 'AI Tools', 'Python', 'Learning Project', 'Final Year Project'];
 
 const AnimFade: React.FC<{ children: React.ReactNode; delay?: number }> = ({ children, delay = 0 }) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -85,7 +86,8 @@ const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, i
     if (cardRef.current) cardRef.current.style.transform = '';
   };
 
-  const isLearning = project.tags.includes('Learning Project') || project.tags.includes('AI-Assisted');
+  const isFinal = project.tags.includes('Final Year Project');
+  const isLearning = (project.tags.includes('Learning Project') || project.tags.includes('AI-Assisted')) && !isFinal;
 
   return (
     <AnimFade delay={index * 70}>
@@ -101,6 +103,11 @@ const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, i
             ★ FEATURED
           </div>
         )}
+        {isFinal && (
+          <div className="absolute top-4 right-4 text-xs font-jetbrains-mono px-2 py-0.5 rounded bg-[#ff6b35]/10 text-[#ff6b35] border border-[#ff6b35]/30">
+            🎓 FINAL PROJECT
+          </div>
+        )}
         {isLearning && !project.featured && (
           <div className="absolute top-4 right-4 text-xs font-jetbrains-mono px-2 py-0.5 rounded bg-[#00b3ff]/10 text-[#00b3ff] border border-[#00b3ff]/30">
             LEARNING
@@ -108,7 +115,7 @@ const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, i
         )}
 
         <div className="flex-grow">
-          <div className="flex items-start gap-3 mb-3 pr-20">
+          <div className="flex items-start gap-3 mb-3 pr-24">
             <div className="w-8 h-8 rounded-lg bg-[#00ff9d]/10 border border-[#00ff9d]/20 flex items-center justify-center flex-shrink-0">
               <i className="fas fa-folder-open text-[#00ff9d] text-xs" />
             </div>
@@ -125,7 +132,9 @@ const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, i
               <span
                 key={tag}
                 className={`text-xs font-jetbrains-mono px-2 py-0.5 rounded border ${
-                  tag === 'Learning Project' || tag === 'AI-Assisted'
+                  tag === 'Final Year Project'
+                    ? 'bg-[#ff6b35]/10 text-[#ff6b35] border-[#ff6b35]/20'
+                    : tag === 'Learning Project' || tag === 'AI-Assisted'
                     ? 'bg-[#00b3ff]/10 text-[#00b3ff] border-[#00b3ff]/20'
                     : 'bg-[#00ff9d]/10 text-[#00ff9d] border-[#00ff9d]/20'
                 }`}
@@ -160,6 +169,7 @@ const Projects: React.FC = () => {
 
   const filtered = activeFilter === 'All' ? projects
     : activeFilter === 'Featured' ? projects.filter(p => p.featured)
+    : activeFilter === 'Final Year Project' ? projects.filter(p => p.tags.includes('Final Year Project'))
     : activeFilter === 'AI Tools' ? projects.filter(p => p.tags.some(t => t.includes('API') || t.includes('AI') || t.includes('Gemini') || t.includes('Cloudflare')))
     : projects.filter(p => p.tags.some(t => t.toLowerCase().includes(activeFilter.toLowerCase())));
 
@@ -171,8 +181,9 @@ const Projects: React.FC = () => {
           <div className="w-20 h-1 mx-auto mb-4" style={{ background: 'linear-gradient(90deg, #00ff9d, #7700ff)' }} />
           <p className="text-center text-gray-500 font-jetbrains-mono text-sm mb-2 tracking-widest">// PROJECTS</p>
           <p className="text-center text-gray-500 text-sm max-w-xl mx-auto mb-8">
-            Honest labels included — <span className="text-[#00ff9d]">Featured</span> = genuinely built by me,&nbsp;
-            <span className="text-[#00b3ff]">Learning Project</span> = built with AI assistance or guidance.
+            Honest labels — <span className="text-[#00ff9d]">Featured</span> = genuinely built by me &nbsp;·&nbsp;
+            <span className="text-[#ff6b35]">Final Project</span> = assessed coursework &nbsp;·&nbsp;
+            <span className="text-[#00b3ff]">Learning</span> = built with AI guidance.
           </p>
         </AnimFade>
 
@@ -202,12 +213,7 @@ const Projects: React.FC = () => {
 
         <AnimFade delay={200}>
           <div className="text-center mt-12">
-            <a
-              href="https://github.com/shanujans"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-secondary inline-flex items-center gap-2"
-            >
+            <a href="https://github.com/shanujans" target="_blank" rel="noopener noreferrer" className="btn-secondary inline-flex items-center gap-2">
               <i className="fab fa-github" />
               View All on GitHub
             </a>
