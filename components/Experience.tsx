@@ -5,44 +5,43 @@ import type { ExperienceItem } from '../types';
 const experience: ExperienceItem[] = [
   {
     type: 'work',
-    title: 'IT Support Technician',
+    title: 'IT Support — Office Administrator',
     organization: 'Pravin Construct Works',
     period: '2020 – Present',
     description:
-      'Providing technical support and system adminstration and cloud platforms. Proven ability to troubleshoot complex issues, automate tasks, and deliver excellent customer service.',
-    skills: [ 'MS Office', 'System Admin', 'Technical Support'],
-    icon: 'fas fa-server',
+      'Sole IT person for a small construction company. Responsible for day-to-day technical support including setting up and maintaining 1–2 office PCs, troubleshooting hardware and software issues, managing MS Office documents, handling email and printer issues, and providing basic network connectivity support. Also handled company documentation, data entry, and general office administration.',
+    skills: ['IT Support', 'Hardware Troubleshooting', 'MS Office', 'Email Systems', 'Networking Basics', 'Printers & Peripherals', 'Documentation'],
+    icon: 'fas fa-headset',
   },
   {
     type: 'work',
-    title: 'Python Developer & Bot Engineer',
-    organization: 'Freelance',
-    period: '2025 – Present',
+    title: 'AI Tools & Portfolio Projects',
+    organization: 'Self-Directed Learning',
+    period: '2023 – Present',
     description:
-      'Developed multiple Telegram bots including an asynchronous file uploader with VirusTotal API integration and an Academic Ally bot for plagiarism detection. Specialized in async Python, API integrations, and automation workflows.',
-    skills: ['Python', 'AsyncIO', 'Telegram API', 'VirusTotal API', 'NLP'],
+      'Independently exploring AI tools and building personal projects to grow technical skills. Deployed ARIA — a live AI chatbot using Google Gemini API and Cloudflare Workers on my portfolio site. Built several learning projects using AI assistance including a Quantum Random Number Generator (IBM API), a Loan Risk Predictor (IBM AutoAI), and Telegram bots. All projects are learning exercises and are honestly described as such.',
+    skills: ['Google Gemini API', 'Cloudflare Workers', 'React', 'Git & GitHub', 'IBM Watson', 'AI Tools', 'Self-Learning'],
     icon: 'fas fa-robot',
   },
   {
     type: 'education',
-    title: 'AI & Quantum Computing',
-    organization: 'IBM Training & Self-Study',
-    period: '2025 – Present',
+    title: 'Information Technology',
+    organization: 'Skills International',
+    period: '2021 – 2023',
     description:
-      'Completed IBM Watson Studio and IBM AutoAI courses. Built a Quantum Random Number Generator using IBM Quantum computers and a Loan Risk Predictor using AutoAI with 77% accuracy. Continuously expanding knowledge in AI/ML systems.',
-    skills: ['IBM Watson', 'IBM Quantum', 'Machine Learning', 'Python', 'SnapML'],
-    icon: 'fas fa-brain',
+      'Completed an IT program covering networking fundamentals, system administration basics, web technologies, and database concepts. Also working there part-time providing IT support and student administration assistance.',
+    skills: ['Networking', 'System Administration', 'Web Technologies', 'Databases', 'IT Fundamentals'],
+    icon: 'fas fa-graduation-cap',
   },
-  
   {
     type: 'education',
-    title: 'Computer Science',
-    organization: 'University of the People',
-    period: '2025 – Present',
+    title: 'IBM AI & Cloud Certifications',
+    organization: 'IBM Training (Online)',
+    period: '2023 – 2024',
     description:
-      'Studying core IT fundamentals including networking, system administration, cloud computing, and software development. Built foundational knowledge in cybersecurity, web technologies, and database management.',
-    skills: ['Networking', 'Cloud Computing', 'Cybersecurity', 'Web Dev', 'Databases'],
-    icon: 'fas fa-graduation-cap',
+      'Completed IBM Watson Studio and IBM AutoAI learning courses. Built a Loan Risk Predictor as a hands-on learning project using AutoAI. Also explored IBM Quantum computing through a guided tutorial. These are learning certifications — not professional qualifications.',
+    skills: ['IBM Watson', 'IBM AutoAI', 'IBM Quantum (Beginner)', 'Cloud Basics'],
+    icon: 'fas fa-certificate',
   },
 ];
 
@@ -65,11 +64,9 @@ const TimelineItem: React.FC<{ item: ExperienceItem; index: number }> = ({ item,
   return (
     <AnimFade delay={index * 100}>
       <div className={`relative flex items-start gap-0 md:gap-8 mb-12 ${isLeft ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
-        {/* Content */}
         <div className={`flex-1 ${isLeft ? 'md:text-right md:pr-8' : 'md:text-left md:pl-8'} pl-12 md:pl-0`}>
           <div
-            className={`p-6 rounded-lg border ${borderColor} bg-white/5 backdrop-blur-sm hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group`}
-            style={{ '--hover-shadow': `0 20px 40px rgba(${item.type === 'work' ? '0,255,157' : '119,0,255'},0.1)` } as React.CSSProperties}
+            className={`p-6 rounded-lg border ${borderColor} bg-white/5 backdrop-blur-sm hover:-translate-y-1 transition-all duration-300 group`}
           >
             <div className={`flex items-center gap-3 mb-3 ${isLeft ? 'md:justify-end' : 'md:justify-start'} flex-wrap`}>
               <span className={`text-xs font-jetbrains-mono px-2 py-1 rounded ${badgeBg}`}>
@@ -90,7 +87,6 @@ const TimelineItem: React.FC<{ item: ExperienceItem; index: number }> = ({ item,
           </div>
         </div>
 
-        {/* Timeline dot - center on md */}
         <div className="absolute left-0 md:left-1/2 md:-translate-x-1/2 top-6 flex flex-col items-center z-10">
           <div
             className="w-10 h-10 rounded-full flex items-center justify-center border-2"
@@ -100,7 +96,6 @@ const TimelineItem: React.FC<{ item: ExperienceItem; index: number }> = ({ item,
           </div>
         </div>
 
-        {/* Right spacer for alternating layout */}
         <div className="hidden md:block flex-1" />
       </div>
     </AnimFade>
@@ -118,7 +113,6 @@ const Experience: React.FC = () => {
         </AnimFade>
 
         <div className="relative max-w-4xl mx-auto">
-          {/* Center line */}
           <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-[#00ff9d]/20 to-transparent" />
           {experience.map((item, i) => (
             <TimelineItem key={i} item={item} index={i} />

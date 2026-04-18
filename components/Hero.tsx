@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 const roles = [
-  'IT Professional',
-  'Python Junior Developer',
-  'Cybersecurity Enthusiast',
-  'AI/ML Enthusiast',
-  'Quantum Computing Explorer',
+  'IT Support Specialist',
+  'AI Tools Enthusiast',
+  'Service Desk Analyst',
+  'QA Manual Tester',
+  'Junior SRE Intern',
 ];
 
 const Hero: React.FC = () => {
@@ -15,12 +15,10 @@ const Hero: React.FC = () => {
   const [isPaused, setIsPaused] = useState(false);
   const heroRef = useRef<HTMLDivElement>(null);
 
-  // Typewriter
   useEffect(() => {
     if (isPaused) return;
     const current = roles[roleIndex];
     let timeout: ReturnType<typeof setTimeout>;
-
     if (!isDeleting) {
       if (displayed.length < current.length) {
         timeout = setTimeout(() => setDisplayed(current.slice(0, displayed.length + 1)), 80);
@@ -45,10 +43,10 @@ const Hero: React.FC = () => {
   };
 
   const stats = [
-    { value: '7+', label: 'Projects' },
-    { value: '4+', label: 'Years Exp.' },
-    { value: '4+', label: 'Tech Stacks' },
-    { value: '∞', label: 'Curiosity' },
+    { value: '4+', label: 'Years IT Support' },
+    { value: '8+', label: 'Projects Built' },
+    { value: '1', label: 'Live AI Chatbot' },
+    { value: '🇱🇰', label: 'Based in Sri Lanka' },
   ];
 
   return (
@@ -61,22 +59,19 @@ const Hero: React.FC = () => {
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="glow-orb w-[32rem] h-[32rem] bg-[#00ff9d] top-1/3 left-1/4 opacity-20" style={{ animation: 'orbFloat1 8s ease-in-out infinite' }} />
         <div className="glow-orb w-[28rem] h-[28rem] bg-[#7700ff] bottom-1/4 right-1/4 opacity-20" style={{ animation: 'orbFloat2 10s ease-in-out infinite' }} />
-        <div className="glow-orb w-64 h-64 bg-[#00b3ff] top-1/4 right-1/3 opacity-10" style={{ animation: 'orbFloat1 12s ease-in-out infinite reverse' }} />
         <div className="scanline" />
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-5xl mx-auto">
+
           {/* Badge */}
-          <div
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#00ff9d]/30 bg-[#00ff9d]/5 mb-6 hero-fade-in-up"
-            style={{ animationDelay: '0ms' }}
-          >
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#00ff9d]/30 bg-[#00ff9d]/5 mb-6 hero-fade-in-up" style={{ animationDelay: '0ms' }}>
             <span className="w-2 h-2 rounded-full bg-[#00ff9d] animate-pulse" />
-            <span className="font-jetbrains-mono text-[#00ff9d] text-xs tracking-widest">AVAILABLE FOR WORK</span>
+            <span className="font-jetbrains-mono text-[#00ff9d] text-xs tracking-widest">OPEN TO WORK — IT SUPPORT & AI TOOLS</span>
           </div>
 
-          {/* Name with glitch */}
+          {/* Name */}
           <h1
             className="text-5xl md:text-7xl lg:text-8xl font-bold mb-4 glitch-text hero-fade-in-up"
             data-text="Shanujan Suresh"
@@ -85,7 +80,7 @@ const Hero: React.FC = () => {
             Shanujan Suresh
           </h1>
 
-          {/* Typewriter role */}
+          {/* Typewriter */}
           <div className="h-12 flex items-center justify-center mb-6 hero-fade-in-up" style={{ animationDelay: '300ms' }}>
             <span className="font-jetbrains-mono text-xl md:text-2xl text-[#00b3ff]">
               {displayed}
@@ -93,11 +88,11 @@ const Hero: React.FC = () => {
             </span>
           </div>
 
-          <p
-            className="text-base md:text-lg text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed hero-fade-in-up"
-            style={{ animationDelay: '450ms' }}
-          >
-            Passionate IT professional transitioning into AI/ML, Cybersecurity, and Python automation. Building tomorrow's solutions today.
+          {/* Honest description */}
+          <p className="text-base md:text-lg text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed hero-fade-in-up" style={{ animationDelay: '450ms' }}>
+            IT Support professional with 4+ years of hands-on experience, now actively building skills in AI tools and automation.
+            I deployed a real AI chatbot using Gemini API — see ARIA in the bottom right corner.
+            Looking for IT Support, Service Desk, or AI Tools roles where I can grow and contribute.
           </p>
 
           <div className="flex flex-wrap justify-center gap-4 mb-16 hero-fade-in-up" style={{ animationDelay: '600ms' }}>
@@ -114,16 +109,10 @@ const Hero: React.FC = () => {
             </a>
           </div>
 
-          {/* Stats strip */}
-          <div
-            className="grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-2xl mx-auto hero-fade-in-up"
-            style={{ animationDelay: '750ms' }}
-          >
+          {/* Stats */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-2xl mx-auto hero-fade-in-up" style={{ animationDelay: '750ms' }}>
             {stats.map(s => (
-              <div
-                key={s.label}
-                className="p-4 rounded border border-white/10 bg-white/5 backdrop-blur-sm"
-              >
+              <div key={s.label} className="p-4 rounded border border-white/10 bg-white/5 backdrop-blur-sm">
                 <div className="text-3xl font-bold text-[#00ff9d] font-jetbrains-mono">{s.value}</div>
                 <div className="text-xs text-gray-500 mt-1 tracking-wider uppercase">{s.label}</div>
               </div>

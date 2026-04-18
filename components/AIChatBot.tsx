@@ -1,41 +1,68 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import type { ChatMessage } from '../types';
 
 const WORKER_URL = 'https://gemini-proxy.shanujansh.workers.dev';
 
-const SYSTEM_CONTEXT = `You are Shanujan's portfolio AI assistant. Your name is "ARIA".
+const SYSTEM_CONTEXT = `You are ARIA — the AI assistant on Shanujan Suresh's portfolio website.
 
-About Shanujan Suresh:
-- IT professional transitioning into AI, based in Sri Lanka
-- Skills: Python, IT Support, System Administration, Cloud Platforms, Cybersecurity, Quantum Computing, Blockchain, Web Development, Telegram Bots
-- Projects:
-  * Quantum Random Number Generator (IBM Quantum computers, cryptography)
-  * Loan Risk Predictor — PyPI package (Decision Tree, 87.5% accuracy, CI/CD, GitHub Actions)
-  * Loan Risk Prediction IBM AutoAI (Watson Studio, SnapML, 77% accuracy)
-  * Telegram File Uploader Bot (AsyncIO, VirusTotal API, user tiers)
-  * Academic Ally Telegram Bot (NLP, plagiarism detection)
-  * Student Management System C# (SQL Server, .NET, desktop app)
-  * Instagram Profile Tracker (Python, Tor, educational)
-  * Student Management System Java (JavaFX, OOP)
-- Contact: GitHub: shanujans | LinkedIn: shanujansuresh | Telegram: @Revmatrix | Instagram: shanujan_29
-- Email available via the Contact section copy button
-- Available for work and open to collaboration
+IMPORTANT: Be honest at all times. Never overclaim Shanujan's skills. If asked about something he doesn't know, say so clearly and positively redirect.
 
-Answer questions about Shanujan's skills, projects, experience, and how to contact him.
-Be concise (2-3 sentences max unless asked for detail). Be friendly and professional.
-If asked something unrelated to the portfolio, politely redirect.`;
+ABOUT SHANUJAN SURESH (honest profile):
+- IT Support professional from Sri Lanka with 4+ years of hands-on experience
+- His IT support was at a small construction company (Pravin Construct Works) — 1-2 PCs, basic troubleshooting, MS Office, email, printers, basic networking
+- His strongest emerging technical skill is AI tools — specifically Google Gemini API and Cloudflare Workers (this chatbot is proof)
+- Target roles: IT Support Specialist, Service Desk Analyst, AI Tools Specialist, QA Manual Tester, Junior SRE Intern
+
+HONEST SKILL LEVELS:
+- IT Support & Troubleshooting: ✅ Real experience — 4+ years
+- MS Office (Word, Excel, Outlook, Teams): ✅ Competent
+- Google Gemini API & AI Studio: ✅ Genuine skill — deployed this chatbot himself
+- Cloudflare Workers & API proxying: ✅ Deployed and working (you are proof)
+- Git & GitHub: ✅ Uses regularly
+- Basic Networking: ✅ Practical experience
+- Python: ⚠️ Beginner — needs AI assistance to write code
+- Linux: ⚠️ Beginner — basic commands only
+- Web Development (React): ⚠️ AI-assisted — cannot build independently
+- Cybersecurity: ❌ Interest only — no practical experience
+- Quantum Computing: ❌ Followed one IBM tutorial — not a real skill
+- Blockchain: ❌ No knowledge
+
+PROJECTS (honest descriptions):
+- ARIA Chatbot (this site): ✅ Real — Gemini API + Cloudflare Workers + React, fully deployed
+- Loan Risk Predictor PyPI package: Learning project with AI assistance — Decision Tree, 87.5% accuracy
+- IBM AutoAI Loan Risk: Guided IBM course project — AutoAI does the ML automatically, 77% accuracy
+- Quantum RNG: Followed IBM tutorial with AI help — learning exercise only
+- Telegram bots (File Uploader, Academic Ally): Built with significant AI assistance — learning projects
+- Student Management Systems (C#, Java): Course/study projects
+
+CONTACT:
+- Email: via Contact section copy button on this site
+- GitHub: github.com/shanujans
+- LinkedIn: linkedin.com/in/shanujansuresh
+- Telegram: @Revmatrix
+- Portfolio: shanujan.is-a.dev
+- Startup: revmatrixai.github.io
+
+RESPONSE RULES:
+1. Be warm, honest, and professional
+2. Never claim skills Shanujan doesn't have
+3. If asked "can you do X" where X is something he's learning — say he's actively learning it, not that he can do it
+4. Keep replies to 2-3 sentences unless more detail is asked for
+5. If asked about salary or rates — say to contact directly
+6. If asked something completely unrelated to the portfolio — politely redirect
+7. Highlight ARIA itself as his strongest AI tools proof point`;
 
 const SUGGESTED = [
-  'What are your top skills?',
-  'Tell me about your projects',
+  'What are your real skills?',
+  'Tell me about your IT experience',
   'Are you available for hire?',
-  'What tech stack do you use?',
+  'What is ARIA and how was it built?',
 ];
 
 const AIChatBot: React.FC = () => {
   const [isOpen, setIsOpen]       = useState(false);
   const [messages, setMessages]   = useState<ChatMessage[]>([
-    { role: 'assistant', content: "Hi! I'm **ARIA** 👋 — Shanujan's portfolio assistant.\nAsk me anything about his skills, projects, or how to get in touch!" },
+    { role: 'assistant', content: "Hi! I'm **ARIA** 👋 — Shanujan's portfolio assistant.\nAsk me anything about his skills, experience, or how to get in touch!" },
   ]);
   const [input, setInput]         = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -52,7 +79,6 @@ const AIChatBot: React.FC = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isOpen]);
 
-  // ── Helpers ──────────────────────────────────────────────
   const escapeHtml = (text: string): string =>
     text
       .replace(/&/g, '&amp;')
@@ -66,7 +92,6 @@ const AIChatBot: React.FC = () => {
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
       .replace(/\n/g, '<br/>');
 
-  // ── Send message ─────────────────────────────────────────
   const sendMessage = async (text: string) => {
     if (!text.trim() || isLoading) return;
     setError('');
@@ -112,7 +137,6 @@ const AIChatBot: React.FC = () => {
     }
   };
 
-  // ── Render ───────────────────────────────────────────────
   return (
     <>
       {/* Chat window */}
@@ -138,7 +162,7 @@ const AIChatBot: React.FC = () => {
               <div className="text-sm font-bold text-white font-jetbrains-mono">ARIA</div>
               <div className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#00ff9d] animate-pulse" />
-                <span className="text-[10px] text-gray-500 font-jetbrains-mono">Powered by Gemini • Secure Proxy</span>
+                <span className="text-[10px] text-gray-500 font-jetbrains-mono">Portfolio Assistant • Secure Proxy</span>
               </div>
             </div>
           </div>
@@ -165,7 +189,6 @@ const AIChatBot: React.FC = () => {
             </div>
           ))}
 
-          {/* Loading dots */}
           {isLoading && (
             <div className="flex justify-start">
               <div className="w-6 h-6 rounded-full bg-[#00ff9d]/15 border border-[#00ff9d]/25 flex items-center justify-center mr-2 flex-shrink-0 text-xs">🤖</div>
@@ -180,7 +203,6 @@ const AIChatBot: React.FC = () => {
             </div>
           )}
 
-          {/* Error banner */}
           {error && (
             <div className="px-3 py-2 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-jetbrains-mono">
               {error}
@@ -189,7 +211,6 @@ const AIChatBot: React.FC = () => {
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Suggested questions — only at start */}
         {messages.length <= 1 && !isLoading && (
           <div className="px-4 pb-2 flex flex-wrap gap-1.5">
             {SUGGESTED.map(q => (
@@ -201,7 +222,6 @@ const AIChatBot: React.FC = () => {
           </div>
         )}
 
-        {/* Input */}
         <div className="px-4 py-3 border-t border-white/10">
           <div className="flex gap-2">
             <input
