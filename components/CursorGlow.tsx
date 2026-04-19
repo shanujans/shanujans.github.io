@@ -3,65 +3,78 @@ import React, { useEffect, useRef } from 'react';
 const CursorGlow: React.FC = () => {
   const dotRef   = useRef<HTMLDivElement>(null);
   const trailRef = useRef<HTMLDivElement>(null);
-  const mouse    = useRef({ x: 0, y: 0 });
-  const trail    = useRef({ x: 0, y: 0 });
+  const mouse    = useRef({ x: -100, y: -100 });
+  const trail    = useRef({ x: -100, y: -100 });
 
   useEffect(() => {
-    const isTouch = window.matchMedia('(pointer: coarse)').matches;
-    if (isTouch) return;
+    if (window.matchMedia('(pointer: coarse)').matches) return;
 
-    // Move dot INSTANTLY — zero lag, no lerp, uses CSS transform directly
+    // Move dot pixel-perfectly with the mouse — no lerp, no RAF needed
     const onMove = (e: MouseEvent) => {
       mouse.current.x = e.clientX;
       mouse.current.y = e.clientY;
-
-      if (dotRef.current) {
-        dotRef.current.style.left = e.clientX - 6 + 'px';
-        dotRef.current.style.top  = e.clientY - 6 + 'px';
+      const d = dotRef.current;
+      if (d) {
+        d.style.left = (e.clientX - 5) + 'px';
+        d.style.top  = (e.clientY - 5) + 'px';
       }
     };
 
-    // Trail uses RAF with 0.55 lerp — fast but visually distinct from dot
+    // Trail — fast lerp 0.5 so it's visually a tiny bit behind
     let rafId: number;
-    const animate = () => {
-      const dx = mouse.current.x - trail.current.x;
-      const dy = mouse.current.y - trail.current.y;
-      trail.current.x += dx * 0.55;
-      trail.current.y += dy * 0.55;
-
-      if (trailRef.current) {
-        trailRef.current.style.left = trail.current.x - 18 + 'px';
-        trailRef.current.style.top  = trail.current.y - 18 + 'px';
+    const tick = () => {
+      trail.current.x += (mouse.current.x - trail.current.x) * 0.5;
+      trail.current.y += (mouse.current.y - trail.current.y) * 0.5;
+      const t = trailRef.current;
+      if (t) {
+        t.style.left = (trail.current.x - 16) + 'px';
+        t.style.top  = (trail.current.y - 16) + 'px';
       }
-      rafId = requestAnimationFrame(animate);
+      rafId = requestAnimationFrame(tick);
     };
-    rafId = requestAnimationFrame(animate);
-
-    const onEnter = () => {
-      dotRef.current?.classList.add('cursor-hover');
-      trailRef.current?.classList.add('trail-hover');
-    };
-    const onLeave = () => {
-      dotRef.current?.classList.remove('cursor-hover');
-      trailRef.current?.classList.remove('trail-hover');
-    };
+    rafId = requestAnimationFrame(tick);
 
     window.addEventListener('mousemove', onMove, { passive: true });
-    document.querySelectorAll('a, button').forEach(el => {
-      el.addEventListener('mouseenter', onEnter);
-      el.addEventListener('mouseleave', onLeave);
-    });
-
     return () => {
       window.removeEventListener('mousemove', onMove);
       cancelAnimationFrame(rafId);
     };
   }, []);
 
+  // All styles INLINE — zero CSS class interference, no transitions on position
+  const dotStyle: React.CSSProperties = {
+    position: 'fixed',
+    width: '10px',
+    height: '10px',
+    background: '#00ff9d',
+    borderRadius: '50%',
+    pointerEvents: 'none',
+    zIndex: 9999,
+    left: '-100px',
+    top: '-100px',
+    boxShadow: '0 0 8px #00ff9d, 0 0 16px #00ff9d80',
+    // NO transition on left/top — only on size/color
+    transition: 'width 0.15s, height 0.15s, background 0.15s',
+  };
+
+  const trailStyle: React.CSSProperties = {
+    position: 'fixed',
+    width: '32px',
+    height: '32px',
+    border: '1px solid rgba(0,255,157,0.35)',
+    borderRadius: '50%',
+    pointerEvents: 'none',
+    zIndex: 9998,
+    left: '-100px',
+    top: '-100px',
+    // NO transition on left/top
+    transition: 'width 0.2s, height 0.2s, border-color 0.2s',
+  };
+
   return (
     <>
-      <div ref={dotRef}   className="cursor-dot"   style={{ position: 'fixed', pointerEvents: 'none', zIndex: 9999, willChange: 'left, top' }} />
-      <div ref={trailRef} className="cursor-trail"  style={{ position: 'fixed', pointerEvents: 'none', zIndex: 9998, willChange: 'left, top' }} />
+      <div ref={dotRef}   style={dotStyle}   />
+      <div ref={trailRef} style={trailStyle}  />
     </>
   );
 };
