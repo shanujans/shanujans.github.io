@@ -12,29 +12,29 @@ const Hero: React.FC = () => {
   const [roleIndex, setRoleIndex] = useState(0);
   const [displayed, setDisplayed] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
+  const [isPaused, setIsPaused]   = useState(false);
   const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (isPaused) return;
     const current = roles[roleIndex];
-    let timeout: ReturnType<typeof setTimeout>;
+    let t: ReturnType<typeof setTimeout>;
     if (!isDeleting) {
       if (displayed.length < current.length) {
-        timeout = setTimeout(() => setDisplayed(current.slice(0, displayed.length + 1)), 80);
+        t = setTimeout(() => setDisplayed(current.slice(0, displayed.length + 1)), 80);
       } else {
         setIsPaused(true);
-        timeout = setTimeout(() => { setIsPaused(false); setIsDeleting(true); }, 2200);
+        t = setTimeout(() => { setIsPaused(false); setIsDeleting(true); }, 2200);
       }
     } else {
       if (displayed.length > 0) {
-        timeout = setTimeout(() => setDisplayed(current.slice(0, displayed.length - 1)), 40);
+        t = setTimeout(() => setDisplayed(current.slice(0, displayed.length - 1)), 40);
       } else {
         setIsDeleting(false);
         setRoleIndex(i => (i + 1) % roles.length);
       }
     }
-    return () => clearTimeout(timeout);
+    return () => clearTimeout(t);
   }, [displayed, isDeleting, isPaused, roleIndex]);
 
   const scrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -43,9 +43,9 @@ const Hero: React.FC = () => {
   };
 
   const stats = [
-    { value: '4+', label: 'Years IT Support' },
-    { value: '8+', label: 'Projects Built' },
-    { value: '1',  label: 'Live AI Chatbot' },
+    { value: '4+',  label: 'Years IT Support' },
+    { value: '8+',  label: 'Projects Built' },
+    { value: '10+', label: 'Integrations\nLive AI Chatbot' },
     { value: '🇱🇰', label: 'Based in Sri Lanka' },
   ];
 
@@ -69,11 +69,7 @@ const Hero: React.FC = () => {
             <span className="font-jetbrains-mono text-[#00ff9d] text-xs tracking-widest">OPEN TO WORK — IT SUPPORT & AI TOOLS</span>
           </div>
 
-          <h1
-            className="text-5xl md:text-7xl lg:text-8xl font-bold mb-4 glitch-text hero-fade-in-up"
-            data-text="Shanujan Suresh"
-            style={{ animationDelay: '150ms' }}
-          >
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-4 glitch-text hero-fade-in-up" data-text="Shanujan Suresh" style={{ animationDelay: '150ms' }}>
             Shanujan Suresh
           </h1>
 
@@ -85,9 +81,9 @@ const Hero: React.FC = () => {
           </div>
 
           <p className="text-base md:text-lg text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed hero-fade-in-up" style={{ animationDelay: '450ms' }}>
-            IT Support professional with 4+ years of hands-on experience, now actively building skills in AI tools and automation.
-            I deployed a real AI chatbot using Gemini API — see ARIA in the bottom right corner.
-            Looking for IT Support, Service Desk, or AI Tools roles where I can grow and contribute.
+            IT Support professional with 4+ years of hands-on experience, actively building skills in
+            AI tools, automation, and agentic systems. Currently studying BSc Computer Science at
+            University of the People. Looking for IT Support, Service Desk, or AI Tools roles.
           </p>
 
           <div className="flex flex-wrap justify-center gap-4 mb-16 hero-fade-in-up" style={{ animationDelay: '600ms' }}>
@@ -98,26 +94,21 @@ const Hero: React.FC = () => {
             <a href="#contact" onClick={e => scrollTo(e, '#contact')} className="btn-secondary">
               <span>Contact Me</span>
             </a>
-            <a href="/Shanujan-CV.pdf" download="Shanujan-Suresh-CV.pdf" className="btn-tertiary">
-              <span>Download CV</span>
-              <i className="fas fa-download ml-2" />
-            </a>
           </div>
 
-          {/* Stats — fixed layout so scroll indicator never overlaps */}
           <div className="grid grid-cols-4 gap-4 max-w-2xl mx-auto hero-fade-in-up" style={{ animationDelay: '750ms' }}>
             {stats.map(s => (
               <div key={s.label} className="p-4 rounded border border-white/10 bg-white/5 backdrop-blur-sm">
                 <div className="text-3xl font-bold text-[#00ff9d] font-jetbrains-mono">{s.value}</div>
-                <div className="text-xs text-gray-500 mt-1 tracking-wider uppercase leading-tight">{s.label}</div>
+                <div className="text-xs text-gray-500 mt-1 tracking-wider uppercase leading-tight whitespace-pre-line">{s.label}</div>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Scroll indicator — pushed further down so it never overlaps stats */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 opacity-40 pointer-events-none">
+      {/* Scroll indicator — low z-index, below stats */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 pointer-events-none" style={{ opacity: 0.3 }}>
         <span className="font-jetbrains-mono text-[10px] text-gray-600 tracking-widest">SCROLL</span>
         <div className="w-px h-8 bg-gradient-to-b from-[#00ff9d] to-transparent" style={{ animation: 'scrollPulse 2s ease-in-out infinite' }} />
       </div>

@@ -11,18 +11,24 @@ const projects: Project[] = [
     featured: true,
   },
   {
+    title: 'Quantum Insight Forge',
+    description: 'An AI-powered application built on Google AI Studio that combines quantum computing concepts with generative AI to analyze and visualize quantum data patterns. Demonstrates practical integration of cutting-edge AI and quantum concepts.',
+    tags: ['Google AI Studio', 'Gemini API', 'Quantum Computing', 'AI Application'],
+    githubUrl: 'https://github.com/shanujans/Quantum-Insight-Forge',
+    featured: true,
+  },
+  {
     title: 'Loan Risk Predictor — PyPI Package (Learning Project)',
-    description: 'A learning project where I packaged a Kaggle ML notebook into a Python package published on PyPI. Built with AI assistance to understand CI/CD via GitHub Actions. Decision Tree model with 87.5% accuracy. A learning exercise — not a production tool.',
+    description: 'A learning project where I packaged a Kaggle ML notebook into a Python package published on PyPI. Built with AI assistance to understand CI/CD via GitHub Actions. Decision Tree model with 87.5% accuracy.',
     tags: ['Python', 'Machine Learning', 'PyPI', 'scikit-learn', 'GitHub Actions', 'Learning Project'],
     githubUrl: 'https://github.com/shanujans/loan-risk-prediction',
     featured: true,
   },
   {
     title: 'Student Management System — C# (ESoft Final Year Project)',
-    description: 'Final year project for ESoft Metro Campus diploma. A C# Windows Forms desktop application with SQL Server backend for managing student registrations and records. Built independently as assessed coursework — my strongest traditional development project.',
-    tags: ['C#', '.NET', 'SQL Server', 'Windows Forms', 'Final Year Project'],
+    description: 'Assessed final year project for ESoft Metro Campus diploma. A C# Windows Forms desktop application with SQL Server backend for managing student registrations, course enrollment, and records. Built and submitted as graded coursework.',
+    tags: ['C#', '.NET', 'SQL Server', 'Windows Forms', 'Coursework'],
     githubUrl: 'https://github.com/shanujans/Skills-International-Application',
-    featured: true,
   },
   {
     title: 'Quantum Random Number Generator (Learning Project)',
@@ -32,13 +38,13 @@ const projects: Project[] = [
   },
   {
     title: 'Loan Risk Prediction — IBM AutoAI (Learning Project)',
-    description: 'Used IBM Watson Studio\'s AutoAI tool to build a loan risk classifier through the guided interface. AutoAI handles the ML pipeline automatically — selected SnapML model with 77% accuracy. IBM learning course project.',
+    description: 'Used IBM Watson Studio AutoAI tool to build a loan risk classifier. AutoAI handles the ML pipeline automatically — selected SnapML model with 77% accuracy. IBM learning course project.',
     tags: ['IBM Watson', 'AutoAI', 'SnapML', 'No-Code ML', 'Learning Project'],
     githubUrl: 'https://github.com/shanujans/AutoAI-Loan-Risk-Predictor',
   },
   {
     title: 'Telegram File Uploader Bot (AI-Assisted)',
-    description: 'A Telegram bot that downloads and uploads large files with VirusTotal API scanning, built with significant AI assistance. Helped me understand async Python and API concepts — I could not write this independently from scratch.',
+    description: 'A Telegram bot that downloads and uploads large files with VirusTotal API scanning, built with significant AI assistance. Helped me understand async Python and API concepts.',
     tags: ['Python', 'Telegram API', 'AsyncIO', 'VirusTotal API', 'AI-Assisted'],
     githubUrl: 'https://github.com/shanujans/telegram-uploader',
   },
@@ -56,7 +62,7 @@ const projects: Project[] = [
   },
 ];
 
-const allTags = ['All', 'Featured', 'AI Tools', 'Python', 'Learning Project', 'Final Year Project'];
+const allTags = ['All', 'Featured', 'AI Tools', 'Python', 'Learning Project', 'Google AI Studio'];
 
 const AnimFade: React.FC<{ children: React.ReactNode; delay?: number }> = ({ children, delay = 0 }) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -86,8 +92,9 @@ const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, i
     if (cardRef.current) cardRef.current.style.transform = '';
   };
 
-  const isFinal = project.tags.includes('Final Year Project');
-  const isLearning = (project.tags.includes('Learning Project') || project.tags.includes('AI-Assisted')) && !isFinal;
+  // Only one badge per card - priority: featured > learning
+  const showFeatured = project.featured;
+  const showLearning = !project.featured && (project.tags.includes('Learning Project') || project.tags.includes('AI-Assisted'));
 
   return (
     <AnimFade delay={index * 70}>
@@ -98,17 +105,13 @@ const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, i
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
-        {project.featured && (
+        {/* Single badge — no overlap */}
+        {showFeatured && (
           <div className="absolute top-4 right-4 text-xs font-jetbrains-mono px-2 py-0.5 rounded bg-[#00ff9d]/10 text-[#00ff9d] border border-[#00ff9d]/30">
             ★ FEATURED
           </div>
         )}
-        {isFinal && (
-          <div className="absolute top-4 right-4 text-xs font-jetbrains-mono px-2 py-0.5 rounded bg-[#ff6b35]/10 text-[#ff6b35] border border-[#ff6b35]/30">
-            🎓 FINAL PROJECT
-          </div>
-        )}
-        {isLearning && !project.featured && (
+        {showLearning && (
           <div className="absolute top-4 right-4 text-xs font-jetbrains-mono px-2 py-0.5 rounded bg-[#00b3ff]/10 text-[#00b3ff] border border-[#00b3ff]/30">
             LEARNING
           </div>
@@ -129,16 +132,12 @@ const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, i
         <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/5">
           <div className="flex flex-wrap gap-1.5">
             {project.tags.slice(0, 3).map(tag => (
-              <span
-                key={tag}
+              <span key={tag}
                 className={`text-xs font-jetbrains-mono px-2 py-0.5 rounded border ${
-                  tag === 'Final Year Project'
-                    ? 'bg-[#ff6b35]/10 text-[#ff6b35] border-[#ff6b35]/20'
-                    : tag === 'Learning Project' || tag === 'AI-Assisted'
+                  tag === 'Learning Project' || tag === 'AI-Assisted'
                     ? 'bg-[#00b3ff]/10 text-[#00b3ff] border-[#00b3ff]/20'
                     : 'bg-[#00ff9d]/10 text-[#00ff9d] border-[#00ff9d]/20'
-                }`}
-              >
+                }`}>
                 {tag}
               </span>
             ))}
@@ -149,12 +148,8 @@ const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, i
             )}
           </div>
           {project.githubUrl && (
-            <a
-              href={project.githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-500 hover:text-[#00ff9d] transition-all duration-300 hover:scale-110 ml-2"
-            >
+            <a href={project.githubUrl} target="_blank" rel="noopener noreferrer"
+              className="text-gray-500 hover:text-[#00ff9d] transition-all duration-300 hover:scale-110 ml-2">
               <i className="fab fa-github text-xl" />
             </a>
           )}
@@ -169,7 +164,7 @@ const Projects: React.FC = () => {
 
   const filtered = activeFilter === 'All' ? projects
     : activeFilter === 'Featured' ? projects.filter(p => p.featured)
-    : activeFilter === 'Final Year Project' ? projects.filter(p => p.tags.includes('Final Year Project'))
+    : activeFilter === 'Google AI Studio' ? projects.filter(p => p.tags.some(t => t.includes('Google AI Studio') || t.includes('AI Studio')))
     : activeFilter === 'AI Tools' ? projects.filter(p => p.tags.some(t => t.includes('API') || t.includes('AI') || t.includes('Gemini') || t.includes('Cloudflare')))
     : projects.filter(p => p.tags.some(t => t.toLowerCase().includes(activeFilter.toLowerCase())));
 
@@ -181,8 +176,7 @@ const Projects: React.FC = () => {
           <div className="w-20 h-1 mx-auto mb-4" style={{ background: 'linear-gradient(90deg, #00ff9d, #7700ff)' }} />
           <p className="text-center text-gray-500 font-jetbrains-mono text-sm mb-2 tracking-widest">// PROJECTS</p>
           <p className="text-center text-gray-500 text-sm max-w-xl mx-auto mb-8">
-            Honest labels — <span className="text-[#00ff9d]">Featured</span> = genuinely built by me &nbsp;·&nbsp;
-            <span className="text-[#ff6b35]">Final Project</span> = assessed coursework &nbsp;·&nbsp;
+            Honest labels — <span className="text-[#00ff9d]">Featured</span> = genuinely built &nbsp;·&nbsp;
             <span className="text-[#00b3ff]">Learning</span> = built with AI guidance.
           </p>
         </AnimFade>
@@ -190,15 +184,12 @@ const Projects: React.FC = () => {
         <AnimFade delay={100}>
           <div className="flex flex-wrap justify-center gap-2 mb-12">
             {allTags.map(tag => (
-              <button
-                key={tag}
-                onClick={() => setActiveFilter(tag)}
+              <button key={tag} onClick={() => setActiveFilter(tag)}
                 className={`px-4 py-1.5 rounded-full text-xs font-jetbrains-mono border transition-all duration-300 ${
                   activeFilter === tag
                     ? 'bg-[#00ff9d] text-[#0a0a14] border-[#00ff9d]'
                     : 'bg-transparent text-gray-400 border-white/10 hover:border-[#00ff9d]/40 hover:text-white'
-                }`}
-              >
+                }`}>
                 {tag}
               </button>
             ))}
@@ -213,7 +204,8 @@ const Projects: React.FC = () => {
 
         <AnimFade delay={200}>
           <div className="text-center mt-12">
-            <a href="https://github.com/shanujans" target="_blank" rel="noopener noreferrer" className="btn-secondary inline-flex items-center gap-2">
+            <a href="https://github.com/shanujans" target="_blank" rel="noopener noreferrer"
+              className="btn-secondary inline-flex items-center gap-2">
               <i className="fab fa-github" />
               View All on GitHub
             </a>
