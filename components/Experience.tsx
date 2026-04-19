@@ -19,7 +19,7 @@ const experience: ExperienceItem[] = [
     organization: 'Self-Directed Learning',
     period: '2023 – Present',
     description:
-      'Independently exploring AI tools and building personal projects to grow technical skills. Deployed ARIA — a live AI chatbot using Google Gemini API and Cloudflare Workers. Built several learning projects using AI assistance including a Quantum Random Number Generator, Loan Risk Predictor, and Telegram bots. All projects are learning exercises honestly described as such.',
+      'Independently exploring AI tools and building personal projects. Deployed ARIA — a live AI chatbot using Google Gemini API and Cloudflare Workers. Built Quantum Insight Forge on Google AI Studio. Created multiple learning projects including a Loan Risk Predictor (PyPI package) and Telegram bots. All projects honestly described in portfolio.',
     skills: ['Google Gemini API', 'Cloudflare Workers', 'React', 'Git & GitHub', 'IBM Watson', 'AI Tools'],
     icon: 'fas fa-robot',
   },
@@ -30,7 +30,7 @@ const experience: ExperienceItem[] = [
     period: '2025 – Present',
     description:
       'Currently studying Bachelor of Science in Computer Science fully online. Covering core CS fundamentals including programming, data structures, algorithms, and software engineering principles.',
-    skills: ['Computer Science', 'Programming Fundamentals', 'Data Structures', 'Algorithms', 'Online Learning'],
+    skills: ['Computer Science', 'Programming Fundamentals', 'Data Structures', 'Algorithms'],
     icon: 'fas fa-graduation-cap',
   },
   {
@@ -39,29 +39,65 @@ const experience: ExperienceItem[] = [
     organization: 'ESoft Metro Campus',
     period: '2024 – 2025',
     description:
-      'Completed an IT diploma covering networking fundamentals, system administration basics, web technologies, and database concepts. Final year project: Student Management System — a full C# Windows Forms desktop application with SQL Server backend built for real institutional use.',
-    skills: ['Networking', 'System Administration', 'Web Technologies', 'SQL Server', 'C#', 'IT Fundamentals'],
+      'Completed an IT diploma covering networking fundamentals, system administration basics, web technologies, and database concepts. Final year project: Student Management System — a full C# Windows Forms desktop application with SQL Server backend.',
+    skills: ['Networking', 'System Administration', 'Web Technologies', 'SQL Server', 'C#'],
     icon: 'fas fa-school',
   },
   {
     type: 'education',
     title: 'IBM AI & Cloud Certifications',
     organization: 'IBM Training (Online)',
-    period: '2023 – 2024',
+    period: '2023 – 2025',
     description:
-      'Completed IBM Watson Studio and IBM AutoAI learning courses. Built a Loan Risk Predictor using AutoAI and explored IBM Quantum computing via guided tutorial. Learning certifications — not professional qualifications.',
-    skills: ['IBM Watson', 'IBM AutoAI', 'IBM Quantum (Beginner)', 'IBM Cloud'],
+      'Completed IBM Watson Studio, IBM AutoAI, Basics of Quantum Information, Quantum Business Foundations, Artificial Intelligence Fundamentals, IBM Z Day AI & Data, IBM Z Day Security. Learning certifications — not professional qualifications.',
+    skills: ['IBM Watson', 'IBM AutoAI', 'Quantum Information', 'AI Fundamentals', 'IBM Cloud'],
     icon: 'fas fa-certificate',
   },
   {
     type: 'education',
     title: 'Cisco & Google Certifications',
-    organization: 'Cisco NetAcad & Google (Online)',
-    period: '2023 – 2024',
+    organization: 'Cisco NetAcad & Google Cloud',
+    period: '2024 – 2026',
     description:
-      'Completed Cisco Introduction to Networks (ITN) and Google IT Support fundamentals. Covered core networking concepts, IP addressing, routing basics, and IT support best practices.',
-    skills: ['Cisco Networking', 'IP Addressing', 'Routing Basics', 'Google IT Support', 'Troubleshooting'],
+      'Cisco: Introduction to Networks, Data Analytics Essentials, Linux Unhatched, Python Essentials 1, Introduction to Data Science. Google: Cloud Technical Series — AI in Action (2026). Covers networking, data, Linux basics, Python fundamentals, and cloud AI.',
+    skills: ['Cisco Networking', 'Data Analytics', 'Linux Basics', 'Python Essentials', 'Google Cloud AI'],
     icon: 'fas fa-network-wired',
+  },
+];
+
+// Top 4 badges — most impressive and recent ones
+const badges = [
+  {
+    icon: 'fas fa-cloud',
+    title: 'AI in Action',
+    issuer: 'Google Cloud',
+    date: 'Mar 2026',
+    color: '#4285F4',
+    note: 'Cloud AI Series',
+  },
+  {
+    icon: 'fas fa-atom',
+    title: 'Quantum Information',
+    issuer: 'IBM',
+    date: 'Apr 2025',
+    color: '#00ff9d',
+    note: 'Basics of Quantum',
+  },
+  {
+    icon: 'fas fa-brain',
+    title: 'AI Fundamentals',
+    issuer: 'IBM SkillsBuild',
+    date: 'Apr 2025',
+    color: '#7700ff',
+    note: 'Artificial Intelligence',
+  },
+  {
+    icon: 'fas fa-chart-bar',
+    title: 'Data Analytics',
+    issuer: 'Cisco',
+    date: 'Mar 2025',
+    color: '#00b3ff',
+    note: 'Analytics Essentials',
   },
 ];
 
@@ -106,10 +142,8 @@ const TimelineItem: React.FC<{ item: ExperienceItem; index: number }> = ({ item,
         </div>
 
         <div className="absolute left-0 md:left-1/2 md:-translate-x-1/2 top-6 flex flex-col items-center z-10">
-          <div
-            className="w-10 h-10 rounded-full flex items-center justify-center border-2"
-            style={{ borderColor: color, background: '#0a0a14', boxShadow: `0 0 16px ${color}60` }}
-          >
+          <div className="w-10 h-10 rounded-full flex items-center justify-center border-2"
+            style={{ borderColor: color, background: '#0a0a14', boxShadow: `0 0 16px ${color}60` }}>
             <i className={`${item.icon} text-sm`} style={{ color }} />
           </div>
         </div>
@@ -128,6 +162,32 @@ const Experience: React.FC = () => {
           <h2 className="text-4xl font-bold text-center mb-2 animated-gradient-text">Experience</h2>
           <div className="w-20 h-1 mx-auto mb-4" style={{ background: 'linear-gradient(90deg, #7700ff, #00b3ff)' }} />
           <p className="text-center text-gray-500 font-jetbrains-mono text-sm mb-16 tracking-widest">// JOURNEY</p>
+        </AnimFade>
+
+        {/* Top 4 Badges */}
+        <AnimFade delay={100}>
+          <div className="max-w-4xl mx-auto mb-16">
+            <p className="text-center text-xs text-gray-500 font-jetbrains-mono tracking-widest mb-6">🏅 FEATURED CERTIFICATIONS</p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {badges.map((b, i) => (
+                <div key={i}
+                  className="p-4 rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm text-center hover:-translate-y-1 transition-all duration-300 group"
+                  style={{ borderColor: `${b.color}25` }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = `${b.color}60`; (e.currentTarget as HTMLElement).style.boxShadow = `0 8px 24px ${b.color}20`; }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = `${b.color}25`; (e.currentTarget as HTMLElement).style.boxShadow = ''; }}
+                >
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3 text-xl"
+                    style={{ background: `${b.color}15`, border: `2px solid ${b.color}40`, color: b.color }}>
+                    <i className={b.icon} />
+                  </div>
+                  <div className="text-white text-xs font-bold leading-tight mb-1">{b.title}</div>
+                  <div className="text-xs font-jetbrains-mono mb-0.5" style={{ color: b.color }}>{b.issuer}</div>
+                  <div className="text-gray-600 text-[10px] font-jetbrains-mono">{b.date}</div>
+                  <div className="text-gray-600 text-[10px] mt-1 italic">{b.note}</div>
+                </div>
+              ))}
+            </div>
+          </div>
         </AnimFade>
 
         <div className="relative max-w-4xl mx-auto">
