@@ -1,21 +1,26 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Lottie from 'lottie-react';
 import Magnet from './Magnet';
 import FadeIn from './FadeIn';
-import ContactButton from './ContactButton';
+import CVRequestModal from './CVRequestModal';
 
-// Hacker animation from LottieFiles
 const LOTTIE_URL = 'https://assets3.lottiefiles.com/packages/lf20_w51pcehl.json';
 
 const Hero: React.FC = () => {
-  const [animData, setAnimData] = React.useState<object | null>(null);
+  const [animData, setAnimData]   = useState<object | null>(null);
+  const [cvOpen, setCvOpen]       = useState(false);
+  const [showScroll, setShowScroll] = useState(true);
 
-  React.useEffect(() => {
-    fetch(LOTTIE_URL)
-      .then(r => r.json())
-      .then(d => setAnimData(d))
-      .catch(() => setAnimData(null));
+  useEffect(() => {
+    fetch(LOTTIE_URL).then(r => r.json()).then(d => setAnimData(d)).catch(() => {});
+  }, []);
+
+  // Hide scroll indicator after user scrolls
+  useEffect(() => {
+    const onScroll = () => { if (window.scrollY > 60) setShowScroll(false); };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   const scrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -24,66 +29,106 @@ const Hero: React.FC = () => {
   };
 
   return (
-    <section
-      id="home"
-      className="relative h-screen flex flex-col overflow-x-clip"
-      style={{ background: '#0C0C0C' }}
-    >
-      {/* Subtle radial glow */}
-      <div className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 80%, rgba(182,0,168,0.08), transparent)' }} />
+    <>
+      <CVRequestModal isOpen={cvOpen} onClose={() => setCvOpen(false)} />
 
-      {/* Navbar spacer */}
-      <div className="h-24 flex-shrink-0" />
+      <section
+        id="home"
+        className="relative flex flex-col overflow-x-clip"
+        style={{ background: '#0C0C0C', minHeight: '100svh' }}
+      >
+        {/* Radial glow */}
+        <div className="absolute inset-0 pointer-events-none"
+          style={{ background: 'radial-gradient(ellipse 55% 45% at 50% 85%, rgba(182,0,168,0.09), transparent)' }} />
 
-      {/* Hero heading */}
-      <FadeIn y={40} delay={0.15} className="px-6 md:px-12 flex-shrink-0">
-        <h1
-          className="hero-heading font-black uppercase tracking-tight leading-none whitespace-nowrap w-full"
-          style={{ fontSize: 'clamp(2.8rem, 13vw, 160px)' }}
-        >
-          hi, i'm shanujan.
-        </h1>
-      </FadeIn>
+        {/* Navbar spacer */}
+        <div className="h-24 flex-shrink-0" />
 
-      {/* Portrait — centered absolutely */}
-      <div className="absolute left-1/2 -translate-x-1/2 bottom-0 z-10 w-[min(480px,80vw)]">
-        <FadeIn y={30} delay={0.6}>
-          <Magnet strength={0.2}>
-            {animData ? (
-              <Lottie animationData={animData} loop autoplay style={{ width: '100%' }} />
-            ) : (
-              /* Fallback if Lottie fails to load */
-              <div className="w-full aspect-square flex items-center justify-center">
-                <div className="text-[8rem]">👨‍💻</div>
-              </div>
-            )}
-          </Magnet>
-        </FadeIn>
-      </div>
-
-      {/* Bottom bar */}
-      <div className="mt-auto pb-10 px-6 md:px-12 flex items-end justify-between relative z-20">
-        <FadeIn y={20} delay={0.3}>
-          <p
-            className="text-[#D7E2EA] font-light uppercase max-w-[260px] leading-relaxed"
-            style={{ fontSize: 'clamp(0.7rem, 1.2vw, 1rem)' }}
+        {/* Hero heading */}
+        <FadeIn y={40} delay={0.15} className="px-5 md:px-12 flex-shrink-0">
+          <h1
+            className="font-black uppercase tracking-tight leading-none w-full"
+            style={{
+              fontSize: 'clamp(2.4rem, 11vw, 140px)',
+              background: 'linear-gradient(180deg, #646973 0%, #BBCCD7 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+              wordBreak: 'break-word',
+            }}
           >
-            an it support &amp; ai developer driven by building autonomous agents and robust systems
-          </p>
+            hi, i'm shanujan.
+          </h1>
         </FadeIn>
 
-        <FadeIn y={20} delay={0.4}>
-          <ContactButton />
-        </FadeIn>
-      </div>
+        {/* Portrait — centered, responsive size */}
+        <div
+          className="absolute left-1/2 -translate-x-1/2 bottom-16 md:bottom-0 z-10"
+          style={{ width: 'min(420px, 72vw)' }}
+        >
+          <FadeIn y={30} delay={0.6}>
+            <Magnet strength={0.18}>
+              {animData ? (
+                <Lottie animationData={animData} loop autoplay style={{ width: '100%' }} />
+              ) : (
+                <div className="w-full flex items-center justify-center" style={{ aspectRatio: '1' }}>
+                  <span style={{ fontSize: 'clamp(4rem, 20vw, 8rem)' }}>👨‍💻</span>
+                </div>
+              )}
+            </Magnet>
+          </FadeIn>
+        </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 z-20 opacity-30 pointer-events-none">
-        <span className="text-[10px] text-[#D7E2EA] tracking-widest uppercase font-light">scroll</span>
-        <div className="w-px h-8" style={{ background: 'linear-gradient(to bottom, #D7E2EA, transparent)' }} />
-      </div>
-    </section>
+        {/* Bottom bar */}
+        <div className="mt-auto pb-8 px-5 md:px-12 flex flex-col md:flex-row items-start md:items-end justify-between gap-6 relative z-20">
+          <FadeIn y={20} delay={0.3}>
+            <p
+              className="text-[#D7E2EA] font-light uppercase leading-relaxed max-w-[240px] md:max-w-[280px]"
+              style={{ fontSize: 'clamp(0.65rem, 1.8vw, 0.9rem)' }}
+            >
+              an it support &amp; ai developer driven by building autonomous agents and robust systems
+            </p>
+          </FadeIn>
+
+          <FadeIn y={20} delay={0.4}>
+            <button className="contact-btn" onClick={() => setCvOpen(true)}>
+              Request CV
+            </button>
+          </FadeIn>
+        </div>
+
+        {/* Animated scroll indicator — disappears after scrolling */}
+        <AnimatePresence>
+          {showScroll && (
+            <motion.div
+              key="scroll"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: [0, 6, 0], transition: { y: { repeat: Infinity, duration: 1.6, ease: 'easeInOut' }, opacity: { duration: 0.5 } } }}
+              exit={{ opacity: 0, y: -10, transition: { duration: 0.4 } }}
+              className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-20 pointer-events-none"
+            >
+              <span
+                className="font-light uppercase tracking-[0.35em] text-[#D7E2EA]/40"
+                style={{ fontSize: '0.6rem' }}
+              >
+                scroll
+              </span>
+              <div className="flex flex-col items-center gap-0.5">
+                {[0, 1, 2].map(i => (
+                  <motion.div
+                    key={i}
+                    animate={{ opacity: [0.2, 1, 0.2] }}
+                    transition={{ duration: 1.2, delay: i * 0.2, repeat: Infinity }}
+                    className="w-px rounded-full"
+                    style={{ height: i === 1 ? '10px' : '6px', background: '#B600A8' }}
+                  />
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </section>
+    </>
   );
 };
 
