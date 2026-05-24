@@ -1,252 +1,198 @@
-import React, { useRef, useState } from 'react';
-import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
-import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import type { Project } from '../types';
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import LiveProjectButton from './LiveProjectButton';
+import FadeIn from './FadeIn';
 
-gsap.registerPlugin(ScrollTrigger);
-
-const projects: Project[] = [
+const PROJECTS = [
   {
-    title: 'ARIA — Live AI Chatbot',
-    description: 'My most genuine technical achievement. Google Gemini API, Cloudflare Workers for secure proxying, and React. Handles CORS, rate limiting, and API key security — real production deployment.',
-    tags: ['Google Gemini API', 'Cloudflare Workers', 'React', 'TypeScript'],
-    githubUrl: 'https://github.com/shanujans/shanujans.github.io',
-    featured: true,
+    num: '01',
+    category: 'AI Integration',
+    name: 'ARIA Chatbot',
+    desc: 'Live AI assistant deployed on this portfolio using Google Gemini API and Cloudflare Workers. Handles CORS, rate limiting, and API key security in production.',
+    url: 'https://shanujan.is-a.dev',
+    github: 'https://github.com/shanujans/shanujans.github.io',
+    imgs: [
+      'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=400&h=200&fit=crop',
+      'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=400&h=200&fit=crop',
+      'https://images.unsplash.com/photo-1680016961103-5a93e3fd83f3?w=400&h=400&fit=crop',
+    ],
+    accent: '#B600A8',
   },
   {
-    title: 'Quantum Insight Forge',
-    description: 'AI application on Google AI Studio combining quantum computing concepts with Gemini generative AI to analyze and visualize quantum data patterns.',
-    tags: ['Google AI Studio', 'Gemini API', 'Quantum Computing', 'AI Application'],
-    githubUrl: 'https://github.com/shanujans/Quantum-Insight-Forge',
-    featured: true,
+    num: '02',
+    category: 'Google AI Studio',
+    name: 'Quantum Insight Forge',
+    desc: 'AI application combining quantum computing concepts with Gemini generative AI. Built on Google AI Studio to analyze and visualize quantum data patterns.',
+    url: 'https://github.com/shanujans/Quantum-Insight-Forge',
+    github: 'https://github.com/shanujans/Quantum-Insight-Forge',
+    imgs: [
+      'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=200&fit=crop',
+      'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=200&fit=crop',
+      'https://images.unsplash.com/photo-1629904853716-f0bc54eea481?w=400&h=400&fit=crop',
+    ],
+    accent: '#7621B0',
   },
   {
-    title: 'Loan Risk Predictor — PyPI',
-    description: 'End-to-end ML package published on PyPI with CI/CD via GitHub Actions. Decision Tree model with 87.5% accuracy. Built with AI assistance to understand Python packaging.',
-    tags: ['Python', 'Machine Learning', 'PyPI', 'scikit-learn', 'GitHub Actions', 'Learning Project'],
-    githubUrl: 'https://github.com/shanujans/loan-risk-prediction',
-    featured: true,
-  },
-  {
-    title: 'Student Management System — C#',
-    description: 'Final year project for ESoft Metro Campus. A C# Windows Forms desktop application with SQL Server backend for managing student registrations and course enrollment.',
-    tags: ['C#', '.NET', 'SQL Server', 'Windows Forms', 'Coursework'],
-    githubUrl: 'https://github.com/shanujans/Skills-International-Application',
-  },
-  {
-    title: 'Quantum Random Number Generator',
-    description: 'Guided learning project using IBM Quantum API to generate random numbers from qubit superposition. Built to understand quantum concepts via IBM tutorial.',
-    tags: ['IBM Quantum', 'Python', 'API', 'Learning Project'],
-    githubUrl: 'https://github.com/shanujans/Quantum-Random-Number-Generator',
-  },
-  {
-    title: 'IBM AutoAI Loan Risk',
-    description: 'IBM Watson Studio AutoAI learning project — AutoAI handles the ML pipeline automatically. Selected SnapML model with 77% accuracy. Guided IBM course project.',
-    tags: ['IBM Watson', 'AutoAI', 'SnapML', 'No-Code ML', 'Learning Project'],
-    githubUrl: 'https://github.com/shanujans/AutoAI-Loan-Risk-Predictor',
-  },
-  {
-    title: 'Telegram File Uploader Bot',
-    description: 'Async Telegram bot that downloads and uploads large files with VirusTotal API scanning. Built with AI assistance to understand async Python and API concepts.',
-    tags: ['Python', 'Telegram API', 'AsyncIO', 'VirusTotal API', 'AI-Assisted'],
-    githubUrl: 'https://github.com/shanujans/telegram-uploader',
-  },
-  {
-    title: 'Academic Ally Telegram Bot',
-    description: 'Telegram bot that checks documents for plagiarism patterns using NLP libraries. Built with AI assistance to understand bot development and text processing.',
-    tags: ['Python', 'NLP', 'Telegram', 'AI-Assisted', 'Learning Project'],
-    githubUrl: 'https://github.com/shanujans/Academic-Ally',
-  },
-  {
-    title: 'Student Management System — Java',
-    description: 'JavaFX desktop application built during studies to practice OOP principles. Demonstrates basic CRUD operations and GUI development with Java.',
-    tags: ['Java', 'JavaFX', 'OOP', 'Learning Project'],
-    githubUrl: 'https://github.com/shanujans/StudentManagementSystem',
+    num: '03',
+    category: 'Machine Learning',
+    name: 'Loan Risk Predictor',
+    desc: 'End-to-end ML package published on PyPI with CI/CD via GitHub Actions. Decision Tree model with 87.5% accuracy — learning project using AI assistance.',
+    url: 'https://github.com/shanujans/loan-risk-prediction',
+    github: 'https://github.com/shanujans/loan-risk-prediction',
+    imgs: [
+      'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=200&fit=crop',
+      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=200&fit=crop',
+      'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=400&h=400&fit=crop',
+    ],
+    accent: '#BE4C00',
   },
 ];
 
-const allTags = ['All', 'Featured', 'AI Tools', 'Python', 'Learning Project', 'Google AI Studio'];
+const TOTAL = PROJECTS.length;
 
-// ── Framer Motion 3D Tilt Card ──────────────────────────────────
-const TiltCard: React.FC<{ project: Project; index: number }> = ({ project, index }) => {
-  const cardRef   = useRef<HTMLDivElement>(null);
-  const mouseX    = useMotionValue(0);
-  const mouseY    = useMotionValue(0);
-
-  const rotateX   = useSpring(useTransform(mouseY, [-0.5, 0.5], [8, -8]),  { stiffness: 300, damping: 30 });
-  const rotateY   = useSpring(useTransform(mouseX, [-0.5, 0.5], [-8, 8]),  { stiffness: 300, damping: 30 });
-  const glowX     = useTransform(mouseX, [-0.5, 0.5], ['0%', '100%']);
-  const glowY     = useTransform(mouseY, [-0.5, 0.5], ['0%', '100%']);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = cardRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    mouseX.set((e.clientX - rect.left) / rect.width - 0.5);
-    mouseY.set((e.clientY - rect.top)  / rect.height - 0.5);
-  };
-
-  const handleMouseLeave = () => {
-    mouseX.set(0);
-    mouseY.set(0);
-  };
-
-  const showFeatured = project.featured;
-  const showLearning = !project.featured &&
-    (project.tags.includes('Learning Project') || project.tags.includes('AI-Assisted'));
+const StickyCard: React.FC<{
+  project: typeof PROJECTS[0];
+  index: number;
+  scrollYProgress: ReturnType<typeof useScroll>['scrollYProgress'];
+}> = ({ project, index, scrollYProgress }) => {
+  const targetScale = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [1, 1 - (TOTAL - 1 - index) * 0.04]
+  );
 
   return (
-    <motion.div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{ rotateX, rotateY, transformStyle: 'preserve-3d', perspective: 800 }}
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.55, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
-      className="group relative bg-white/5 backdrop-blur-md p-6 rounded-xl border border-white/10 flex flex-col h-full"
+    <div
+      className="sticky"
+      style={{ top: `${80 + index * 28}px` }}
     >
-      {/* Dynamic glow spot following mouse */}
       <motion.div
-        className="absolute inset-0 rounded-xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         style={{
-          background: useTransform(
-            [glowX, glowY],
-            ([x, y]) => `radial-gradient(circle at ${x} ${y}, rgba(0,255,157,0.07), transparent 60%)`
-          ),
+          scale: targetScale,
+          transformOrigin: 'top center',
         }}
-      />
-
-      {/* Badge */}
-      {showFeatured && (
-        <div className="absolute top-4 right-4 text-xs font-jetbrains-mono px-2 py-0.5 rounded bg-[#00ff9d]/10 text-[#00ff9d] border border-[#00ff9d]/30">
-          ★ FEATURED
-        </div>
-      )}
-      {showLearning && (
-        <div className="absolute top-4 right-4 text-xs font-jetbrains-mono px-2 py-0.5 rounded bg-[#00b3ff]/10 text-[#00b3ff] border border-[#00b3ff]/30">
-          LEARNING
-        </div>
-      )}
-
-      <div className="flex-grow">
-        <div className="flex items-start gap-3 mb-3 pr-24">
-          <div className="w-8 h-8 rounded-lg bg-[#00ff9d]/10 border border-[#00ff9d]/20 flex items-center justify-center flex-shrink-0">
-            <i className="fas fa-folder-open text-[#00ff9d] text-xs" />
+        className="border-2 border-[#D7E2EA]/20 rounded-[48px] p-8 md:p-10 mx-auto max-w-5xl"
+        
+      >
+        {/* inner bg explicitly */}
+        <div
+          className="rounded-[40px] p-8 md:p-10"
+          style={{
+            background: '#0C0C0C',
+            border: `2px solid rgba(215,226,234,0.15)`,
+            scale: undefined,
+          }}
+        >
+          {/* Top row */}
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+            <div className="flex items-center gap-6">
+              <span
+                className="font-black leading-none"
+                style={{ fontSize: 'clamp(3rem, 7vw, 5.5rem)', color: project.accent }}
+              >
+                {project.num}
+              </span>
+              <div>
+                <div className="text-xs uppercase tracking-widest text-[#D7E2EA]/50 font-light mb-1">
+                  {project.category}
+                </div>
+                <h3
+                  className="font-black uppercase text-[#D7E2EA]"
+                  style={{ fontSize: 'clamp(1.4rem, 3vw, 2.2rem)' }}
+                >
+                  {project.name}
+                </h3>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <LiveProjectButton href={project.url} />
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full border border-[#D7E2EA]/20 flex items-center justify-center text-[#D7E2EA] hover:border-[#D7E2EA]/60 transition-colors"
+              >
+                <i className="fab fa-github" />
+              </a>
+            </div>
           </div>
-          <h3 className="text-base font-bold text-white group-hover:text-[#00ff9d] transition-colors duration-300 leading-snug">
-            {project.title}
-          </h3>
-        </div>
-        <p className="text-sm text-gray-400 leading-relaxed mb-4">{project.description}</p>
-      </div>
 
-      <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/5">
-        <div className="flex flex-wrap gap-1.5">
-          {project.tags.slice(0, 3).map(tag => (
-            <span key={tag}
-              className={`text-xs font-jetbrains-mono px-2 py-0.5 rounded border ${
-                tag === 'Learning Project' || tag === 'AI-Assisted'
-                  ? 'bg-[#00b3ff]/10 text-[#00b3ff] border-[#00b3ff]/20'
-                  : 'bg-[#00ff9d]/10 text-[#00ff9d] border-[#00ff9d]/20'
-              }`}>
-              {tag}
-            </span>
-          ))}
-          {project.tags.length > 3 && (
-            <span className="text-xs font-jetbrains-mono px-2 py-0.5 rounded bg-white/5 text-gray-500">
-              +{project.tags.length - 3}
-            </span>
-          )}
+          <p className="text-[#D7E2EA]/60 font-light max-w-xl mb-8 leading-relaxed">{project.desc}</p>
+
+          {/* Image grid */}
+          <div className="grid grid-cols-2 gap-3 md:gap-4 h-[220px] md:h-[280px]">
+            {/* Left col: 2 stacked */}
+            <div className="flex flex-col gap-3 md:gap-4">
+              {project.imgs.slice(0, 2).map((src, i) => (
+                <img
+                  key={i}
+                  src={src}
+                  alt=""
+                  className="w-full flex-1 object-cover rounded-[28px]"
+                  style={{ minHeight: 0 }}
+                />
+              ))}
+            </div>
+            {/* Right col: tall */}
+            <img
+              src={project.imgs[2]}
+              alt=""
+              className="w-full h-full object-cover rounded-[28px]"
+            />
+          </div>
         </div>
-        {project.githubUrl && (
-          <a href={project.githubUrl} target="_blank" rel="noopener noreferrer"
-            className="text-gray-500 hover:text-[#00ff9d] transition-all duration-300 hover:scale-110 ml-2">
-            <i className="fab fa-github text-xl" />
-          </a>
-        )}
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 };
 
 const Projects: React.FC = () => {
-  const [activeFilter, setActiveFilter] = useState('All');
-  const headingRef = useRef<HTMLDivElement>(null);
-
-  useGSAP(() => {
-    gsap.fromTo(headingRef.current,
-      { opacity: 0, y: 30 },
-      {
-        opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
-        scrollTrigger: { trigger: headingRef.current, start: 'top 85%' },
-      }
-    );
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end end'],
   });
 
-  const filtered = activeFilter === 'All' ? projects
-    : activeFilter === 'Featured' ? projects.filter(p => p.featured)
-    : activeFilter === 'Google AI Studio' ? projects.filter(p => p.tags.some(t => t.includes('Google AI Studio') || t.includes('AI Studio')))
-    : activeFilter === 'AI Tools' ? projects.filter(p => p.tags.some(t => t.includes('API') || t.includes('AI') || t.includes('Gemini') || t.includes('Cloudflare')))
-    : projects.filter(p => p.tags.some(t => t.toLowerCase().includes(activeFilter.toLowerCase())));
-
   return (
-    <section id="projects" className="py-24 bg-black/20 scroll-mt-20">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-
-        <div ref={headingRef} style={{ opacity: 0 }}>
-          <h2 className="text-4xl font-bold text-center mb-2 animated-gradient-text">My Projects</h2>
-          <div className="w-20 h-1 mx-auto mb-4" style={{ background: 'linear-gradient(90deg, #00ff9d, #7700ff)' }} />
-          <p className="text-center text-gray-500 font-jetbrains-mono text-sm mb-2 tracking-widest">// PROJECTS</p>
-          <p className="text-center text-gray-500 text-sm max-w-xl mx-auto mb-8">
-            Honest labels — <span className="text-[#00ff9d]">Featured</span> = genuinely built &nbsp;·&nbsp;
-            <span className="text-[#00b3ff]">Learning</span> = built with AI guidance.
-          </p>
-        </div>
-
-        {/* Filter tabs */}
-        <motion.div
-          className="flex flex-wrap justify-center gap-2 mb-12"
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1 }}
+    <section
+      id="projects"
+      ref={containerRef}
+      className="rounded-t-[60px] -mt-14 relative z-10 px-4 md:px-8 pt-24 pb-32"
+      style={{ background: '#0C0C0C' }}
+    >
+      <FadeIn y={30}>
+        <h2
+          className="hero-heading font-black uppercase text-center mb-16"
+          style={{ fontSize: 'clamp(3rem, 12vw, 140px)', lineHeight: 1 }}
         >
-          {allTags.map(tag => (
-            <button key={tag} onClick={() => setActiveFilter(tag)}
-              className={`px-4 py-1.5 rounded-full text-xs font-jetbrains-mono border transition-all duration-300 ${
-                activeFilter === tag
-                  ? 'bg-[#00ff9d] text-[#0a0a14] border-[#00ff9d]'
-                  : 'bg-transparent text-gray-400 border-white/10 hover:border-[#00ff9d]/40 hover:text-white'
-              }`}>
-              {tag}
-            </button>
-          ))}
-        </motion.div>
+          Projects
+        </h2>
+      </FadeIn>
 
-        {/* 3D Tilt Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" style={{ perspective: 1200 }}>
-          {filtered.map((project, index) => (
-            <TiltCard key={project.title} project={project} index={index} />
-          ))}
-        </div>
-
-        <motion.div
-          className="text-center mt-12"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          <a href="https://github.com/shanujans" target="_blank" rel="noopener noreferrer"
-            className="btn-secondary inline-flex items-center gap-2">
-            <i className="fab fa-github" />
-            View All on GitHub
-          </a>
-        </motion.div>
+      {/* Sticky stacking container — height drives scroll */}
+      <div style={{ height: `${TOTAL * 85}vh` }}>
+        {PROJECTS.map((p, i) => (
+          <StickyCard
+            key={p.num}
+            project={p}
+            index={i}
+            scrollYProgress={scrollYProgress}
+          />
+        ))}
       </div>
+
+      {/* More projects link */}
+      <FadeIn y={20} delay={0.2} className="text-center mt-20">
+        <a
+          href="https://github.com/shanujans"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-3 rounded-full border-2 border-[#D7E2EA]/30 text-[#D7E2EA] font-medium uppercase tracking-widest px-10 py-4 hover:bg-[#D7E2EA]/5 transition-all duration-300"
+        >
+          <i className="fab fa-github" />
+          View All Projects
+        </a>
+      </FadeIn>
     </section>
   );
 };

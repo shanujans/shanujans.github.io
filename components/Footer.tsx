@@ -1,70 +1,79 @@
 import React from 'react';
+import FadeIn from './FadeIn';
+import ContactButton from './ContactButton';
 
-const Footer: React.FC = () => {
-  const year = new Date().getFullYear();
+const socials = [
+  { icon: 'fab fa-github',    url: 'https://github.com/shanujans',                 label: 'GitHub'    },
+  { icon: 'fab fa-linkedin',  url: 'https://www.linkedin.com/in/shanujansuresh/', label: 'LinkedIn'  },
+  { icon: 'fab fa-telegram',  url: 'https://t.me/Revmatrix',                      label: 'Telegram'  },
+  { icon: 'fab fa-instagram', url: 'https://www.instagram.com/shanujan_29/',      label: 'Instagram' },
+];
 
-  const scrollTo = (href: string) => {
-    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
+const Footer: React.FC = () => (
+  <footer
+    id="contact"
+    className="py-24 px-6 md:px-12 scroll-mt-20"
+    style={{ background: '#0C0C0C', borderTop: '1px solid rgba(215,226,234,0.08)' }}
+  >
+    <div className="max-w-5xl mx-auto">
 
-  return (
-    <footer className="relative bg-black/50 border-t border-white/5 overflow-hidden">
-      {/* Top glow line */}
-      <div className="absolute top-0 left-0 w-full h-px" style={{ background: 'linear-gradient(90deg, transparent, #00ff9d40, transparent)' }} />
+      {/* Big CTA */}
+      <FadeIn y={30}>
+        <h2
+          className="hero-heading font-black uppercase text-center mb-6"
+          style={{ fontSize: 'clamp(2.5rem, 9vw, 100px)', lineHeight: 1.05 }}
+        >
+          Let's Build Together
+        </h2>
+      </FadeIn>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <div className="grid md:grid-cols-3 gap-8 mb-8">
-          {/* Brand */}
-          <div>
-            <div className="font-jetbrains-mono text-xl font-bold text-white mb-3">
-              <span className="text-[#00ff9d]">&lt;</span>Shanujan<span className="text-[#7700ff]"> /</span><span className="text-[#00ff9d]">&gt;</span>
-            </div>
-            <p className="text-sm text-gray-500 leading-relaxed">
-              IT Professional & Developer passionate about AI/ML, Cybersecurity, and Quantum Computing.
-            </p>
-          </div>
+      <FadeIn y={20} delay={0.15} className="text-center mb-10">
+        <p className="text-[#D7E2EA]/60 font-light uppercase tracking-widest text-sm">
+          Available for IT Support · AI Tools · Service Desk roles
+        </p>
+      </FadeIn>
 
-          {/* Quick links */}
-          <div>
-            <div className="text-xs text-gray-500 font-jetbrains-mono tracking-widest mb-3">NAVIGATE</div>
-            <div className="flex flex-wrap gap-x-6 gap-y-2">
-              {['#home', '#about', '#experience', '#services', '#projects', '#contact'].map(href => (
-                <button
-                  key={href}
-                  onClick={() => scrollTo(href)}
-                  className="text-sm text-gray-400 hover:text-[#00ff9d] transition-colors font-jetbrains-mono capitalize"
-                >
-                  {href.slice(1)}
-                </button>
-              ))}
-            </div>
-          </div>
+      <FadeIn y={20} delay={0.2} className="flex justify-center mb-16">
+        <ContactButton label="Contact Me" />
+      </FadeIn>
 
-          {/* Status */}
-          <div>
-            <div className="text-xs text-gray-500 font-jetbrains-mono tracking-widest mb-3">STATUS</div>
-            <div className="flex items-center gap-2 mb-2">
-              <span className="w-2 h-2 rounded-full bg-[#00ff9d] animate-pulse" />
-              <span className="text-sm text-gray-400">Available for work</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#00b3ff]" />
-              <span className="text-sm text-gray-400">Based in Sri Lanka 🇱🇰</span>
-            </div>
-          </div>
+      {/* Divider */}
+      <div className="border-t border-[#D7E2EA]/10 mb-10" />
+
+      {/* Bottom row */}
+      <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+
+        {/* Status */}
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+          <span className="text-[#D7E2EA]/60 font-light uppercase tracking-widest text-xs">
+            Available for work · Sri Lanka 🇱🇰
+          </span>
         </div>
 
-        <div className="border-t border-white/5 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="font-jetbrains-mono text-xs text-gray-600">
-            © {year} Shanujan Suresh. All Rights Reserved.
-          </p>
-          <p className="text-xs text-gray-600 font-jetbrains-mono">
-            Built with <span className="text-[#00ff9d]">React</span> + <span className="text-[#00b3ff]">TypeScript</span> + <span className="text-[#7700ff]">Vite</span>
-          </p>
+        {/* Socials */}
+        <div className="flex items-center gap-4">
+          {socials.map(s => (
+            <a
+              key={s.label}
+              href={s.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={s.label}
+              className="w-10 h-10 rounded-full border border-[#D7E2EA]/15 flex items-center justify-center text-[#D7E2EA]/50 hover:text-[#D7E2EA] hover:border-[#D7E2EA]/50 transition-all duration-300"
+            >
+              <i className={s.icon} />
+            </a>
+          ))}
         </div>
+
+        {/* Copyright */}
+        <p className="text-[#D7E2EA]/30 text-xs font-light uppercase tracking-widest">
+          © {new Date().getFullYear()} Shanujan Suresh
+        </p>
       </div>
-    </footer>
-  );
-};
+    </div>
+  </footer>
+);
 
 export default Footer;

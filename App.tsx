@@ -1,21 +1,19 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import LoadingScreen from './components/LoadingScreen';
-import Header from './components/Header';
+import CursorGlow from './components/CursorGlow';
+import ScrollProgress from './components/ScrollProgress';
+import BackToTopButton from './components/BackToTopButton';
+import VisitorTracker from './components/VisitorTracker';
+import AIChatBot from './components/AIChatBot';
+
+// New design sections
+import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import MarqueeSection from './components/MarqueeSection';
 import About from './components/About';
-import Experience from './components/Experience';
 import Services from './components/Services';
 import Projects from './components/Projects';
-import Contact from './components/Contact';
 import Footer from './components/Footer';
-import BackToTopButton from './components/BackToTopButton';
-import TerminalBackground from './components/TerminalBackground';
-import ParticleNetwork from './components/ParticleNetwork';
-import ScrollProgress from './components/ScrollProgress';
-import CursorGlow from './components/CursorGlow';
-import AIChatBot from './components/AIChatBot';
-import RightSideEffect from './components/RightSideEffect';
-import VisitorTracker from './components/VisitorTracker';
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -36,28 +34,32 @@ const App: React.FC = () => {
       {loading && <LoadingScreen onComplete={handleLoadComplete} />}
 
       <div
-        className="bg-[#0a0a14] text-gray-200 font-rajdhani relative overflow-x-hidden"
-        style={{ opacity: loading ? 0 : 1, transition: 'opacity 0.4s ease' }}
+        style={{
+          background: '#0C0C0C',
+          overflowX: 'clip',
+          opacity: loading ? 0 : 1,
+          transition: 'opacity 0.4s ease',
+        }}
       >
+        {/* Global utilities — security files untouched */}
         <CursorGlow />
         <VisitorTracker />
         <ScrollProgress />
-        <TerminalBackground />
-        <ParticleNetwork />
-        <RightSideEffect />
 
-        <Header />
+        {/* Navigation */}
+        <Navbar />
 
-        <main className="relative z-10">
+        {/* Page sections */}
+        <main>
           <Hero />
+          <MarqueeSection />
           <About />
-          <Experience />
           <Services />
           <Projects />
-          <Contact />
+          <Footer />
         </main>
 
-        <Footer />
+        {/* Floating utilities */}
         <BackToTopButton />
         <AIChatBot />
       </div>

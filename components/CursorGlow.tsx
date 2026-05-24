@@ -4,27 +4,25 @@ const CursorGlow: React.FC = () => {
   useEffect(() => {
     if (window.matchMedia('(pointer: coarse)').matches) return;
 
-    // Build elements in pure JS — zero React overhead
     const dot = document.createElement('div');
     Object.assign(dot.style, {
       position: 'fixed', top: '0', left: '0',
       width: '10px', height: '10px',
       borderRadius: '50%',
-      background: '#00ff9d',
-      boxShadow: '0 0 8px #00ff9d, 0 0 20px #00ff9d60',
+      background: '#B600A8',
+      boxShadow: '0 0 8px #B600A8, 0 0 20px #B600A880',
       pointerEvents: 'none',
       zIndex: '99999',
       willChange: 'transform',
-      // NO transition on transform — only size/color transitions
       transition: 'width 0.15s, height 0.15s, background 0.15s, box-shadow 0.15s',
     });
 
     const ring = document.createElement('div');
     Object.assign(ring.style, {
       position: 'fixed', top: '0', left: '0',
-      width: '28px', height: '28px',
+      width: '30px', height: '30px',
       borderRadius: '50%',
-      border: '1.5px solid rgba(0,255,157,0.5)',
+      border: '1.5px solid rgba(182,0,168,0.45)',
       pointerEvents: 'none',
       zIndex: '99998',
       willChange: 'transform',
@@ -36,50 +34,45 @@ const CursorGlow: React.FC = () => {
 
     let mx = -50, my = -50, rx = -50, ry = -50;
 
-    // Dot follows mouse INSTANTLY — transform is GPU layer, no layout reflow
     const onMove = (e: MouseEvent) => {
-      mx = e.clientX;
-      my = e.clientY;
+      mx = e.clientX; my = e.clientY;
       dot.style.transform = `translate(${mx - 5}px, ${my - 5}px)`;
     };
 
-    // Ring lerps slightly behind for visual depth
     let rafId: number;
     const tick = () => {
       rx += (mx - rx) * 0.45;
       ry += (my - ry) * 0.45;
-      ring.style.transform = `translate(${rx - 14}px, ${ry - 14}px)`;
+      ring.style.transform = `translate(${rx - 15}px, ${ry - 15}px)`;
       rafId = requestAnimationFrame(tick);
     };
     rafId = requestAnimationFrame(tick);
 
     const onEnter = () => {
       dot.style.width = '14px'; dot.style.height = '14px';
-      dot.style.background = '#00b3ff';
-      dot.style.boxShadow = '0 0 10px #00b3ff, 0 0 24px #00b3ff60';
-      ring.style.width = '44px'; ring.style.height = '44px';
-      ring.style.borderColor = 'rgba(0,179,255,0.5)';
+      dot.style.background = '#7621B0';
+      dot.style.boxShadow = '0 0 12px #7621B0, 0 0 28px #7621B080';
+      ring.style.width = '46px'; ring.style.height = '46px';
+      ring.style.borderColor = 'rgba(118,33,176,0.5)';
     };
     const onLeave = () => {
       dot.style.width = '10px'; dot.style.height = '10px';
-      dot.style.background = '#00ff9d';
-      dot.style.boxShadow = '0 0 8px #00ff9d, 0 0 20px #00ff9d60';
-      ring.style.width = '28px'; ring.style.height = '28px';
-      ring.style.borderColor = 'rgba(0,255,157,0.5)';
+      dot.style.background = '#B600A8';
+      dot.style.boxShadow = '0 0 8px #B600A8, 0 0 20px #B600A880';
+      ring.style.width = '30px'; ring.style.height = '30px';
+      ring.style.borderColor = 'rgba(182,0,168,0.45)';
     };
 
     document.querySelectorAll('a, button').forEach(el => {
       el.addEventListener('mouseenter', onEnter);
       el.addEventListener('mouseleave', onLeave);
     });
-
     window.addEventListener('mousemove', onMove, { passive: true });
 
     return () => {
       window.removeEventListener('mousemove', onMove);
       cancelAnimationFrame(rafId);
-      dot.remove();
-      ring.remove();
+      dot.remove(); ring.remove();
     };
   }, []);
 

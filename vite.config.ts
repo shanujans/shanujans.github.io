@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   optimizeDeps: {
-    include: ['gsap', '@gsap/react', 'framer-motion', 'lucide-react', 'clsx', 'tailwind-merge'],
+    include: ['framer-motion', 'lottie-react', 'lucide-react', 'gsap', '@gsap/react'],
   },
   build: {
     outDir: 'dist',
@@ -12,9 +12,9 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          react:   ['react', 'react-dom'],
-          gsap:    ['gsap', '@gsap/react'],
-          motion:  ['framer-motion'],
+          react:  ['react', 'react-dom'],
+          motion: ['framer-motion'],
+          lottie: ['lottie-react'],
         },
       },
     },
