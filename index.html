@@ -1,72 +1,88 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="google-site-verification" content="google173255409e5f314c.html" />
-
-    <title>Shanujan Suresh | IT Professional & Developer</title>
-    <meta name="description" content="Portfolio of Shanujan Suresh — IT Support Professional & AI Tools Enthusiast. BSc CS student at University of the People." />
-    <meta name="keywords" content="Shanujan Suresh, Portfolio, IT Support, AI Tools, Gemini API, Cloudflare Workers, Sri Lanka" />
+    <title>Shanujan Suresh | IT Support & AI Developer</title>
+    <meta name="description" content="IT Support professional & AI developer from Sri Lanka. Building autonomous agents and robust systems." />
     <meta name="author" content="Shanujan Suresh" />
-
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://shanujan.is-a.dev/" />
-    <meta property="og:title" content="Shanujan Suresh | IT Professional & Developer" />
-    <meta property="og:description" content="IT Support professional with 4+ years experience, building skills in AI tools and automation." />
-    <meta property="og:image" content="https://picsum.photos/seed/shanujan-portfolio/1200/630" />
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://shanujan.is-a.dev/" />
-    <meta property="twitter:title" content="Shanujan Suresh | IT Professional & Developer" />
-    <meta property="twitter:description" content="IT Support professional with 4+ years experience, building skills in AI tools and automation." />
-    <meta property="twitter:image" content="https://picsum.photos/seed/shanujan-portfolio/1200/630" />
-
+    <meta property="og:title" content="Shanujan Suresh | IT Support & AI Developer" />
+    <meta property="og:description" content="IT Support professional & AI developer from Sri Lanka." />
+    <meta property="og:image" content="https://picsum.photos/seed/shanujan/1200/630" />
     <link rel="icon" href="/favicon.png" type="image/png" />
     <link rel="apple-touch-icon" href="/favicon.png" />
-    <link rel="shortcut icon" href="/favicon.png" />
     <link rel="icon" type="image/png" href="/favicon.png?v=2" />
 
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Fonts: Inter (body) + Instrument Serif (display) + JetBrains Mono (code) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital,wght@0,400;1,400&family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
-      /* ─── BASE ──────────────────────────────────────────── */
-      *, *::before, *::after { box-sizing: border-box; }
-      html { scroll-behavior: smooth; }
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-      body {
-        font-family: 'Inter', 'Rajdhani', sans-serif;
-        background-color: #0a0a14;
-        color: #e2e8f0;
+      html, body {
+        background: #0C0C0C;
+        color: #D7E2EA;
+        font-family: 'Kanit', sans-serif;
+        overflow-x: clip;
         cursor: none;
-        overflow-x: hidden;
       }
 
-      ::selection { background-color: #00ff9d; color: #0a0a14; }
+      #root { background: #0C0C0C; overflow-x: clip; }
 
-      ::-webkit-scrollbar { width: 4px; }
-      ::-webkit-scrollbar-track { background: #0a0a14; }
-      ::-webkit-scrollbar-thumb { background: #00ff9d30; border-radius: 4px; }
-      ::-webkit-scrollbar-thumb:hover { background: #00ff9d60; }
+      ::selection { background: #B600A8; color: #fff; }
 
-      /* ─── TYPOGRAPHY ────────────────────────────────────── */
-      .font-rajdhani      { font-family: 'Rajdhani', sans-serif; }
+      ::-webkit-scrollbar { width: 3px; }
+      ::-webkit-scrollbar-track { background: #0C0C0C; }
+      ::-webkit-scrollbar-thumb { background: #B600A8; border-radius: 3px; }
+
+      /* Hero gradient heading */
+      .hero-heading {
+        background: linear-gradient(180deg, #646973 0%, #BBCCD7 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      /* Contact button */
+      .contact-btn {
+        background: linear-gradient(123deg, #18011F 7%, #B600A8 37%, #7621B0 72%, #BE4C00 100%);
+        box-shadow: 0px 4px 4px rgba(181,1,167,0.25), 4px 4px 12px #7721B1 inset;
+        outline: 2px solid white;
+        outline-offset: -3px;
+        border-radius: 9999px;
+        color: white;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        padding: 1rem 3rem;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+        border: none;
+        font-family: 'Kanit', sans-serif;
+        font-size: 0.95rem;
+        white-space: nowrap;
+      }
+      .contact-btn:hover { transform: translateY(-2px); box-shadow: 0px 8px 24px rgba(181,1,167,0.4), 4px 4px 20px #7721B1 inset; }
+
+      /* Scrollbar chatbot */
+      .scrollbar-thin::-webkit-scrollbar { width: 3px; }
+      .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+      .scrollbar-thin::-webkit-scrollbar-thumb { background: rgba(0,255,157,0.2); border-radius: 3px; }
+
+      /* Chatbot bounce */
+      @keyframes bounce { 0%,100% { transform:translateY(0); opacity:0.4; } 50% { transform:translateY(-4px); opacity:1; } }
+
+      /* Loading screen */
       .font-jetbrains-mono { font-family: 'JetBrains Mono', monospace; }
-      .font-display       { font-family: 'Instrument Serif', Georgia, serif; }
-
-      /* ─── CURSOR — pure transform, NO position transition ── */
-      /* CursorGlow.tsx builds elements in pure JS with inline styles.
-         These rules apply only if the old class-based cursor exists — kept
-         for backwards safety but new cursor doesn't use classes. */
-      body.cursor-active * { cursor: none !important; }
-
-      /* ─── ANIMATED GRADIENT TEXT ────────────────────────── */
+      @keyframes fadeInUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
+      .hero-fade-in-up { opacity:0; transform:translateY(28px); animation:fadeInUp 0.7s cubic-bezier(0.22,1,0.36,1) forwards; }
+      .glitch-text { position:relative; color:#fff; }
       .animated-gradient-text {
         background: linear-gradient(90deg, #00ff9d, #00b3ff, #7700ff, #ff6b35, #00ff9d);
         background-size: 300% 100%;
@@ -75,157 +91,43 @@
         color: transparent;
         animation: gradientShift 8s ease infinite;
       }
-      @keyframes gradientShift {
-        0%   { background-position: 0% 50%; }
-        50%  { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-      }
+      @keyframes gradientShift { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
 
-      /* ─── GLITCH TEXT ───────────────────────────────────── */
-      .glitch-text { position: relative; color: #fff; animation: glitch 6s ease-in-out infinite; }
-      .glitch-text::before,
-      .glitch-text::after {
-        content: attr(data-text);
-        position: absolute; inset: 0;
-        background: transparent;
-      }
-      .glitch-text::before {
-        color: #00ff9d;
-        clip-path: polygon(0 30%, 100% 30%, 100% 50%, 0 50%);
-        animation: glitchTop 6s ease-in-out infinite;
-      }
-      .glitch-text::after {
-        color: #7700ff;
-        clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%);
-        animation: glitchBottom 6s ease-in-out infinite;
-      }
-      @keyframes glitch {
-        0%, 90%, 100% { transform: translate(0); }
-        92% { transform: translate(-2px,  1px); }
-        94% { transform: translate( 2px, -1px); }
-        96% { transform: translate(-1px,  2px); }
-        98% { transform: translate( 1px, -2px); }
-      }
-      @keyframes glitchTop {
-        0%, 90%, 100% { transform: translate(0); opacity: 0; }
-        91% { transform: translate(-4px, -2px); opacity: 0.8; }
-        93% { transform: translate( 3px,  1px); opacity: 0.8; }
-        95% { opacity: 0; }
-      }
-      @keyframes glitchBottom {
-        0%, 90%, 100% { transform: translate(0); opacity: 0; }
-        92% { transform: translate( 3px, 2px); opacity: 0.7; }
-        94% { transform: translate(-2px,-1px); opacity: 0.7; }
-        96% { opacity: 0; }
-      }
-
-      /* ─── GLOW ORBS ─────────────────────────────────────── */
-      .glow-orb { position: absolute; border-radius: 50%; filter: blur(90px); }
-      @keyframes orbFloat1 {
-        0%, 100% { transform: translate(0,0) scale(1); }
-        33%       { transform: translate(30px,-20px) scale(1.05); }
-        66%       { transform: translate(-20px,15px) scale(0.95); }
-      }
-      @keyframes orbFloat2 {
-        0%, 100% { transform: translate(0,0) scale(1); }
-        33%       { transform: translate(-25px,20px) scale(0.95); }
-        66%       { transform: translate(20px,-15px) scale(1.05); }
-      }
-
-      /* ─── SCANLINE ──────────────────────────────────────── */
-      .scanline {
-        position: absolute; inset: 0; pointer-events: none; z-index: 2;
-        background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
-      }
-      .scanline::after {
-        content: ''; position: absolute; top: -100%; left: 0; width: 100%; height: 100%;
-        background: linear-gradient(to bottom, transparent 0%, rgba(0,255,157,0.04) 50%, transparent 100%);
-        animation: scanMove 12s linear infinite;
-      }
-      @keyframes scanMove { 0% { top: -100%; } 100% { top: 100%; } }
-
-      /* ─── SCROLL INDICATOR ──────────────────────────────── */
-      @keyframes scrollPulse {
-        0%, 100% { opacity: 0.5; }
-        50%       { opacity: 1; }
-      }
-
-      /* ─── SCROLL FADE IN (legacy — kept for any remaining uses) ── */
-      .fade-in-up {
-        opacity: 0; transform: translateY(24px);
-        transition: opacity 0.65s cubic-bezier(0.22,1,0.36,1), transform 0.65s cubic-bezier(0.22,1,0.36,1);
-      }
-      .fade-in-up.visible { opacity: 1; transform: translateY(0); }
-
-      /* ─── HERO FADE IN UP (loading screen only) ─────────── */
-      @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(28px); }
-        to   { opacity: 1; transform: translateY(0); }
-      }
-      .hero-fade-in-up {
-        opacity: 0; transform: translateY(28px);
-        animation: fadeInUp 0.7s cubic-bezier(0.22,1,0.36,1) forwards;
-      }
-
-      /* ─── BUTTONS ───────────────────────────────────────── */
-      .btn-primary, .btn-secondary, .btn-tertiary {
-        display: inline-flex; align-items: center; justify-content: center;
-        padding: 0.7rem 1.6rem;
-        font-size: 0.9rem; font-weight: 600;
-        font-family: 'JetBrains Mono', monospace;
-        border-radius: 6px; text-transform: uppercase; letter-spacing: 0.08em;
-        transition: all 0.3s cubic-bezier(0.22,1,0.36,1);
-        border: 1.5px solid transparent;
-        cursor: pointer; position: relative; overflow: hidden; text-decoration: none;
-      }
-      .btn-primary  { background:#00ff9d; color:#0a0a14; border-color:#00ff9d; box-shadow:0 0 12px rgba(0,255,157,0.4); }
-      .btn-primary:hover  { background:transparent; color:#00ff9d; box-shadow:0 0 24px rgba(0,255,157,0.5); transform:translateY(-2px); }
-      .btn-secondary { background:transparent; color:#00b3ff; border-color:#00b3ff; box-shadow:0 0 8px rgba(0,179,255,0.25); }
-      .btn-secondary:hover { background:#00b3ff; color:#0a0a14; box-shadow:0 0 20px rgba(0,179,255,0.5); transform:translateY(-2px); }
-      .btn-tertiary { background:transparent; color:#7700ff; border-color:#7700ff; box-shadow:0 0 8px rgba(119,0,255,0.25); }
-      .btn-tertiary:hover { background:#7700ff; color:#fff; box-shadow:0 0 20px rgba(119,0,255,0.5); transform:translateY(-2px); }
-
-      /* ─── CONTACT INPUTS ────────────────────────────────── */
+      /* CV / contact inputs */
       .contact-input {
         width:100%; background:transparent;
-        border:1.5px solid rgba(255,255,255,0.1); border-radius:6px;
-        padding:1.4rem 1rem 0.6rem;
-        color:#fff; font-size:0.9rem; font-family:'JetBrains Mono',monospace;
-        transition:border-color 0.3s, box-shadow 0.3s; outline:none;
+        border:1.5px solid rgba(255,255,255,0.15); border-radius:6px;
+        padding:1.4rem 1rem 0.6rem; color:#fff;
+        font-size:0.9rem; font-family:'JetBrains Mono',monospace;
+        transition:border-color 0.3s; outline:none;
       }
-      .contact-input:focus { border-color:#00ff9d; box-shadow:0 0 0 3px rgba(0,255,157,0.08); }
+      .contact-input:focus { border-color:#B600A8; box-shadow:0 0 0 3px rgba(182,0,168,0.1); }
       .contact-label {
         position:absolute; top:1rem; left:1rem;
         font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#6b7280;
-        background:#0a0a14; padding:0 4px; pointer-events:none;
-        transition:all 0.2s ease;
+        background:#0C0C0C; padding:0 4px; pointer-events:none; transition:all 0.2s ease;
       }
       .contact-input:focus + .contact-label,
-      .contact-input:not(:placeholder-shown) + .contact-label {
-        top:0.2rem; font-size:0.65rem; color:#00ff9d;
-      }
+      .contact-input:not(:placeholder-shown) + .contact-label { top:0.2rem; font-size:0.65rem; color:#B600A8; }
 
-      /* ─── CHATBOT ────────────────────────────────────────── */
-      .scrollbar-thin::-webkit-scrollbar { width:3px; }
-      .scrollbar-thin::-webkit-scrollbar-track { background:transparent; }
-      .scrollbar-thin::-webkit-scrollbar-thumb { background:rgba(0,255,157,0.2); border-radius:3px; }
-      @keyframes bounce {
-        0%,100% { transform:translateY(0); opacity:0.4; }
-        50%      { transform:translateY(-4px); opacity:1; }
-      }
+      /* Btn classes used by CVRequestModal */
+      .btn-primary { display:inline-flex;align-items:center;justify-content:center;padding:0.7rem 1.6rem;font-size:0.9rem;font-weight:600;font-family:'JetBrains Mono',monospace;border-radius:6px;text-transform:uppercase;letter-spacing:0.08em;transition:all 0.3s;border:1.5px solid #00ff9d;background:#00ff9d;color:#0C0C0C;cursor:pointer;text-decoration:none; }
+      .btn-primary:hover { background:transparent;color:#00ff9d;transform:translateY(-2px); }
+      .btn-secondary { display:inline-flex;align-items:center;justify-content:center;padding:0.7rem 1.6rem;font-size:0.9rem;font-weight:600;font-family:'JetBrains Mono',monospace;border-radius:6px;text-transform:uppercase;letter-spacing:0.08em;transition:all 0.3s;border:1.5px solid #00b3ff;background:transparent;color:#00b3ff;cursor:pointer;text-decoration:none; }
+      .btn-secondary:hover { background:#00b3ff;color:#0C0C0C;transform:translateY(-2px); }
+      .btn-tertiary { display:inline-flex;align-items:center;justify-content:center;padding:0.7rem 1.6rem;font-size:0.9rem;font-weight:600;font-family:'JetBrains Mono',monospace;border-radius:6px;text-transform:uppercase;letter-spacing:0.08em;transition:all 0.3s;border:1.5px solid #7700ff;background:transparent;color:#7700ff;cursor:pointer;text-decoration:none; }
+      .btn-tertiary:hover { background:#7700ff;color:#fff;transform:translateY(-2px); }
 
-      /* ─── MISC ──────────────────────────────────────────── */
+      /* Scroll margin */
       .scroll-mt-20 { scroll-margin-top:5rem; }
 
-      /* Mobile: restore cursor */
-      @media (pointer: coarse) {
-        body { cursor:auto; }
-      }
+      /* Mobile cursor */
+      @media (pointer:coarse) { body { cursor:auto; } }
     </style>
-    <script type="module" crossorigin src="/assets/index-Cu7UdsQA.js"></script>
-    <link rel="modulepreload" crossorigin href="/assets/gsap-D1cXIKMv.js">
-    <link rel="modulepreload" crossorigin href="/assets/motion-DJT2ETu5.js">
-    <link rel="modulepreload" crossorigin href="/assets/react-Nh7mDamV.js">
+    <script type="module" crossorigin src="/assets/index-BSo3fVFy.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/motion-BatEpHrt.js">
+    <link rel="modulepreload" crossorigin href="/assets/react-qEnEej_m.js">
+    <link rel="modulepreload" crossorigin href="/assets/lottie-BVA3SPNK.js">
   </head>
   <body>
     <div id="root"></div>
