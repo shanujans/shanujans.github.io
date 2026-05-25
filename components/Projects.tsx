@@ -14,7 +14,7 @@ const PROJECTS = [
     imgs: [
       'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=400&h=200&fit=crop&q=80',
       'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=400&h=200&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1680016961103-5a93e3fd83f3?w=400&h=400&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&h=400&fit=crop&q=80',
     ],
     accent: '#B600A8',
     tag: 'Featured',
@@ -140,10 +140,8 @@ const StickyCard: React.FC<{
           </p>
 
           {/* Image grid — responsive height */}
-          <div
-            className="grid grid-cols-2 gap-2 md:gap-4"
-            style={{ height: 'clamp(140px, 25vw, 260px)' }}
-          >
+          <div className="grid grid-cols-2 gap-2 md:gap-4 h-auto md:h-[clamp(140px,25vw,260px)]">
+            
             {/* Left: 2 stacked */}
             <div className="flex flex-col gap-2 md:gap-4">
               {project.imgs.slice(0, 2).map((src, i) => (
@@ -203,7 +201,7 @@ const Projects: React.FC = () => {
       </FadeIn>
 
       {/* Sticky stack — height scales with card count */}
-      <div style={{ height: `${TOTAL * 80}vh` }}>
+      <div className="h-auto md:[height:calc(4*80vh)]">
         {PROJECTS.map((p, i) => (
           <StickyCard
             key={p.num}
