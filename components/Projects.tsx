@@ -73,15 +73,15 @@ const StickyCard: React.FC<{
   index: number;
   scrollYProgress: ReturnType<typeof useScroll>['scrollYProgress'];
 }> = ({ project, index, scrollYProgress }) => {
-  // 🟢 FIXED: All cards now shrink uniformly, with a constant 0.035 step between them
+  // All cards shrink with a consistent step; the last card stays at scale 1
   const scale = useTransform(
     scrollYProgress,
     [0, 1],
-    [1, 0.86 + index * 0.035]
+    [1, 1 - (TOTAL - 1 - index) * 0.035]
   );
 
   return (
-    <div className="sticky" style={{ top: `${72 + index * 22}px` }}>
+    <div className="sticky" style={{ top: '72px' }}>   {/* ✅ Same top for all cards */}
       <motion.div style={{ scale, transformOrigin: 'top center' }}>
         <div
           className="rounded-[32px] md:rounded-[48px] p-5 md:p-10 mx-auto"
