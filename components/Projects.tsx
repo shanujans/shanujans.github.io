@@ -143,7 +143,7 @@ const StickyCard: React.FC<{
             {project.desc}
           </p>
 
-          {/* Image grid — now using aspect-ratio wrappers */}
+          {/* Image grid — updated with aspect-ratio */}
           <div className="grid grid-cols-2 gap-2 md:gap-4">
             {/* Left: 2 stacked */}
             <div className="flex flex-col gap-2 md:gap-4">
