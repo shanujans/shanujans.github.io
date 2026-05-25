@@ -67,21 +67,12 @@ const PROJECTS = [
 ];
 
 const TOTAL = PROJECTS.length;
-const CARD_HEIGHT_VH = 80;
 
 const StickyCard: React.FC<{
-  project: typeof PROJECTS[0];
+  project: (typeof PROJECTS)[0];
   index: number;
   scrollYProgress: ReturnType<typeof useScroll>['scrollYProgress'];
 }> = ({ project, index, scrollYProgress }) => {
-  // Y offset - slides each card down smoothly
-  const yOffset = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [0, (TOTAL - 1 - index) * -CARD_HEIGHT_VH]
-  );
-
-  // Scale effect
   const scale = useTransform(
     scrollYProgress,
     [0, 1],
@@ -89,25 +80,15 @@ const StickyCard: React.FC<{
   );
 
   return (
-    <div
-      className="sticky"
-      style={{
-        top: 0,
-        zIndex: 50 - index,
-      }}
-    >
-      <motion.div style={{ y: yOffset, scale, transformOrigin: 'top center' }}>
+    <div className="sticky" style={{ top: `${72 + index * 22}px` }}>
+      <motion.div style={{ scale, transformOrigin: 'top center' }}>
         <div
           className="rounded-[32px] md:rounded-[48px] p-5 md:p-10 mx-auto"
           style={{
             maxWidth: '900px',
-            minHeight: `${CARD_HEIGHT_VH}vh`,
             background: '#0C0C0C',
             border: '1.5px solid rgba(215,226,234,0.1)',
             boxShadow: `0 0 40px ${project.accent}15`,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
           }}
         >
           {/* Top row */}
@@ -224,7 +205,7 @@ const Projects: React.FC = () => {
       </FadeIn>
 
       {/* Sticky stack – fixed height */}
-      <div className="h-auto md:h-[320vh] relative">
+      <div className="h-auto md:h-[320vh]">
         {PROJECTS.map((p, i) => (
           <StickyCard
             key={p.num}
