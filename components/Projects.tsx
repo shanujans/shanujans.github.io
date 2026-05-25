@@ -67,6 +67,7 @@ const PROJECTS = [
 ];
 
 const TOTAL = PROJECTS.length;
+const CARD_HEIGHT_VH = 80;
 
 const StickyCard: React.FC<{
   project: (typeof PROJECTS)[0];
@@ -76,96 +77,127 @@ const StickyCard: React.FC<{
   const scale = useTransform(
     scrollYProgress,
     [0, 1],
-    [1, 1 - (TOTAL - 1 - index) * 0.035]
+    [1, 1 - (TOTAL - 1 - index) * 0.05]
+  );
+
+  const yOffset = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [0, (TOTAL - 1 - index) * -20]
   );
 
   return (
-    <div className="sticky" style={{ top: `${72 + index * 22}px` }}>
-      <motion.div style={{ scale, transformOrigin: 'top center' }}>
-        <div
-          className="rounded-[32px] md:rounded-[48px] p-5 md:p-10 mx-auto"
-          style={{
-            maxWidth: '900px',
-            background: '#0C0C0C',
-            border: '1.5px solid rgba(215,226,234,0.1)',
-            boxShadow: `0 0 40px ${project.accent}15`,
-          }}
-        >
-          {/* Top row */}
-          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-5 md:mb-8">
-            <div className="flex items-center gap-4 md:gap-6 min-w-0">
-              <span
-                className="font-black leading-none flex-shrink-0"
-                style={{ fontSize: 'clamp(2rem, 6vw, 4.5rem)', color: project.accent }}
-              >
-                {project.num}
-              </span>
-              <div className="min-w-0">
-                <div className="text-[10px] md:text-xs uppercase tracking-widest text-[#D7E2EA]/45 font-light mb-1 truncate">
-                  {project.category}
-                </div>
-                <h3
-                  className="font-black uppercase text-[#D7E2EA] leading-tight"
-                  style={{ fontSize: 'clamp(1rem, 2.8vw, 2rem)' }}
-                >
-                  {project.name}
-                </h3>
+    <div
+      className="sticky w-full"
+      style={{
+        top: 0,
+        zIndex: 50 - index,
+      }}
+    >
+      <motion.div
+        style={{
+          scale,
+          y: yOffset,
+          transformOrigin: 'top center',
+        }}
+      >
+        <div className="mx-auto px-3 md:px-8 py-10 md:py-16">
+          <div
+            className="rounded-[32px] md:rounded-[48px] p-5 md:p-10 w-full"
+            style={{
+              maxWidth: '900px',
+              background: '#0C0C0C',
+              border: '1.5px solid rgba(215,226,234,0.1)',
+              boxShadow: `0 0 40px ${project.accent}15`,
+              margin: '0 auto',
+              minHeight: `${CARD_HEIGHT_VH}vh`,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+            }}
+          >
+            {/* Top row */}
+            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-5 md:mb-8">
+              <div className="flex items-center gap-4 md:gap-6 min-w-0">
                 <span
-                  className="inline-block mt-1 text-[10px] uppercase tracking-widest px-2 py-0.5 rounded-full font-medium"
+                  className="font-black leading-none flex-shrink-0"
                   style={{
-                    background: project.accent + '20',
+                    fontSize: 'clamp(2rem, 6vw, 4.5rem)',
                     color: project.accent,
-                    border: `1px solid ${project.accent}40`,
                   }}
                 >
-                  {project.tag}
+                  {project.num}
                 </span>
+                <div className="min-w-0">
+                  <div className="text-[10px] md:text-xs uppercase tracking-widest text-[#D7E2EA]/45 font-light mb-1 truncate">
+                    {project.category}
+                  </div>
+                  <h3
+                    className="font-black uppercase text-[#D7E2EA] leading-tight"
+                    style={{ fontSize: 'clamp(1rem, 2.8vw, 2rem)' }}
+                  >
+                    {project.name}
+                  </h3>
+                  <span
+                    className="inline-block mt-1 text-[10px] uppercase tracking-widest px-2 py-0.5 rounded-full font-medium"
+                    style={{
+                      background: project.accent + '20',
+                      color: project.accent,
+                      border: `1px solid ${project.accent}40`,
+                    }}
+                  >
+                    {project.tag}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 flex-shrink-0">
+                <LiveProjectButton href={project.url} label="View" />
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-9 h-9 rounded-full border border-[#D7E2EA]/20 flex items-center justify-center text-[#D7E2EA]/60 hover:text-[#D7E2EA] hover:border-[#D7E2EA]/50 transition-all text-sm"
+                >
+                  <i className="fab fa-github" />
+                </a>
               </div>
             </div>
 
-            <div className="flex items-center gap-2 flex-shrink-0">
-              <LiveProjectButton href={project.url} label="View" />
-              <a
-                href={project.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full border border-[#D7E2EA]/20 flex items-center justify-center text-[#D7E2EA]/60 hover:text-[#D7E2EA] hover:border-[#D7E2EA]/50 transition-all text-sm"
-              >
-                <i className="fab fa-github" />
-              </a>
-            </div>
-          </div>
+            <p
+              className="text-[#D7E2EA]/55 font-light leading-relaxed mb-5 md:mb-8"
+              style={{
+                fontSize: 'clamp(0.78rem, 1.5vw, 1rem)',
+                maxWidth: '520px',
+              }}
+            >
+              {project.desc}
+            </p>
 
-          <p
-            className="text-[#D7E2EA]/55 font-light leading-relaxed mb-5 md:mb-8"
-            style={{ fontSize: 'clamp(0.78rem, 1.5vw, 1rem)', maxWidth: '520px' }}
-          >
-            {project.desc}
-          </p>
-
-          {/* Image grid — using aspect-ratio wrappers */}
-          <div className="grid grid-cols-2 gap-2 md:gap-4">
-            {/* Left: 2 stacked */}
-            <div className="flex flex-col gap-2 md:gap-4">
-              {project.imgs.slice(0, 2).map((src, i) => (
-                <div key={i} className="aspect-[2/1] w-full">
-                  <img
-                    src={src}
-                    alt=""
-                    className="w-full h-full object-cover rounded-[12px] md:rounded-[28px]"
-                    loading="lazy"
-                  />
-                </div>
-              ))}
-            </div>
-            {/* Right: tall */}
-            <div className="aspect-square w-full h-full">
-              <img
-                src={project.imgs[2]}
-                alt=""
-                className="w-full h-full object-cover rounded-[12px] md:rounded-[28px]"
-                loading="lazy"
-              />
+            {/* Image grid — using aspect-ratio wrappers */}
+            <div className="grid grid-cols-2 gap-2 md:gap-4">
+              {/* Left: 2 stacked */}
+              <div className="flex flex-col gap-2 md:gap-4">
+                {project.imgs.slice(0, 2).map((src, i) => (
+                  <div key={i} className="aspect-[2/1] w-full flex-1">
+                    <img
+                      src={src}
+                      alt=""
+                      className="w-full h-full object-cover rounded-[12px] md:rounded-[28px]"
+                      loading="lazy"
+                    />
+                  </div>
+                ))}
+              </div>
+              {/* Right: tall */}
+              <div className="aspect-square w-full">
+                <img
+                  src={project.imgs[2]}
+                  alt=""
+                  className="w-full h-full object-cover rounded-[12px] md:rounded-[28px]"
+                  loading="lazy"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -185,12 +217,12 @@ const Projects: React.FC = () => {
     <section
       id="projects"
       ref={containerRef}
-      className="rounded-t-[40px] md:rounded-t-[60px] -mt-10 md:-mt-14 relative z-10 px-3 md:px-8 pt-20 md:pt-24 pb-24 md:pb-32"
+      className="rounded-t-[40px] md:rounded-t-[60px] -mt-10 md:-mt-14 relative z-10 pt-20 md:pt-24 pb-24 md:pb-32"
       style={{ background: '#0C0C0C' }}
     >
       <FadeIn y={30}>
         <h2
-          className="font-black uppercase text-center mb-12 md:mb-16"
+          className="font-black uppercase text-center mb-12 md:mb-16 px-3 md:px-8"
           style={{
             fontSize: 'clamp(2.8rem, 11vw, 130px)',
             lineHeight: 1,
@@ -204,8 +236,8 @@ const Projects: React.FC = () => {
         </h2>
       </FadeIn>
 
-      {/* Sticky stack – fixed height */}
-      <div className="h-auto md:h-[320vh]">
+      {/* Sticky stack container */}
+      <div className="h-auto md:h-[320vh] relative">
         {PROJECTS.map((p, i) => (
           <StickyCard
             key={p.num}
