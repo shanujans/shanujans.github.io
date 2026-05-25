@@ -73,7 +73,6 @@ const StickyCard: React.FC<{
   index: number;
   scrollYProgress: ReturnType<typeof useScroll>['scrollYProgress'];
 }> = ({ project, index, scrollYProgress }) => {
-  // All cards shrink with a consistent step; the last card stays at scale 1
   const scale = useTransform(
     scrollYProgress,
     [0, 1],
@@ -81,7 +80,7 @@ const StickyCard: React.FC<{
   );
 
   return (
-    <div className="sticky" style={{ top: '72px' }}>   {/* ✅ Same top for all cards */}
+    <div className="sticky" style={{ top: '72px' }}>
       <motion.div style={{ scale, transformOrigin: 'top center' }}>
         <div
           className="rounded-[32px] md:rounded-[48px] p-5 md:p-10 mx-auto"
@@ -144,9 +143,8 @@ const StickyCard: React.FC<{
             {project.desc}
           </p>
 
-          {/* Image grid — using aspect-ratio wrappers */}
+          {/* Image grid */}
           <div className="grid grid-cols-2 gap-2 md:gap-4">
-            {/* Left: 2 stacked */}
             <div className="flex flex-col gap-2 md:gap-4">
               {project.imgs.slice(0, 2).map((src, i) => (
                 <div key={i} className="aspect-[2/1] w-full">
@@ -159,7 +157,6 @@ const StickyCard: React.FC<{
                 </div>
               ))}
             </div>
-            {/* Right: tall */}
             <div className="aspect-square w-full h-full">
               <img
                 src={project.imgs[2]}
@@ -176,16 +173,18 @@ const StickyCard: React.FC<{
 };
 
 const Projects: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const stackRef = useRef<HTMLDivElement>(null);
+
+  // ✅ Track scroll progress over the actual stack container (the one with 320vh height)
   const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end end'],
+    target: stackRef,
+    offset: ['start end', 'end start'], // full range: from when stack enters viewport until it leaves
+    layoutEffect: false,                // ensures proper hydration on production
   });
 
   return (
     <section
       id="projects"
-      ref={containerRef}
       className="rounded-t-[40px] md:rounded-t-[60px] -mt-10 md:-mt-14 relative z-10 px-3 md:px-8 pt-20 md:pt-24 pb-24 md:pb-32"
       style={{ background: '#0C0C0C' }}
     >
@@ -205,8 +204,8 @@ const Projects: React.FC = () => {
         </h2>
       </FadeIn>
 
-      {/* Sticky stack – fixed height */}
-      <div className="h-auto md:h-[320vh]">
+      {/* Sticky stack – ref on the scrollable container */}
+      <div ref={stackRef} className="h-auto md:h-[320vh]">
         {PROJECTS.map((p, i) => (
           <StickyCard
             key={p.num}
