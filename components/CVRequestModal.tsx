@@ -1,9 +1,76 @@
 import React, { useState } from 'react';
 
-// ✏️ After deploying cv-gateway Worker, paste your Worker URL here:
 const CV_GATEWAY_URL = 'https://cv-gateway.shanujansh.workers.dev';
 
 type Step = 'details' | 'otp' | 'processing' | 'success' | 'error';
+
+const ACCENT  = '#B600A8';
+const ACCENT2 = '#7621B0';
+const BG      = '#0C0C0C';
+
+const inputStyle: React.CSSProperties = {
+  width: '100%',
+  background: 'transparent',
+  border: '1.5px solid rgba(182,0,168,0.2)',
+  borderRadius: '8px',
+  padding: '1.4rem 1rem 0.6rem',
+  color: '#D7E2EA',
+  fontSize: '0.9rem',
+  fontFamily: 'Kanit, sans-serif',
+  outline: 'none',
+  transition: 'border-color 0.3s',
+};
+
+const FloatInput: React.FC<{
+  type?: string;
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  required?: boolean;
+  maxLength?: number;
+  extra?: React.CSSProperties;
+}> = ({ type = 'text', label, value, onChange, required, maxLength, extra }) => {
+  const [focused, setFocused] = React.useState(false);
+  const lifted = focused || value.length > 0;
+  return (
+    <div className="relative">
+      <input
+        type={type}
+        required={required}
+        maxLength={maxLength}
+        value={value}
+        placeholder=" "
+        onChange={e => onChange(e.target.value)}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
+        style={{
+          ...inputStyle,
+          ...extra,
+          borderColor: focused ? ACCENT : 'rgba(182,0,168,0.2)',
+          boxShadow: focused ? `0 0 0 3px rgba(182,0,168,0.08)` : 'none',
+        }}
+      />
+      <label
+        style={{
+          position: 'absolute',
+          top: lifted ? '0.25rem' : '1rem',
+          left: '1rem',
+          fontSize: lifted ? '0.62rem' : '0.82rem',
+          color: lifted ? ACCENT : 'rgba(215,226,234,0.4)',
+          background: BG,
+          padding: '0 4px',
+          pointerEvents: 'none',
+          transition: 'all 0.2s ease',
+          fontFamily: 'Kanit, sans-serif',
+          textTransform: 'uppercase',
+          letterSpacing: '0.06em',
+        }}
+      >
+        {label}
+      </label>
+    </div>
+  );
+};
 
 const CVRequestModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
   const [step, setStep]       = useState<Step>('details');
@@ -18,7 +85,6 @@ const CVRequestModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ is
     setStep('details'); setName(''); setOrg('');
     setEmail(''); setOtp(''); setMessage(''); setLoading(false);
   };
-
   const handleClose = () => { reset(); onClose(); };
 
   const submitDetails = async (e: React.FormEvent) => {
@@ -33,9 +99,8 @@ const CVRequestModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ is
       const data = await res.json();
       if (!res.ok) { setMessage(data.error || 'Something went wrong.'); setStep('error'); }
       else setStep('otp');
-    } catch {
-      setMessage('Network error. Please try again.'); setStep('error');
-    } finally { setLoading(false); }
+    } catch { setMessage('Network error. Please try again.'); setStep('error'); }
+    finally { setLoading(false); }
   };
 
   const submitOTP = async (e: React.FormEvent) => {
@@ -51,128 +116,152 @@ const CVRequestModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ is
       const data = await res.json();
       if (!res.ok) { setMessage(data.error || 'Verification failed.'); setStep('error'); }
       else { setMessage(data.message); setStep('success'); }
-    } catch {
-      setMessage('Network error. Please try again.'); setStep('error');
-    } finally { setLoading(false); }
+    } catch { setMessage('Network error. Please try again.'); setStep('error'); }
+    finally { setLoading(false); }
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[999] flex items-center justify-center p-4"
-      style={{ background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(8px)' }}>
-      <div className="w-full max-w-md rounded-2xl border border-white/10 overflow-hidden"
-        style={{ background: 'rgba(10,10,20,0.98)', boxShadow: '0 25px 60px rgba(0,0,0,0.7), 0 0 40px rgba(0,255,157,0.08)' }}>
-
+    <div
+      className="fixed inset-0 z-[999] flex items-center justify-center p-4"
+      style={{ background: 'rgba(0,0,0,0.88)', backdropFilter: 'blur(10px)' }}
+      onClick={e => { if (e.target === e.currentTarget) handleClose(); }}
+    >
+      <div
+        className="w-full max-w-md rounded-3xl overflow-hidden"
+        style={{
+          background: BG,
+          border: `1px solid rgba(182,0,168,0.2)`,
+          boxShadow: `0 25px 60px rgba(0,0,0,0.8), 0 0 50px rgba(182,0,168,0.08)`,
+        }}
+      >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-white/10"
-          style={{ background: 'rgba(0,255,157,0.04)' }}>
+        <div
+          className="flex items-center justify-between px-6 py-4 border-b"
+          style={{ background: 'rgba(182,0,168,0.05)', borderColor: 'rgba(182,0,168,0.15)' }}
+        >
           <div>
-            <div className="text-white font-bold font-jetbrains-mono">Request CV Access</div>
-            <div className="text-xs text-gray-500 font-jetbrains-mono mt-0.5">Work email required — verified delivery only</div>
+            <div className="text-white font-bold uppercase tracking-widest text-sm">Request CV Access</div>
+            <div className="text-[#D7E2EA]/40 text-xs mt-0.5 font-light">Work email required · AI verified</div>
           </div>
-          <button onClick={handleClose} className="text-gray-500 hover:text-white transition-colors">
+          <button onClick={handleClose} className="text-[#D7E2EA]/40 hover:text-white transition-colors">
             <i className="fas fa-times text-lg" />
           </button>
         </div>
 
         <div className="p-6">
 
-          {/* Step: details */}
+          {/* Details step */}
           {step === 'details' && (
             <form onSubmit={submitDetails} className="space-y-4">
-              <div className="p-3 rounded-lg border border-[#00ff9d]/20 bg-[#00ff9d]/5 text-xs text-gray-400 font-jetbrains-mono">
-                📋 Your details will be verified by AI before the CV is sent. Personal emails (Gmail, Outlook, etc.) are not accepted.
+              <div
+                className="p-3 rounded-xl text-xs font-light"
+                style={{ background: 'rgba(182,0,168,0.06)', border: '1px solid rgba(182,0,168,0.15)', color: 'rgba(215,226,234,0.6)' }}
+              >
+                📋 Your details are AI-verified before the CV is delivered. Personal emails (Gmail, Outlook) are not accepted.
               </div>
-              <div className="relative">
-                <input type="text" required value={name} onChange={e => setName(e.target.value)}
-                  placeholder=" " className="contact-input peer w-full" />
-                <label className="contact-label">Your Full Name</label>
-              </div>
-              <div className="relative">
-                <input type="text" required value={org} onChange={e => setOrg(e.target.value)}
-                  placeholder=" " className="contact-input peer w-full" />
-                <label className="contact-label">Company / Organization</label>
-              </div>
-              <div className="relative">
-                <input type="email" required value={email} onChange={e => setEmail(e.target.value)}
-                  placeholder=" " className="contact-input peer w-full" />
-                <label className="contact-label">Work Email (e.g. you@company.com)</label>
-              </div>
-              <button type="submit" disabled={loading}
-                className="w-full btn-primary flex items-center justify-center gap-2 disabled:opacity-60">
+              <FloatInput label="Your Full Name" value={name} onChange={setName} required />
+              <FloatInput label="Company / Organization" value={org} onChange={setOrg} required />
+              <FloatInput type="email" label="Work Email (you@company.com)" value={email} onChange={setEmail} required />
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full contact-btn flex items-center justify-center gap-2 disabled:opacity-50"
+              >
                 {loading
-                  ? <><span className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />Sending OTP...</>
+                  ? <><span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />Sending OTP...</>
                   : <>Send Verification Code <i className="fas fa-arrow-right text-sm" /></>}
               </button>
             </form>
           )}
 
-          {/* Step: OTP */}
+          {/* OTP step */}
           {step === 'otp' && (
             <form onSubmit={submitOTP} className="space-y-4">
-              <div className="p-3 rounded-lg border border-[#00b3ff]/20 bg-[#00b3ff]/5 text-xs text-gray-400 font-jetbrains-mono">
-                ✉️ A 6-digit code was sent to <span className="text-white">{email}</span>. Check your inbox (and spam folder). Valid for 10 minutes.
+              <div
+                className="p-3 rounded-xl text-xs font-light"
+                style={{ background: 'rgba(118,33,176,0.07)', border: '1px solid rgba(118,33,176,0.2)', color: 'rgba(215,226,234,0.6)' }}
+              >
+                ✉️ A 6-digit code was sent to <span className="text-white font-medium">{email}</span>. Valid for 10 minutes.
               </div>
-              <div className="relative">
-                <input type="text" required maxLength={6} value={otp}
-                  onChange={e => setOtp(e.target.value.replace(/\D/g, ''))}
-                  placeholder=" " className="contact-input peer w-full text-center text-2xl tracking-[0.5em] font-jetbrains-mono" />
-                <label className="contact-label">6-Digit Code</label>
-              </div>
-              <button type="submit" disabled={loading || otp.length !== 6}
-                className="w-full btn-primary flex items-center justify-center gap-2 disabled:opacity-60">
+              <FloatInput
+                label="6-Digit Code"
+                value={otp}
+                onChange={v => setOtp(v.replace(/\D/g, ''))}
+                maxLength={6}
+                required
+                extra={{ textAlign: 'center', fontSize: '1.6rem', letterSpacing: '0.5em', fontFamily: 'monospace' }}
+              />
+              <button
+                type="submit"
+                disabled={loading || otp.length !== 6}
+                className="w-full contact-btn flex items-center justify-center gap-2 disabled:opacity-50"
+              >
                 {loading
-                  ? <><span className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />Verifying...</>
-                  : <>Verify & Request CV <i className="fas fa-shield-halved text-sm" /></>}
+                  ? <><span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />Verifying...</>
+                  : <>Verify &amp; Request CV <i className="fas fa-shield-halved text-sm" /></>}
               </button>
               <button type="button" onClick={() => setStep('details')}
-                className="w-full text-center text-xs text-gray-500 hover:text-gray-300 transition-colors font-jetbrains-mono">
+                className="w-full text-center text-xs font-light transition-colors"
+                style={{ color: 'rgba(215,226,234,0.4)' }}
+                onMouseEnter={e => (e.currentTarget.style.color = '#D7E2EA')}
+                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(215,226,234,0.4)'}}>
                 ← Back / Change email
               </button>
             </form>
           )}
 
-          {/* Step: AI processing */}
+          {/* Processing */}
           {step === 'processing' && (
-            <div className="text-center py-8">
-              <div className="w-16 h-16 rounded-full bg-[#7700ff]/10 border border-[#7700ff]/30 flex items-center justify-center mx-auto mb-4">
-                <i className="fas fa-brain text-2xl text-[#7700ff] animate-pulse" />
+            <div className="text-center py-10">
+              <div
+                className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+                style={{ background: 'rgba(118,33,176,0.1)', border: '1px solid rgba(118,33,176,0.3)' }}
+              >
+                <i className="fas fa-brain text-2xl animate-pulse" style={{ color: ACCENT2 }} />
               </div>
               <p className="text-white font-bold mb-2">AI Agent Validating...</p>
-              <p className="text-gray-400 text-sm">Analyzing your details. This takes a few seconds.</p>
+              <p className="text-[#D7E2EA]/50 text-sm font-light">Analysing your details. This takes a few seconds.</p>
               <div className="flex justify-center gap-1 mt-4">
                 {[0,1,2].map(i => (
-                  <span key={i} className="w-2 h-2 rounded-full bg-[#7700ff]"
-                    style={{ animation: `bounce 1s ease-in-out ${i * 0.15}s infinite` }} />
+                  <span key={i} className="w-2 h-2 rounded-full"
+                    style={{ background: ACCENT2, animation: `bounce 1s ease-in-out ${i*0.15}s infinite` }} />
                 ))}
               </div>
             </div>
           )}
 
-          {/* Step: success */}
+          {/* Success */}
           {step === 'success' && (
-            <div className="text-center py-8">
-              <div className="w-16 h-16 rounded-full bg-[#00ff9d]/10 border border-[#00ff9d]/30 flex items-center justify-center mx-auto mb-4">
-                <i className="fas fa-check text-2xl text-[#00ff9d]" />
+            <div className="text-center py-10">
+              <div
+                className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+                style={{ background: 'rgba(182,0,168,0.1)', border: `1px solid rgba(182,0,168,0.3)` }}
+              >
+                <i className="fas fa-check text-2xl" style={{ color: ACCENT }} />
               </div>
               <p className="text-white font-bold text-lg mb-2">CV Sent! 🎉</p>
-              <p className="text-gray-400 text-sm mb-6">{message}</p>
-              <button onClick={handleClose} className="btn-secondary">Close</button>
+              <p className="text-[#D7E2EA]/50 text-sm font-light mb-6">{message}</p>
+              <button onClick={handleClose} className="contact-btn">Close</button>
             </div>
           )}
 
-          {/* Step: error */}
+          {/* Error */}
           {step === 'error' && (
-            <div className="text-center py-8">
-              <div className="w-16 h-16 rounded-full bg-red-500/10 border border-red-500/30 flex items-center justify-center mx-auto mb-4">
+            <div className="text-center py-10">
+              <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+                style={{ background: 'rgba(220,38,38,0.1)', border: '1px solid rgba(220,38,38,0.3)' }}>
                 <i className="fas fa-times text-2xl text-red-400" />
               </div>
               <p className="text-white font-bold text-lg mb-2">Verification Failed</p>
-              <p className="text-gray-400 text-sm mb-6">{message}</p>
+              <p className="text-[#D7E2EA]/50 text-sm font-light mb-6">{message}</p>
               <div className="flex gap-3 justify-center">
-                <button onClick={reset} className="btn-secondary text-sm">Try Again</button>
-                <button onClick={handleClose} className="btn-tertiary text-sm">Close</button>
+                <button onClick={reset} className="contact-btn text-sm">Try Again</button>
+                <button onClick={handleClose}
+                  className="rounded-full border border-[#D7E2EA]/20 text-[#D7E2EA]/60 font-medium uppercase tracking-widest px-6 py-3 hover:bg-[#D7E2EA]/5 transition-all text-sm">
+                  Close
+                </button>
               </div>
             </div>
           )}

@@ -61,7 +61,7 @@ const Navbar: React.FC = () => {
                 onClick={e => scrollTo(e, '#home')}
                 className="font-black uppercase text-[#D7E2EA] tracking-tight text-base md:text-lg flex-shrink-0"
               >
-                &lt;SJ /&gt;
+                &lt;SHANUJAN /&gt;
               </a>
 
               {/* Desktop — CENTERED links */}
