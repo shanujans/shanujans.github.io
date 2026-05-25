@@ -143,7 +143,7 @@ const StickyCard: React.FC<{
             {project.desc}
           </p>
 
-          {/* Image grid — updated with aspect-ratio */}
+          {/* Image grid — using aspect-ratio wrappers */}
           <div className="grid grid-cols-2 gap-2 md:gap-4">
             {/* Left: 2 stacked */}
             <div className="flex flex-col gap-2 md:gap-4">
@@ -204,7 +204,8 @@ const Projects: React.FC = () => {
         </h2>
       </FadeIn>
 
-      <div className="h-auto md:[height:calc(4*80vh)]">
+      {/* Sticky stack – fixed height */}
+      <div className="h-auto md:h-[320vh]">
         {PROJECTS.map((p, i) => (
           <StickyCard
             key={p.num}
