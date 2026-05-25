@@ -5,64 +5,55 @@ const WORKER_URL = 'https://gemini-proxy.shanujansh.workers.dev';
 
 const SYSTEM_CONTEXT = `You are ARIA — the AI assistant on Shanujan Suresh's portfolio website.
 
-IMPORTANT: Be honest at all times. Never overclaim Shanujan's skills. If asked about something he doesn't know, say so clearly and positively redirect.
+IMPORTANT: Be honest at all times. Never overclaim Shanujan's skills.
 
 ABOUT SHANUJAN SURESH (honest profile):
 - IT Support professional from Sri Lanka with 4+ years of hands-on experience
-- His IT support was at a small construction company (Pravin Construct Works) — 1-2 PCs, basic troubleshooting, MS Office, email, printers, basic networking
+- His IT support was at a small construction company (Pravin Construct Works)
 - His strongest emerging technical skill is AI tools — specifically Google Gemini API and Cloudflare Workers (this chatbot is proof)
+- Currently studying BSc Computer Science at University of the People (2025–present)
 - Target roles: IT Support Specialist, Service Desk Analyst, AI Tools Specialist, QA Manual Tester, Junior SRE Intern
 
 HONEST SKILL LEVELS:
 - IT Support & Troubleshooting: ✅ Real experience — 4+ years
-- MS Office (Word, Excel, Outlook, Teams): ✅ Competent
 - Google Gemini API & AI Studio: ✅ Genuine skill — deployed this chatbot himself
-- Cloudflare Workers & API proxying: ✅ Deployed and working (you are proof)
+- Cloudflare Workers & API proxying: ✅ Deployed and working
 - Git & GitHub: ✅ Uses regularly
-- Basic Networking: ✅ Practical experience
-- Python: ⚠️ Beginner — needs AI assistance to write code
+- Python: ⚠️ Beginner — needs AI assistance
 - Linux: ⚠️ Beginner — basic commands only
-- Web Development (React): ⚠️ AI-assisted — cannot build independently
-- Cybersecurity: ❌ Interest only — no practical experience
-- Quantum Computing: ❌ Followed one IBM tutorial — not a real skill
-- Blockchain: ❌ No knowledge
+- Web Development (React): ⚠️ AI-assisted
+- Cybersecurity: ❌ Interest only
+- Quantum Computing: ❌ Followed IBM tutorial — not a real skill
 
-PROJECTS (honest descriptions):
-- ARIA Chatbot (this site): ✅ Real — Gemini API + Cloudflare Workers + React, fully deployed
-- Loan Risk Predictor PyPI package: Learning project with AI assistance — Decision Tree, 87.5% accuracy
-- IBM AutoAI Loan Risk: Guided IBM course project — AutoAI does the ML automatically, 77% accuracy
-- Quantum RNG: Followed IBM tutorial with AI help — learning exercise only
-- Telegram bots (File Uploader, Academic Ally): Built with significant AI assistance — learning projects
-- Student Management Systems (C#, Java): Course/study projects
+PROJECTS:
+- ARIA Chatbot (this site): ✅ Real — Gemini API + Cloudflare Workers + React
+- Q-Optima: Autonomous quantum logistics AI agent built for Milan AI Week 2026
+- Loan Risk Predictor PyPI: Learning project, Decision Tree, 87.5% accuracy
+- Student Management System C#: ESoft final year project
 
-CONTACT:
-- Email: via Contact section copy button on this site
-- GitHub: github.com/shanujans
-- LinkedIn: linkedin.com/in/shanujansuresh
-- Telegram: @Revmatrix
-- Portfolio: shanujan.is-a.dev
-- Startup: revmatrixai.github.io
+CONTACT: GitHub: shanujans | LinkedIn: shanujansuresh | Telegram: @Revmatrix | Portfolio: shanujan.is-a.dev
 
 RESPONSE RULES:
 1. Be warm, honest, and professional
 2. Never claim skills Shanujan doesn't have
-3. If asked "can you do X" where X is something he's learning — say he's actively learning it, not that he can do it
-4. Keep replies to 2-3 sentences unless more detail is asked for
-5. If asked about salary or rates — say to contact directly
-6. If asked something completely unrelated to the portfolio — politely redirect
-7. Highlight ARIA itself as his strongest AI tools proof point`;
+3. Keep replies to 2-3 sentences unless more detail asked
+4. Highlight ARIA itself as his strongest AI tools proof point`;
 
 const SUGGESTED = [
   'What are your real skills?',
-  'Tell me about your IT experience',
+  'Tell me about Q-Optima',
   'Are you available for hire?',
   'What is ARIA and how was it built?',
 ];
 
+// Purple/pink accent colours
+const ACCENT  = '#B600A8';
+const ACCENT2 = '#7621B0';
+
 const AIChatBot: React.FC = () => {
   const [isOpen, setIsOpen]       = useState(false);
   const [messages, setMessages]   = useState<ChatMessage[]>([
-    { role: 'assistant', content: "Hi! I'm **ARIA** 👋 — Shanujan's portfolio assistant.\nAsk me anything about his skills, experience, or how to get in touch!" },
+    { role: 'assistant', content: "Hi! I'm **ARIA** 👋 — Shanujan's AI portfolio assistant.\nAsk me anything about his skills, experience, or how to get in touch!" },
   ]);
   const [input, setInput]         = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -72,20 +63,13 @@ const AIChatBot: React.FC = () => {
   const inputRef       = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (isOpen) {
-      setHasUnread(false);
-      setTimeout(() => inputRef.current?.focus(), 150);
-    }
+    if (isOpen) { setHasUnread(false); setTimeout(() => inputRef.current?.focus(), 150); }
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isOpen]);
 
-  const escapeHtml = (text: string): string =>
-    text
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
+  const escapeHtml = (t: string) =>
+    t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+     .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 
   const renderMessage = (content: string) =>
     escapeHtml(content)
@@ -95,18 +79,15 @@ const AIChatBot: React.FC = () => {
   const sendMessage = async (text: string) => {
     if (!text.trim() || isLoading) return;
     setError('');
-
     const userMsg: ChatMessage = { role: 'user', content: text };
     setMessages(prev => [...prev, userMsg]);
     setInput('');
     setIsLoading(true);
-
     try {
       const contents = [...messages, userMsg].map(m => ({
         role: m.role === 'assistant' ? 'model' : 'user',
         parts: [{ text: m.content }],
       }));
-
       const res = await fetch(WORKER_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -116,37 +97,33 @@ const AIChatBot: React.FC = () => {
           generationConfig: { maxOutputTokens: 350, temperature: 0.7 },
         }),
       });
-
-      if (!res.ok) {
-        const errText = await res.text().catch(() => 'Request failed');
-        throw new Error('Error ' + res.status + ': ' + errText);
-      }
-
+      if (!res.ok) throw new Error('Error ' + res.status + ': ' + await res.text().catch(() => ''));
       const data = await res.json();
-      const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text
-        ?? "Sorry, I couldn't generate a response. Please try again.";
-
+      const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text ?? "Sorry, couldn't generate a response.";
       setMessages(prev => [...prev, { role: 'assistant', content: reply }]);
       if (!isOpen) setHasUnread(true);
-
     } catch (err) {
-      const msg = err instanceof Error ? err.message : JSON.stringify(err);
-      setError('⚠️ ' + msg);
+      setError('⚠️ ' + (err instanceof Error ? err.message : String(err)));
     } finally {
       setIsLoading(false);
     }
   };
 
+  const chatBg    = 'rgba(12,12,12,0.97)';
+  const borderCol = `rgba(182,0,168,0.2)`;
+
   return (
     <>
       {/* Chat window */}
       <div
-        className="fixed bottom-20 right-6 z-50 flex flex-col rounded-2xl overflow-hidden border border-white/10"
+        className="fixed bottom-20 right-4 md:right-6 z-50 flex flex-col rounded-2xl overflow-hidden"
         style={{
-          width: '340px', height: '500px',
-          background: 'rgba(10,10,20,0.97)',
+          width: 'min(340px, calc(100vw - 32px))',
+          height: '500px',
+          background: chatBg,
           backdropFilter: 'blur(20px)',
-          boxShadow: '0 25px 60px rgba(0,0,0,0.6), 0 0 30px rgba(0,255,157,0.06)',
+          border: `1px solid ${borderCol}`,
+          boxShadow: `0 25px 60px rgba(0,0,0,0.7), 0 0 30px rgba(182,0,168,0.08)`,
           opacity: isOpen ? 1 : 0,
           transform: isOpen ? 'translateY(0) scale(1)' : 'translateY(16px) scale(0.96)',
           pointerEvents: isOpen ? 'all' : 'none',
@@ -154,19 +131,26 @@ const AIChatBot: React.FC = () => {
         }}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-4 py-3 border-b border-white/10"
-          style={{ background: 'rgba(0,255,157,0.04)' }}>
+        <div
+          className="flex items-center justify-between px-4 py-3 border-b flex-shrink-0"
+          style={{ background: `rgba(182,0,168,0.06)`, borderColor: borderCol }}
+        >
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-[#00ff9d]/15 border border-[#00ff9d]/30 flex items-center justify-center text-sm">🤖</div>
+            <div
+              className="w-8 h-8 rounded-full flex items-center justify-center text-sm flex-shrink-0"
+              style={{ background: `rgba(182,0,168,0.15)`, border: `1px solid rgba(182,0,168,0.3)` }}
+            >
+              🤖
+            </div>
             <div>
               <div className="text-sm font-bold text-white font-jetbrains-mono">ARIA</div>
               <div className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#00ff9d] animate-pulse" />
-                <span className="text-[10px] text-gray-500 font-jetbrains-mono">Portfolio Assistant • Secure Proxy</span>
+                <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: ACCENT }} />
+                <span className="text-[10px] text-[#D7E2EA]/40 font-jetbrains-mono">Portfolio Assistant · Secure</span>
               </div>
             </div>
           </div>
-          <button onClick={() => setIsOpen(false)} className="text-gray-600 hover:text-white transition-colors">
+          <button onClick={() => setIsOpen(false)} className="text-[#D7E2EA]/40 hover:text-white transition-colors">
             <i className="fas fa-times" />
           </button>
         </div>
@@ -176,14 +160,26 @@ const AIChatBot: React.FC = () => {
           {messages.map((msg, i) => (
             <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
               {msg.role === 'assistant' && (
-                <div className="w-6 h-6 rounded-full bg-[#00ff9d]/15 border border-[#00ff9d]/25 flex items-center justify-center mr-2 flex-shrink-0 mt-0.5 text-xs">🤖</div>
+                <div
+                  className="w-6 h-6 rounded-full flex items-center justify-center mr-2 flex-shrink-0 mt-0.5 text-xs"
+                  style={{ background: `rgba(182,0,168,0.15)`, border: `1px solid rgba(182,0,168,0.25)` }}
+                >
+                  🤖
+                </div>
               )}
               <div
-                className={`max-w-[80%] px-3 py-2.5 rounded-xl text-sm leading-relaxed ${
-                  msg.role === 'user'
-                    ? 'bg-[#00ff9d]/12 text-white border border-[#00ff9d]/20 rounded-br-sm'
-                    : 'bg-white/5 text-gray-200 border border-white/8 rounded-bl-sm'
-                }`}
+                className="max-w-[80%] px-3 py-2.5 rounded-xl text-sm leading-relaxed"
+                style={msg.role === 'user' ? {
+                  background: `rgba(182,0,168,0.12)`,
+                  color: 'white',
+                  border: `1px solid rgba(182,0,168,0.2)`,
+                  borderBottomRightRadius: '4px',
+                } : {
+                  background: 'rgba(255,255,255,0.04)',
+                  color: '#D7E2EA',
+                  border: '1px solid rgba(255,255,255,0.06)',
+                  borderBottomLeftRadius: '4px',
+                }}
                 dangerouslySetInnerHTML={{ __html: renderMessage(msg.content) }}
               />
             </div>
@@ -191,12 +187,13 @@ const AIChatBot: React.FC = () => {
 
           {isLoading && (
             <div className="flex justify-start">
-              <div className="w-6 h-6 rounded-full bg-[#00ff9d]/15 border border-[#00ff9d]/25 flex items-center justify-center mr-2 flex-shrink-0 text-xs">🤖</div>
-              <div className="px-4 py-3 rounded-xl rounded-bl-sm bg-white/5 border border-white/8">
+              <div className="w-6 h-6 rounded-full flex items-center justify-center mr-2 flex-shrink-0 text-xs"
+                style={{ background: 'rgba(182,0,168,0.15)', border: '1px solid rgba(182,0,168,0.25)' }}>🤖</div>
+              <div className="px-4 py-3 rounded-xl" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
                 <div className="flex gap-1 items-center">
-                  {[0, 1, 2].map(i => (
-                    <span key={i} className="w-1.5 h-1.5 rounded-full bg-[#00ff9d]"
-                      style={{ animation: `bounce 1s ease-in-out ${i * 0.15}s infinite` }} />
+                  {[0,1,2].map(i => (
+                    <span key={i} className="w-1.5 h-1.5 rounded-full"
+                      style={{ background: ACCENT, animation: `bounce 1s ease-in-out ${i * 0.15}s infinite` }} />
                   ))}
                 </div>
               </div>
@@ -204,25 +201,33 @@ const AIChatBot: React.FC = () => {
           )}
 
           {error && (
-            <div className="px-3 py-2 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-jetbrains-mono">
+            <div className="px-3 py-2 rounded-lg text-xs font-jetbrains-mono"
+              style={{ background: 'rgba(220,38,38,0.1)', border: '1px solid rgba(220,38,38,0.2)', color: '#f87171' }}>
               {error}
             </div>
           )}
           <div ref={messagesEndRef} />
         </div>
 
+        {/* Suggested */}
         {messages.length <= 1 && !isLoading && (
-          <div className="px-4 pb-2 flex flex-wrap gap-1.5">
+          <div className="px-4 pb-2 flex flex-wrap gap-1.5 flex-shrink-0">
             {SUGGESTED.map(q => (
               <button key={q} onClick={() => sendMessage(q)}
-                className="text-xs px-2.5 py-1 rounded-full border border-white/10 bg-white/5 text-gray-400 hover:border-[#00ff9d]/40 hover:text-white transition-all font-jetbrains-mono">
+                className="text-xs px-2.5 py-1 rounded-full transition-all font-jetbrains-mono"
+                style={{
+                  border: `1px solid rgba(182,0,168,0.25)`,
+                  background: 'rgba(182,0,168,0.05)',
+                  color: '#D7E2EA',
+                }}>
                 {q}
               </button>
             ))}
           </div>
         )}
 
-        <div className="px-4 py-3 border-t border-white/10">
+        {/* Input */}
+        <div className="px-4 py-3 border-t flex-shrink-0" style={{ borderColor: borderCol }}>
           <div className="flex gap-2">
             <input
               ref={inputRef}
@@ -231,14 +236,21 @@ const AIChatBot: React.FC = () => {
               onChange={e => setInput(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && !e.shiftKey && sendMessage(input)}
               placeholder="Ask me anything..."
-              className="flex-1 text-sm px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white placeholder-gray-600 focus:outline-none focus:border-[#00ff9d]/50 font-jetbrains-mono transition-colors"
+              className="flex-1 text-sm px-3 py-2.5 rounded-lg text-white placeholder-[#D7E2EA]/30 focus:outline-none font-jetbrains-mono transition-colors"
+              style={{
+                background: 'rgba(255,255,255,0.04)',
+                border: `1px solid rgba(182,0,168,0.15)`,
+              }}
+              onFocus={e => { e.currentTarget.style.borderColor = 'rgba(182,0,168,0.5)'; }}
+              onBlur={e => { e.currentTarget.style.borderColor = 'rgba(182,0,168,0.15)'; }}
             />
             <button
               onClick={() => sendMessage(input)}
               disabled={!input.trim() || isLoading}
-              className="w-10 h-10 rounded-lg bg-[#00ff9d] text-[#0a0a14] flex items-center justify-center hover:opacity-90 transition-opacity disabled:opacity-40"
+              className="w-10 h-10 rounded-lg flex items-center justify-center transition-opacity disabled:opacity-40"
+              style={{ background: `linear-gradient(123deg, #B600A8, #7621B0)` }}
             >
-              <i className="fas fa-paper-plane text-sm" />
+              <i className="fas fa-paper-plane text-sm text-white" />
             </button>
           </div>
         </div>
@@ -247,17 +259,22 @@ const AIChatBot: React.FC = () => {
       {/* FAB */}
       <button
         onClick={() => setIsOpen(s => !s)}
-        className="fixed bottom-6 right-20 z-50 w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 hover:scale-110"
+        className="fixed bottom-6 right-4 md:right-20 z-50 w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 hover:scale-110"
         style={{
-          background: isOpen ? 'rgba(10,10,20,0.9)' : 'linear-gradient(135deg,#00ff9d,#00b3ff)',
-          border: isOpen ? '1px solid rgba(0,255,157,0.3)' : 'none',
-          boxShadow: isOpen ? '0 0 20px rgba(0,255,157,0.15)' : '0 0 25px rgba(0,255,157,0.35)',
-          color: isOpen ? '#00ff9d' : '#0a0a14',
+          background: isOpen
+            ? 'rgba(12,12,12,0.9)'
+            : 'linear-gradient(123deg, #B600A8, #7621B0)',
+          border: isOpen ? `1px solid rgba(182,0,168,0.3)` : 'none',
+          boxShadow: isOpen
+            ? '0 0 20px rgba(182,0,168,0.15)'
+            : '0 0 25px rgba(182,0,168,0.45)',
+          color: isOpen ? ACCENT : '#fff',
         }}
         aria-label="Open AI assistant"
       >
         {hasUnread && !isOpen && (
-          <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-red-500 border-2 border-[#0a0a14]" />
+          <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-red-500 border-2"
+            style={{ borderColor: '#0C0C0C' }} />
         )}
         <i className={`fas ${isOpen ? 'fa-times' : 'fa-robot'} text-lg`} />
       </button>

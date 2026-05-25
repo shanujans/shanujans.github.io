@@ -6,37 +6,47 @@ interface AnimatedTextProps {
   className?: string;
 }
 
+// Safe: one motion.span per word (not per char) — avoids hooks-in-loop violation
+const WordSpan: React.FC<{
+  word: string;
+  index: number;
+  total: number;
+  scrollYProgress: ReturnType<typeof useScroll>['scrollYProgress'];
+}> = ({ word, index, total, scrollYProgress }) => {
+  const start   = index / total;
+  const end     = (index + 1) / total;
+  const opacity = useTransform(scrollYProgress, [start, end], [0.12, 1]);
+  return (
+    <motion.span style={{ opacity, color: '#D7E2EA' }}>
+      {word}
+    </motion.span>
+  );
+};
+
 const AnimatedText: React.FC<AnimatedTextProps> = ({ text, className = '' }) => {
   const ref = useRef<HTMLParagraphElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ['start 0.8', 'end 0.2'],
+    offset: ['start 0.85', 'end 0.35'],
   });
 
   const words = text.split(' ');
 
   return (
-    <p ref={ref} className={className} style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '0 0.25em' }}>
-      {words.map((word, wi) => {
-        const chars = word.split('');
-        const wordStart = wi / words.length;
-        const wordEnd   = (wi + 1) / words.length;
-        return (
-          <span key={wi} style={{ display: 'inline-flex' }}>
-            {chars.map((char, ci) => {
-              const charStart = wordStart + (ci / chars.length) * (wordEnd - wordStart);
-              const charEnd   = wordStart + ((ci + 1) / chars.length) * (wordEnd - wordStart);
-              // eslint-disable-next-line react-hooks/rules-of-hooks
-              const opacity = useTransform(scrollYProgress, [charStart, charEnd], [0.15, 1]);
-              return (
-                <motion.span key={ci} style={{ opacity }}>
-                  {char}
-                </motion.span>
-              );
-            })}
-          </span>
-        );
-      })}
+    <p
+      ref={ref}
+      className={className}
+      style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '0 0.3em' }}
+    >
+      {words.map((word, i) => (
+        <WordSpan
+          key={i}
+          word={word}
+          index={i}
+          total={words.length}
+          scrollYProgress={scrollYProgress}
+        />
+      ))}
     </p>
   );
 };

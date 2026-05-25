@@ -1,10 +1,14 @@
 import React, { useEffect, useState, useCallback } from 'react';
+
+// Loading + utilities
 import LoadingScreen from './components/LoadingScreen';
 import CursorGlow from './components/CursorGlow';
 import ScrollProgress from './components/ScrollProgress';
 import BackToTopButton from './components/BackToTopButton';
-import VisitorTracker from './components/VisitorTracker';
 import AIChatBot from './components/AIChatBot';
+
+// Security files — untouched, imported as-is
+import VisitorTracker from './components/VisitorTracker';
 
 // New design sections
 import Navbar from './components/Navbar';
@@ -41,7 +45,7 @@ const App: React.FC = () => {
           transition: 'opacity 0.4s ease',
         }}
       >
-        {/* Global utilities — security files untouched */}
+        {/* Global utilities */}
         <CursorGlow />
         <VisitorTracker />
         <ScrollProgress />
@@ -49,7 +53,7 @@ const App: React.FC = () => {
         {/* Navigation */}
         <Navbar />
 
-        {/* Page sections */}
+        {/* Page */}
         <main>
           <Hero />
           <MarqueeSection />
@@ -59,7 +63,7 @@ const App: React.FC = () => {
           <Footer />
         </main>
 
-        {/* Floating utilities */}
+        {/* Floating */}
         <BackToTopButton />
         <AIChatBot />
       </div>
