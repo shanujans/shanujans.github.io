@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Lottie from 'lottie-react';
 import Magnet from './Magnet';
@@ -16,17 +16,11 @@ const Hero: React.FC = () => {
     fetch(LOTTIE_URL).then(r => r.json()).then(d => setAnimData(d)).catch(() => {});
   }, []);
 
-  // Hide scroll indicator after user scrolls
   useEffect(() => {
     const onScroll = () => { if (window.scrollY > 60) setShowScroll(false); };
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
-
-  const scrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
-  };
 
   return (
     <>
@@ -34,17 +28,15 @@ const Hero: React.FC = () => {
 
       <section
         id="home"
-        className="relative flex flex-col overflow-x-clip"
-        style={{ background: '#0C0C0C', minHeight: '100svh' }}
+        className="relative flex flex-col overflow-x-clip md:min-h-[100svh]"
+        style={{ background: '#0C0C0C' }}  // Only md+ gets 100svh minimum
       >
         {/* Radial glow */}
         <div className="absolute inset-0 pointer-events-none"
           style={{ background: 'radial-gradient(ellipse 55% 45% at 50% 85%, rgba(182,0,168,0.09), transparent)' }} />
 
-        {/* Navbar spacer */}
         <div className="h-24 flex-shrink-0" />
 
-        {/* Hero heading */}
         <FadeIn y={40} delay={0.15} className="px-5 md:px-12 flex-shrink-0 relative z-20">
           <h1
             className="font-black uppercase tracking-tight leading-[1.15] w-full"
@@ -60,12 +52,12 @@ const Hero: React.FC = () => {
           </h1>
         </FadeIn>
 
-        {/* Portrait/Lottie image: relative on mobile, absolute on desktop, centers on both */}
+        {/* Portrait/Lottie */}
         <div
           className="
-            relative
+            relative               // stay in the flow, mobile only
             md:absolute
-            left-1/2
+            md:left-1/2
             md:-translate-x-1/2
             md:bottom-0
             z-10
@@ -75,7 +67,7 @@ const Hero: React.FC = () => {
           style={{
             width: 'min(420px, 75vw)',
             margin: '0 auto',
-            marginBottom: '1.5rem', // Mobile: slight bottom spacing
+            marginBottom: '1.5rem', // only on mobile
           }}
         >
           <FadeIn y={30} delay={0.6}>
@@ -111,7 +103,6 @@ const Hero: React.FC = () => {
           </FadeIn>
         </div>
 
-        {/* Animated scroll indicator */}
         <AnimatePresence>
           {showScroll && (
             <motion.div
