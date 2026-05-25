@@ -66,7 +66,6 @@ const PROJECTS = [
   },
 ];
 
-const STACK_VH = 80;          // visible height per card in vh
 const TOTAL = PROJECTS.length;
 
 const StickyCard: React.FC<{
@@ -81,16 +80,12 @@ const StickyCard: React.FC<{
   );
 
   return (
-    <div
-      className="sticky"
-      style={{ top: `${STACK_VH * index}vh` }}      // sequential offset
-    >
+    <div className="sticky" style={{ top: `${72 + index * 22}px` }}>
       <motion.div style={{ scale, transformOrigin: 'top center' }}>
         <div
           className="rounded-[32px] md:rounded-[48px] p-5 md:p-10 mx-auto"
           style={{
             maxWidth: '900px',
-            minHeight: `${STACK_VH}vh`,               // fills the slot
             background: '#0C0C0C',
             border: '1.5px solid rgba(215,226,234,0.1)',
             boxShadow: `0 0 40px ${project.accent}15`,
@@ -148,8 +143,9 @@ const StickyCard: React.FC<{
             {project.desc}
           </p>
 
-          {/* Image grid with aspect-ratio wrappers */}
+          {/* Image grid — using aspect-ratio wrappers */}
           <div className="grid grid-cols-2 gap-2 md:gap-4">
+            {/* Left: 2 stacked */}
             <div className="flex flex-col gap-2 md:gap-4">
               {project.imgs.slice(0, 2).map((src, i) => (
                 <div key={i} className="aspect-[2/1] w-full">
@@ -162,6 +158,7 @@ const StickyCard: React.FC<{
                 </div>
               ))}
             </div>
+            {/* Right: tall */}
             <div className="aspect-square w-full h-full">
               <img
                 src={project.imgs[2]}
@@ -207,7 +204,7 @@ const Projects: React.FC = () => {
         </h2>
       </FadeIn>
 
-      {/* Stack container with exact total height */}
+      {/* Sticky stack – fixed height */}
       <div className="h-auto md:h-[320vh]">
         {PROJECTS.map((p, i) => (
           <StickyCard
