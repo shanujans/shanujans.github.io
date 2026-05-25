@@ -44,27 +44,26 @@ const Hero: React.FC = () => {
         {/* Navbar spacer */}
         <div className="h-24 flex-shrink-0" />
 
-        {/* Hero heading */}
-        <FadeIn y={40} delay={0.15} className="px-5 md:px-12 flex-shrink-0">
+        {/* Hero heading - FIXED: Changed leading-none to leading-[1.15] to prevent mobile clip, added mobile line break */}
+        <FadeIn y={40} delay={0.15} className="px-5 md:px-12 flex-shrink-0 relative z-20">
           <h1
-            className="font-black uppercase tracking-tight leading-none w-full"
+            className="font-black uppercase tracking-tight leading-[1.15] w-full"
             style={{
-              fontSize: 'clamp(2.4rem, 11vw, 140px)',
+              fontSize: 'clamp(2rem, 12vw, 140px)',
               background: 'linear-gradient(180deg, #646973 0%, #BBCCD7 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
-              wordBreak: 'break-word',
             }}
           >
-            hi, i'm shanujan.
+            hi, i'm <br className="block md:hidden" /> shanujan.
           </h1>
         </FadeIn>
 
-        {/* Portrait — centered, responsive size */}
+        {/* Portrait — FIXED: Changed bottom-16 to bottom-[18%] to lift it above the text on mobile */}
         <div
-          className="absolute left-1/2 -translate-x-1/2 bottom-16 md:bottom-0 z-10"
-          style={{ width: 'min(420px, 72vw)' }}
+          className="absolute left-1/2 -translate-x-1/2 bottom-[18%] md:bottom-0 z-10 pointer-events-none md:pointer-events-auto"
+          style={{ width: 'min(420px, 75vw)' }}
         >
           <FadeIn y={30} delay={0.6}>
             <Magnet strength={0.18}>
@@ -81,13 +80,17 @@ const Hero: React.FC = () => {
 
         {/* Bottom bar */}
         <div className="mt-auto pb-8 px-5 md:px-12 flex flex-col md:flex-row items-start md:items-end justify-between gap-6 relative z-20">
+          
+          {/* FIXED: Added a subtle glass background on mobile so text is perfectly readable if it ever overlaps */}
           <FadeIn y={20} delay={0.3}>
-            <p
-              className="text-[#D7E2EA] font-light uppercase leading-relaxed max-w-[240px] md:max-w-[280px]"
-              style={{ fontSize: 'clamp(0.65rem, 1.8vw, 0.9rem)' }}
-            >
-              an it support &amp; ai developer driven by building autonomous agents and robust systems
-            </p>
+            <div className="bg-black/40 md:bg-transparent backdrop-blur-md md:backdrop-blur-none p-3 -ml-3 md:p-0 md:m-0 rounded-xl">
+              <p
+                className="text-[#D7E2EA] font-light uppercase leading-relaxed max-w-[240px] md:max-w-[280px]"
+                style={{ fontSize: 'clamp(0.65rem, 1.8vw, 0.9rem)' }}
+              >
+                an it support &amp; ai developer driven by building autonomous agents and robust systems
+              </p>
+            </div>
           </FadeIn>
 
           <FadeIn y={20} delay={0.4}>
@@ -97,7 +100,7 @@ const Hero: React.FC = () => {
           </FadeIn>
         </div>
 
-        {/* Animated scroll indicator — disappears after scrolling */}
+        {/* Animated scroll indicator */}
         <AnimatePresence>
           {showScroll && (
             <motion.div
