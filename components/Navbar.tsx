@@ -36,7 +36,11 @@ const Navbar: React.FC = () => {
   const scrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
-    setMenuOpen(false);
+    if (window.innerWidth < 768) {
+        setTimeout(() => setMenuOpen(false), 250);
+    } else {
+        setMenuOpen(false);
+    }    
   };
 
   return (
