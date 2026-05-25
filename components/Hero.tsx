@@ -44,7 +44,7 @@ const Hero: React.FC = () => {
         {/* Navbar spacer */}
         <div className="h-24 flex-shrink-0" />
 
-        {/* Hero heading - FIXED: Changed leading-none to leading-[1.15] to prevent mobile clip, added mobile line break */}
+        {/* Hero heading */}
         <FadeIn y={40} delay={0.15} className="px-5 md:px-12 flex-shrink-0 relative z-20">
           <h1
             className="font-black uppercase tracking-tight leading-[1.15] w-full"
@@ -60,10 +60,23 @@ const Hero: React.FC = () => {
           </h1>
         </FadeIn>
 
-        {/* Portrait — FIXED: Changed bottom-16 to bottom-[18%] to lift it above the text on mobile */}
+        {/* Portrait/Lottie image: relative on mobile, absolute on desktop, centers on both */}
         <div
-          className="absolute left-1/2 -translate-x-1/2 bottom-[18%] md:bottom-0 z-10 pointer-events-none md:pointer-events-auto"
-          style={{ width: 'min(420px, 75vw)' }}
+          className="
+            relative
+            md:absolute
+            left-1/2
+            md:-translate-x-1/2
+            md:bottom-0
+            z-10
+            pointer-events-none
+            md:pointer-events-auto
+          "
+          style={{
+            width: 'min(420px, 75vw)',
+            margin: '0 auto',
+            marginBottom: '1.5rem', // Mobile: slight bottom spacing
+          }}
         >
           <FadeIn y={30} delay={0.6}>
             <Magnet strength={0.18}>
@@ -80,8 +93,6 @@ const Hero: React.FC = () => {
 
         {/* Bottom bar */}
         <div className="mt-auto pb-8 px-5 md:px-12 flex flex-col md:flex-row items-start md:items-end justify-between gap-6 relative z-20">
-          
-          {/* FIXED: Added a subtle glass background on mobile so text is perfectly readable if it ever overlaps */}
           <FadeIn y={20} delay={0.3}>
             <div className="bg-black/40 md:bg-transparent backdrop-blur-md md:backdrop-blur-none p-3 -ml-3 md:p-0 md:m-0 rounded-xl">
               <p
