@@ -69,7 +69,7 @@ const PROJECTS = [
 const TOTAL = PROJECTS.length;
 
 const StickyCard: React.FC<{
-  project: typeof PROJECTS[0];
+  project: (typeof PROJECTS)[0];
   index: number;
   scrollYProgress: ReturnType<typeof useScroll>['scrollYProgress'];
 }> = ({ project, index, scrollYProgress }) => {
@@ -112,7 +112,11 @@ const StickyCard: React.FC<{
                 </h3>
                 <span
                   className="inline-block mt-1 text-[10px] uppercase tracking-widest px-2 py-0.5 rounded-full font-medium"
-                  style={{ background: project.accent + '20', color: project.accent, border: `1px solid ${project.accent}40` }}
+                  style={{
+                    background: project.accent + '20',
+                    color: project.accent,
+                    border: `1px solid ${project.accent}40`,
+                  }}
                 >
                   {project.tag}
                 </span>
@@ -139,30 +143,30 @@ const StickyCard: React.FC<{
             {project.desc}
           </p>
 
-          {/* Image grid — responsive height */}
-          <div className="grid grid-cols-2 gap-2 md:gap-4 h-auto md:h-[clamp(140px,25vw,260px)]">
-            
+          {/* Image grid — now using aspect-ratio wrappers */}
+          <div className="grid grid-cols-2 gap-2 md:gap-4">
             {/* Left: 2 stacked */}
             <div className="flex flex-col gap-2 md:gap-4">
               {project.imgs.slice(0, 2).map((src, i) => (
-                <img
-                  key={i}
-                  src={src}
-                  alt=""
-                  className="w-full object-cover flex-1"
-                  style={{ borderRadius: 'clamp(12px, 2.5vw, 28px)', minHeight: 0 }}
-                  loading="lazy"
-                />
+                <div key={i} className="aspect-[2/1] w-full">
+                  <img
+                    src={src}
+                    alt=""
+                    className="w-full h-full object-cover rounded-[12px] md:rounded-[28px]"
+                    loading="lazy"
+                  />
+                </div>
               ))}
             </div>
             {/* Right: tall */}
-            <img
-              src={project.imgs[2]}
-              alt=""
-              className="w-full h-full object-cover"
-              style={{ borderRadius: 'clamp(12px, 2.5vw, 28px)' }}
-              loading="lazy"
-            />
+            <div className="aspect-square w-full h-full">
+              <img
+                src={project.imgs[2]}
+                alt=""
+                className="w-full h-full object-cover rounded-[12px] md:rounded-[28px]"
+                loading="lazy"
+              />
+            </div>
           </div>
         </div>
       </motion.div>
@@ -200,7 +204,6 @@ const Projects: React.FC = () => {
         </h2>
       </FadeIn>
 
-      {/* Sticky stack — height scales with card count */}
       <div className="h-auto md:[height:calc(4*80vh)]">
         {PROJECTS.map((p, i) => (
           <StickyCard
