@@ -24,7 +24,7 @@ const PROJECTS = [
     category: 'Autonomous AI Agent · Quantum',
     name: 'Q-Optima',
     desc: 'Multi-cloud autonomous AI agent for NP-Hard logistics optimisation using Quantum Computing (QAOA). Voice input → Gemini vision → IBM Quantum → Telegram dispatch. Built for Milan AI Week 2026 Agent Olympics. Zero cost stack.',
-    url: 'https://github.com/shanujans/q-optima',
+    url: 'https://q-optima.vercel.app/',
     github: 'https://github.com/shanujans/q-optima',
     imgs: [
       'https://opengraph.githubassets.com/1/shanujans/q-optima',
@@ -32,7 +32,7 @@ const PROJECTS = [
       'https://opengraph.githubassets.com/1/qiskit/qiskit',
     ],
     accent: '#7621B0',
-    tag: 'Featured',
+    tag: 'Competition Submission',
   },
   {
     num: '03',
@@ -47,7 +47,7 @@ const PROJECTS = [
       'https://opengraph.githubassets.com/1/scikit-learn/scikit-learn',
     ],
     accent: '#BE4C00',
-    tag: 'Machine Learning',
+    tag: 'Learning Project',
   },
   {
     num: '04',
@@ -66,33 +66,33 @@ const PROJECTS = [
   },
   {
     num: '05',
-    category: 'Open Source · Google SDK',
-    name: 'Python GenAI SDK',
-    desc: 'Active open-source contributor to Google\'s official Python GenAI SDK. Identified and reported core REST API bugs affecting Gemini 2.5 models handling CJK inputs. Merged PRs for documentation and codebase fixes.',
-    url: 'https://github.com/googleapis/python-genai/issues/2134',
-    github: 'https://github.com/googleapis/python-genai',
+    category: 'Python · Telethon',
+    name: 'Telegram File Uploader',
+    desc: 'A powerful, asynchronous Python bot designed to download large files (up to 10 GB) from direct links to a cloud server, automatically split them into manageable chunks, and upload them to Telegram, bypassing standard file size limits.',
+    url: 'https://t.me/Revmatrix',
+    github: 'https://github.com/shanujans/telegram-uploader',
     imgs: [
-      'https://opengraph.githubassets.com/1/googleapis/python-genai',
-      'https://skillicons.dev/icons?i=python,gcp,git,github&perline=4',
+      'https://opengraph.githubassets.com/1/shanujans/telegram-uploader',
+      'https://skillicons.dev/icons?i=python,oci,git,github&perline=4',
       'https://opengraph.githubassets.com/1/google/generative-ai-python',
     ],
     accent: '#005CB6',
-    tag: 'Contribution',
+    tag: 'Learning Project',
   },
   {
     num: '06',
-    category: 'IT Automation · Telegram API',
-    name: 'Revmatrix Hub',
-    desc: 'Custom IT Support scripts and AI automation workspace designed to handle repetitive service desk tasks. Operates primarily via a 24/7 accessible Telegram integration for deployment, triaging, and user management.',
+    category: 'Gemini API · Telegram API',
+    name: 'Academic Ally',
+    desc: 'A sophisticated, defensive Telegram bot designed to help students write with academic integrity. This bot serves as an educational tool to analyze documents for common plagiarism patterns and potential AI-generated content, providing ethical strategies for improvement.',
     url: 'https://t.me/Revmatrix',
-    github: 'https://github.com/shanujans/service-desk-automation',
+    github: 'https://github.com/shanujans/Academic-Ally',
     imgs: [
-      'https://opengraph.githubassets.com/1/shanujans/service-desk-automation',
-      'https://skillicons.dev/icons?i=python,docker,bash,linux,aws&perline=5',
+      'https://opengraph.githubassets.com/1/shanujans/Academic-Ally',
+      'https://skillicons.dev/icons?i=python,docker,bash,Gemini,aws&perline=5',
       'https://opengraph.githubassets.com/1/python-telegram-bot/python-telegram-bot',
     ],
     accent: '#00A388',
-    tag: 'Agent Tooling',
+    tag: 'Learning Project',
   },
 ];
 
@@ -101,8 +101,9 @@ const TOTAL = PROJECTS.length;
 const StickyCard: React.FC<{
   project: (typeof PROJECTS)[0];
   index: number;
+  isLast: boolean;
   scrollYProgress: ReturnType<typeof useScroll>['scrollYProgress'];
-}> = ({ project, index, scrollYProgress }) => {
+}> = ({ project, index, isLast, scrollYProgress }) => {
   const scale = useTransform(
     scrollYProgress,
     [0, 1],
@@ -110,8 +111,8 @@ const StickyCard: React.FC<{
   );
 
   return (
-    // ✅ Replaced missing gaps with native margins to build proper stack timing
-    <div className="sticky mb-10 md:mb-[12vh]" style={{ top: '10vh' }}>
+    // Replaced missing gaps with native margins, but explicitly REMOVED margin for the last card (isLast)
+    <div className={`sticky ${isLast ? 'mb-0' : 'mb-10 md:mb-[12vh]'}`} style={{ top: '10vh' }}>
       <motion.div style={{ scale, transformOrigin: 'top center' }}>
         <div
           className="rounded-3xl md:rounded-[40px] p-6 md:p-10 mx-auto transition-colors duration-500 relative z-20"
@@ -250,14 +251,14 @@ const Projects: React.FC = () => {
         </h2>
       </FadeIn>
 
-      {/* ✅ Replaced h-[450vh] hardcode with auto-height and padding-bottom buffer.
-          This ensures elements NEVER overflow regardless of screen size or card amount. */}
-      <div ref={stackRef} className="relative w-full pb-[15vh] md:pb-[35vh]">
+      {/* ✅ Removed pb-[35vh] that caused the big white space. Added minor padding to breathe nicely above the button */}
+      <div ref={stackRef} className="relative w-full pb-8 md:pb-16">
         {PROJECTS.map((p, i) => (
           <StickyCard
             key={p.num}
             project={p}
             index={i}
+            isLast={i === PROJECTS.length - 1} // Determines if it's the 6th card
             scrollYProgress={scrollYProgress}
           />
         ))}
