@@ -7,10 +7,82 @@ import CVRequestModal from './CVRequestModal';
 
 const LOTTIE_URL = 'https://assets3.lottiefiles.com/packages/lf20_w51pcehl.json';
 
+const COMMANDS = [
+  { 
+    cmd: 'nmap -sV -p- 192.168.1.1', 
+    delay: 2200, 
+    output: [
+      'Starting Nmap 7.92 at 2024-05-21 10:30 EDT', 
+      'Nmap scan report for 192.168.1.1 (host up)', 
+      'PORT    STATE SERVICE  VERSION', 
+      '22/tcp  open  ssh      OpenSSH 8.2p1 Ubuntu', 
+      '80/tcp  open  http     Apache httpd 2.4.41', 
+      '443/tcp open  ssl/http Apache httpd 2.4.41', 
+      'Nmap done: 1 IP scanned in 5.43 seconds'
+    ] 
+  },
+  { 
+    cmd: 'python3 qrng.py --qubits 256', 
+    delay: 2000, 
+    output: [
+      '[*] Connecting to IBM Quantum backend...', 
+      '[*] Initializing 256-qubit circuit...', 
+      '[+] Applying Hadamard gates to qubits...', 
+      '[+] Measuring superposition states...', 
+      '[+] Generated 256 truly random bits', 
+      '0b1101011001010110001011001101001010101001001110010101'
+    ] 
+  },
+  { 
+    cmd: 'sudo apt-get update && apt-get upgrade -y', 
+    delay: 1800, 
+    output: [
+      'Hit:1 http://kali.download/kali kali-rolling InRelease', 
+      'Reading package lists... Done', 
+      'Building dependency tree... Done', 
+      '0 upgraded, 0 newly installed, 0 to remove'
+    ] 
+  },
+  { 
+    cmd: 'git clone https://github.com/shanujans/AutoAI-Loan-Risk-Predictor', 
+    delay: 1500, 
+    output: [
+      "Cloning into 'AutoAI-Loan-Risk-Predictor'...", 
+      'remote: Enumerating objects: 28, done.', 
+      'Receiving objects: 100% (28/28), 12.4 KiB | 2.1 MiB/s, done.'
+    ] 
+  },
+  { 
+    cmd: 'python3 train_model.py --dataset loan_data.csv', 
+    delay: 2500, 
+    output: [
+      '[*] Loading dataset: 1000 samples, 12 features', 
+      '[*] Running AutoAI pipeline...', 
+      '[*] Snap Boosting Machine selected', 
+      '[+] Accuracy: 77.3% | Precision: 0.81 | Recall: 0.74', 
+      '[+] Model saved: loan_risk_model.pkl'
+    ] 
+  },
+  { 
+    cmd: 'whoami', 
+    delay: 700, 
+    output: ['shanujan@dev'] 
+  },
+  { 
+    cmd: 'ls ~/projects', 
+    delay: 800, 
+    output: [
+      'QRNG/  AutoAI-Loan-Risk/  telegram-bots/  Academic-Ally/', 
+      'Instagram-Tracker/  Student-Mgmt-Java/  Skills-Int-C#/'
+    ] 
+  },
+];
+
 const Hero: React.FC = () => {
   const [animData, setAnimData]   = useState<object | null>(null);
   const [cvOpen, setCvOpen]       = useState(false);
   const [showScroll, setShowScroll] = useState(true);
+  const [terminalLines, setTerminalLines] = useState<string[]>([]);
 
   useEffect(() => {
     fetch(LOTTIE_URL).then(r => r.json()).then(d => setAnimData(d)).catch(() => {});
@@ -22,6 +94,44 @@ const Hero: React.FC = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // ✅ Loop background terminal emulator commands seamlessly in background
+  useEffect(() => {
+    let isMounted = true;
+    let currentCmdIndex = 0;
+    let lineBuffer: string[] = [];
+
+    const runSequence = async () => {
+      while (isMounted) {
+        const item = COMMANDS[currentCmdIndex];
+        
+        // Write the input prompt line
+        if (!isMounted) break;
+        lineBuffer = [...lineBuffer, `shanujan@portfolio:~$ ${item.cmd}`].slice(-16);
+        setTerminalLines([...lineBuffer]);
+        
+        // Brief typing pause
+        await new Promise(resolve => setTimeout(resolve, 800));
+        
+        // Stream outputs line by line
+        for (const line of item.output) {
+          if (!isMounted) break;
+          lineBuffer = [...lineBuffer, line].slice(-16);
+          setTerminalLines([...lineBuffer]);
+          
+          const lineDelay = Math.max(80, item.delay / item.output.length);
+          await new Promise(resolve => setTimeout(resolve, lineDelay));
+        }
+        
+        // Pause between complete sequences
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        currentCmdIndex = (currentCmdIndex + 1) % COMMANDS.length;
+      }
+    };
+
+    runSequence();
+    return () => { isMounted = false; };
+  }, []);
+
   return (
     <>
       <CVRequestModal isOpen={cvOpen} onClose={() => setCvOpen(false)} />
@@ -29,11 +139,41 @@ const Hero: React.FC = () => {
       <section
         id="home"
         className="relative flex flex-col overflow-x-clip md:min-h-[100svh]"
-        style={{ background: '#0C0C0C' }}  // Only md+ gets 100svh minimum
+        style={{ background: '#0C0C0C' }}
       >
         {/* Radial glow */}
         <div className="absolute inset-0 pointer-events-none"
           style={{ background: 'radial-gradient(ellipse 55% 45% at 50% 85%, rgba(182,0,168,0.09), transparent)' }} />
+
+        {/* ✅ Horizontal background terminal to occupy the center blank space cleanly */}
+        <div 
+          className="absolute left-1/2 -translate-x-1/2 w-full max-w-[1440px] px-6 select-none pointer-events-none font-mono flex flex-col justify-end text-left"
+          style={{
+            top: '30%',
+            height: '28vh',
+            opacity: 0.12, // Perfectly subtle behind other content
+            zIndex: 5,
+            overflow: 'hidden',
+            maskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)',
+          }}
+        >
+          <div className="flex flex-col gap-1 w-full text-[10px] sm:text-xs tracking-wider">
+            {terminalLines.map((line, idx) => (
+              <div 
+                key={idx} 
+                className="whitespace-pre-wrap leading-relaxed truncate"
+                style={{
+                  color: line.startsWith('shanujan@') ? '#B600A8' : '#D7E2EA',
+                  fontWeight: line.startsWith('shanujan@') ? '600' : '300',
+                  textShadow: line.startsWith('shanujan@') ? '0 0 8px rgba(182,0,168,0.3)' : 'none',
+                }}
+              >
+                {line}
+              </div>
+            ))}
+          </div>
+        </div>
 
         <div className="h-24 flex-shrink-0" />
 
@@ -55,7 +195,7 @@ const Hero: React.FC = () => {
         {/* Portrait/Lottie */}
         <div
           className="
-            relative               // stay in the flow, mobile only
+            relative
             md:absolute
             md:left-1/2
             md:-translate-x-1/2
@@ -65,9 +205,9 @@ const Hero: React.FC = () => {
             md:pointer-events-auto
           "
           style={{
-            width: 'min(420px, 75vw)',
+            width: 'min(480px, 80vw)', // ✅ Slightly scaled up to cover additional vertical grid space
             margin: '0 auto',
-            marginBottom: '1.5rem', // only on mobile
+            marginBottom: '2rem',
           }}
         >
           <FadeIn y={30} delay={0.6}>
@@ -86,10 +226,10 @@ const Hero: React.FC = () => {
         {/* Bottom bar */}
         <div className="mt-auto pb-8 px-5 md:px-12 flex flex-col md:flex-row items-start md:items-end justify-between gap-6 relative z-20">
           <FadeIn y={20} delay={0.3}>
-            <div className="bg-black/40 md:bg-transparent backdrop-blur-md md:backdrop-blur-none p-3 -ml-3 md:p-0 md:m-0 rounded-xl">
+            <div className="bg-black/40 md:bg-transparent backdrop-blur-md md:backdrop-blur-none p-4 -ml-4 md:p-0 md:m-0 rounded-xl">
               <p
-                className="text-[#D7E2EA] font-light uppercase leading-relaxed max-w-[240px] md:max-w-[280px]"
-                style={{ fontSize: 'clamp(0.65rem, 1.8vw, 0.9rem)' }}
+                className="text-[#D7E2EA] font-light uppercase leading-relaxed max-w-[340px] md:max-w-[420px]" // ✅ Increased width & font range for robust desktop/mobile scale
+                style={{ fontSize: 'clamp(0.8rem, 2vw, 1.05rem)' }}
               >
                 an it support &amp; ai developer driven by building autonomous agents and robust systems
               </p>
