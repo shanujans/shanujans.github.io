@@ -106,7 +106,7 @@ const About: React.FC = () => {
             {[
               { v: '4+', l: 'Years IT Support' },
               { v: '8+', l: 'Projects Built'   },
-              { v: '1',  l: 'Live AI Chatbot'  },
+              { v: '4+',  l: 'Live AI Chatbot'  },
             ].map(s => (
               <div
                 key={s.l}

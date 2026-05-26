@@ -73,7 +73,7 @@ const PROJECTS = [
     github: 'https://github.com/shanujans/telegram-uploader',
     imgs: [
       'https://opengraph.githubassets.com/1/shanujans/telegram-uploader',
-      'https://skillicons.dev/icons?i=python,oci,git,github&perline=4',
+      'https://skillicons.dev/icons?i=python,gcp,git,github&perline=4',
       'https://opengraph.githubassets.com/1/google/generative-ai-python',
     ],
     accent: '#005CB6',
@@ -88,7 +88,7 @@ const PROJECTS = [
     github: 'https://github.com/shanujans/Academic-Ally',
     imgs: [
       'https://opengraph.githubassets.com/1/shanujans/Academic-Ally',
-      'https://skillicons.dev/icons?i=python,docker,bash,Gemini,aws&perline=5',
+      'https://skillicons.dev/icons?i=python,docker,bash,aws&perline=5',
       'https://opengraph.githubassets.com/1/python-telegram-bot/python-telegram-bot',
     ],
     accent: '#00A388',
