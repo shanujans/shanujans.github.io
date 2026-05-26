@@ -111,7 +111,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
 
         {/* Status */}
         <div className="font-light uppercase tracking-[0.4em] text-[#D7E2EA]/60 text-xs sm:text-sm">
-          INITIALIZING PORTFOLIO...
+          INITIALIZING...
         </div>
 
         {/* Progress bar container */}

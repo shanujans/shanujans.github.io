@@ -94,7 +94,7 @@ const Hero: React.FC = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // ✅ Loop background terminal emulator commands seamlessly in background
+  // ✅ Terminal buffer history is increased to 22 lines to support the expanded height
   useEffect(() => {
     let isMounted = true;
     let currentCmdIndex = 0;
@@ -104,25 +104,21 @@ const Hero: React.FC = () => {
       while (isMounted) {
         const item = COMMANDS[currentCmdIndex];
         
-        // Write the input prompt line
         if (!isMounted) break;
-        lineBuffer = [...lineBuffer, `shanujan@portfolio:~$ ${item.cmd}`].slice(-16);
+        lineBuffer = [...lineBuffer, `shanujan@portfolio:~$ ${item.cmd}`].slice(-22); // Increased to -22
         setTerminalLines([...lineBuffer]);
         
-        // Brief typing pause
         await new Promise(resolve => setTimeout(resolve, 800));
         
-        // Stream outputs line by line
         for (const line of item.output) {
           if (!isMounted) break;
-          lineBuffer = [...lineBuffer, line].slice(-16);
+          lineBuffer = [...lineBuffer, line].slice(-22); // Increased to -22
           setTerminalLines([...lineBuffer]);
           
           const lineDelay = Math.max(80, item.delay / item.output.length);
           await new Promise(resolve => setTimeout(resolve, lineDelay));
         }
         
-        // Pause between complete sequences
         await new Promise(resolve => setTimeout(resolve, 2000));
         currentCmdIndex = (currentCmdIndex + 1) % COMMANDS.length;
       }
@@ -145,13 +141,13 @@ const Hero: React.FC = () => {
         <div className="absolute inset-0 pointer-events-none"
           style={{ background: 'radial-gradient(ellipse 55% 45% at 50% 85%, rgba(182,0,168,0.09), transparent)' }} />
 
-        {/* ✅ Horizontal background terminal to occupy the center blank space cleanly */}
+        {/* ✅ Terminal layout adjusted vertically: height increased to 38vh, top offset shifted up to 25% */}
         <div 
           className="absolute left-1/2 -translate-x-1/2 w-full max-w-[1440px] px-6 select-none pointer-events-none font-mono flex flex-col justify-end text-left"
           style={{
-            top: '30%',
-            height: '28vh',
-            opacity: 0.12, // Perfectly subtle behind other content
+            top: '25%',
+            height: '38vh',
+            opacity: 0.12, 
             zIndex: 5,
             overflow: 'hidden',
             maskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)',
@@ -205,7 +201,7 @@ const Hero: React.FC = () => {
             md:pointer-events-auto
           "
           style={{
-            width: 'min(480px, 80vw)', // ✅ Slightly scaled up to cover additional vertical grid space
+            width: 'min(480px, 80vw)',
             margin: '0 auto',
             marginBottom: '2rem',
           }}
@@ -228,7 +224,7 @@ const Hero: React.FC = () => {
           <FadeIn y={20} delay={0.3}>
             <div className="bg-black/40 md:bg-transparent backdrop-blur-md md:backdrop-blur-none p-4 -ml-4 md:p-0 md:m-0 rounded-xl">
               <p
-                className="text-[#D7E2EA] font-light uppercase leading-relaxed max-w-[340px] md:max-w-[420px]" // ✅ Increased width & font range for robust desktop/mobile scale
+                className="text-[#D7E2EA] font-light uppercase leading-relaxed max-w-[340px] md:max-w-[420px]" 
                 style={{ fontSize: 'clamp(0.8rem, 2vw, 1.05rem)' }}
               >
                 an it support &amp; ai developer driven by building autonomous agents and robust systems
