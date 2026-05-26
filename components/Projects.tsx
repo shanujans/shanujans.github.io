@@ -110,14 +110,15 @@ const StickyCard: React.FC<{
   );
 
   return (
-    <div className="sticky" style={{ top: '80px' }}>
+    // ✅ Replaced missing gaps with native margins to build proper stack timing
+    <div className="sticky mb-10 md:mb-[12vh]" style={{ top: '10vh' }}>
       <motion.div style={{ scale, transformOrigin: 'top center' }}>
         <div
-          className="rounded-3xl md:rounded-[40px] p-6 md:p-10 mx-auto transition-colors duration-500"
+          className="rounded-3xl md:rounded-[40px] p-6 md:p-10 mx-auto transition-colors duration-500 relative z-20"
           style={{
             maxWidth: '900px',
             background: '#0C0C0C',
-            border: '1.5px solid rgba(215,226,234,0.06)', // Matched footer borders
+            border: '1.5px solid rgba(215,226,234,0.06)',
             boxShadow: `0 0 50px ${project.accent}12`,
           }}
         >
@@ -176,7 +177,6 @@ const StickyCard: React.FC<{
           {/* Dynamic Image Grid */}
           <div className="grid grid-cols-2 gap-3 md:gap-4 mt-6 md:mt-8">
             <div className="flex flex-col gap-3 md:gap-4">
-              {/* Repository OpenGraph Banner */}
               <div 
                 className="aspect-[2/1] w-full rounded-[14px] md:rounded-[24px] overflow-hidden border"
                 style={{ borderColor: 'rgba(215,226,234,0.06)', background: 'rgba(0,0,0,0.4)' }}
@@ -188,7 +188,6 @@ const StickyCard: React.FC<{
                   loading="lazy"
                 />
               </div>
-              {/* Technology Stack Icons */}
               <div 
                 className="aspect-[2/1] w-full rounded-[14px] md:rounded-[24px] overflow-hidden border flex items-center justify-center p-4 md:p-6"
                 style={{ borderColor: 'rgba(215,226,234,0.06)', background: 'rgba(255,255,255,0.01)' }}
@@ -202,7 +201,6 @@ const StickyCard: React.FC<{
               </div>
             </div>
             
-            {/* Environment OpenGraph Square-Crop */}
             <div 
               className="aspect-square w-full h-full rounded-[14px] md:rounded-[24px] overflow-hidden border group"
               style={{ borderColor: 'rgba(215,226,234,0.06)', background: 'rgba(0,0,0,0.4)' }}
@@ -224,7 +222,6 @@ const StickyCard: React.FC<{
 const Projects: React.FC = () => {
   const stackRef = useRef<HTMLDivElement>(null);
 
-  // Scroll logic for the new larger container holding all 6 items
   const { scrollYProgress } = useScroll({
     target: stackRef,
     offset: ['start end', 'end start'],
@@ -234,12 +231,12 @@ const Projects: React.FC = () => {
   return (
     <section
       id="projects"
-      className="rounded-t-[40px] md:rounded-t-[60px] -mt-10 md:-mt-14 relative z-10 px-4 md:px-10 pt-24 md:pt-32 pb-24 md:pb-36"
+      className="rounded-t-[40px] md:rounded-t-[60px] -mt-10 md:-mt-14 relative z-10 px-4 md:px-10 pt-24 md:pt-32 pb-20 md:pb-28"
       style={{ background: '#0C0C0C', borderTop: '1px solid rgba(215,226,234,0.06)' }}
     >
       <FadeIn y={30}>
         <h2
-          className="font-black uppercase text-center mb-16 md:mb-24"
+          className="font-black uppercase text-center mb-16 md:mb-24 relative z-20"
           style={{
             fontSize: 'clamp(2.5rem, 10vw, 110px)',
             lineHeight: 1,
@@ -253,8 +250,9 @@ const Projects: React.FC = () => {
         </h2>
       </FadeIn>
 
-      {/* Increased height heavily to accommodate 6 full-screen scrollable sticky cards */}
-      <div ref={stackRef} className="h-auto md:h-[450vh]">
+      {/* ✅ Replaced h-[450vh] hardcode with auto-height and padding-bottom buffer.
+          This ensures elements NEVER overflow regardless of screen size or card amount. */}
+      <div ref={stackRef} className="relative w-full pb-[15vh] md:pb-[35vh]">
         {PROJECTS.map((p, i) => (
           <StickyCard
             key={p.num}
@@ -265,7 +263,7 @@ const Projects: React.FC = () => {
         ))}
       </div>
 
-      <FadeIn y={20} delay={0.2} className="text-center mt-20 md:mt-28">
+      <FadeIn y={20} delay={0.2} className="text-center relative z-20 mt-10">
         <a
           href="https://github.com/shanujans"
           target="_blank"
