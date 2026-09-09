@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="google-site-verification" content="google173255409e5f314c.html" />
     <title>Shanujan Suresh | IT Support & AI Developer</title>
     <meta name="description" content="IT Support professional & AI developer from Sri Lanka. Building autonomous agents and robust systems." />
@@ -16,14 +16,9 @@
     <link rel="apple-touch-icon" href="/favicon.png" />
     <link rel="icon" type="image/png" href="/favicon.png?v=2" />
 
-    <!-- Font preloads for faster text rendering -->
-    <link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/kanit/v18/n6Hz4bbTIrAA3JGlqg.woff2" />
-    <link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/jetbrainsmono/v25/tDbD2oWUg0MKq0n2Un4W1g.woff2" />
-
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- font-display=swap prevents invisible text during font load -->
     <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -34,11 +29,11 @@
         background: #0C0C0C;
         color: #D7E2EA;
         font-family: 'Kanit', sans-serif;
-        overflow-x: hidden; /* Better support than clip */
+        overflow-x: clip;
         cursor: none;
       }
 
-      #root { background: #0C0C0C; overflow-x: hidden; }
+      #root { background: #0C0C0C; overflow-x: clip; }
 
       ::selection { background: #B600A8; color: #fff; }
 
@@ -110,7 +105,7 @@
       .contact-label {
         position:absolute; top:1rem; left:1rem;
         font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#6b7280;
-        background:#0C0C0C; padding:0 4px; pointerEvents:none; transition:all 0.2s ease;
+        background:#0C0C0C; padding:0 4px; pointer-events:none; transition:all 0.2s ease;
       }
       .contact-input:focus + .contact-label,
       .contact-input:not(:placeholder-shown) + .contact-label { top:0.2rem; font-size:0.65rem; color:#B600A8; }
@@ -128,20 +123,11 @@
 
       /* Mobile cursor */
       @media (pointer:coarse) { body { cursor:auto; } }
-
-      /* Respect reduced motion preference */
-      @media (prefers-reduced-motion: reduce) {
-        *, *::before, *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-          scroll-behavior: auto !important;
-        }
-      }
     </style>
-    <script type="module" crossorigin src="/assets/index-DEkQzYJm.js"></script>
-    <link rel="modulepreload" crossorigin href="/assets/motion-CHBIqBT_.js">
-    <link rel="modulepreload" crossorigin href="/assets/react-Caf6GKmd.js">
+    <script type="module" crossorigin src="/assets/index-BkcurAMM.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/motion-BkTelhxL.js">
+    <link rel="modulepreload" crossorigin href="/assets/react-BYS8AVK3.js">
+    <link rel="modulepreload" crossorigin href="/assets/lottie-B65uapvB.js">
   </head>
   <body>
     <div id="root"></div>
