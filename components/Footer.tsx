@@ -242,6 +242,28 @@ const Footer: React.FC = () => {
                 Available for work · Sri Lanka 🇱🇰
               </span>
             </div>
+            {/* FlyRank Graduate Badge */}
+            <a href="https://internship.flyrank.ai/verify" target="_blank" rel="noopener noreferrer" aria-label="FlyRank AI Internship Graduate"
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: '6px',
+                padding: '6px 10px', borderRadius: '9999px',
+                background: '#111', border: '1px solid #333',
+                color: '#fff', textDecoration: 'none',
+                fontSize: '12px', fontWeight: 600,
+                fontFamily: 'JetBrains Mono, monospace',
+                letterSpacing: '0.02em',
+                transition: 'border-color 0.2s, background 0.2s',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = '#B600A8'; e.currentTarget.style.background = '#1a1a1a'; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = '#333'; e.currentTarget.style.background = '#111'; }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ verticalAlign: 'middle' }}>
+                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M2 17L12 22L22 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M2 12L12 17L22 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              <span>FlyRank AI Internship Graduate</span>
+            </a>
             <p className="text-[#D7E2EA]/20 font-light uppercase tracking-widest"
               style={{ fontSize: 'clamp(0.5rem,0.9vw,0.65rem)' }}>
               © {new Date().getFullYear()} Shanujan Suresh
